@@ -19,10 +19,4 @@
 
         @include('layouts.partials.footer')
     </div>
-
-    @stack("scripts")
-    @livewireScripts
-    @stack('scripts')
-    @livewireScripts
-
 </html>

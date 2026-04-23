@@ -49,5 +49,7 @@
             }
         });
     </script>
+    @stack("scripts")
+    @livewireScripts
 
 <!--end::Footer-->
