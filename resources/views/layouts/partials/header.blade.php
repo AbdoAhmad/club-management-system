@@ -98,6 +98,8 @@
         })();
     </script>
     <!--end::Theme Script-->
+    @stack("styles")
+    @livewireStyles
 
 
 </head>

@@ -3,8 +3,6 @@
     dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" >
 
     @include('layouts.partials.header')
-    @stack("styles")
-    @livewireStyles
 
     <body class="layout-fixed sidebar-expand-lg">
     <div class="app-wrapper">
