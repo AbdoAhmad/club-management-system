@@ -1,0 +1,269 @@
+/* Premium VIP Football Club Theme */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+:root, [data-bs-theme="light"] {
+  /* LIGHT MODE (Real Madrid Home / Executive White) */
+  --prem-bg: #F4F6F9; /* Very light gray */
+  --prem-surface: #FFFFFF; /* Pure White */
+  --prem-primary: #C59B27; /* Deeper Gold for contrast on white */
+  --prem-primary-hover: #A37F1C;
+  --prem-secondary: #1A1A1A; /* Deep Slate Text */
+  --prem-text-main: #333333;
+  --prem-text-muted: #6C757D;
+  --prem-border: rgba(197, 155, 39, 0.3); /* Gold Border */
+  --prem-header-bg: rgba(255, 255, 255, 0.95);
+  --prem-sidebar-bg: #FFFFFF;
+}
+
+[data-bs-theme="dark"] {
+  /* DARK MODE (VIP Box / Deep Black) */
+  --prem-bg: #050505;
+  --prem-surface: #121212;
+  --prem-primary: #D4AF37;
+  --prem-primary-hover: #E4C049;
+  --prem-secondary: #FFFFFF;
+  --prem-text-main: #F3F4F6;
+  --prem-text-muted: #9CA3AF;
+  --prem-border: rgba(212, 175, 55, 0.2);
+  --prem-header-bg: rgba(10, 10, 10, 0.85);
+  --prem-sidebar-bg: #0A0A0A;
+}
+
+body {
+  font-family: 'Outfit', sans-serif !important;
+  background-color: var(--prem-bg) !important;
+  color: var(--prem-text-main) !important;
+}
+
+/* Animations & Smoothness */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.app-wrapper, .app-main {
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/* Sidebar Styling */
+.app-sidebar {
+  background-color: var(--prem-sidebar-bg) !important;
+  border-right: 1px solid var(--prem-border);
+}
+
+.brand-link {
+  border-bottom: 1px solid var(--prem-border) !important;
+  color: var(--prem-primary) !important;
+}
+
+.sidebar-menu .nav-link {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: var(--prem-text-muted) !important;
+}
+
+.sidebar-menu .nav-link.active {
+  background: linear-gradient(90deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0) 100%) !important;
+  color: var(--prem-primary) !important;
+  border-left: 3px solid var(--prem-primary);
+}
+
+.sidebar-menu .nav-link:hover {
+  background: rgba(212,175,55,0.08);
+  color: var(--prem-secondary) !important;
+  transform: translateX(4px);
+}
+
+/* Header & Dropdowns Styling */
+.app-header {
+  background-color: var(--prem-header-bg) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--prem-border) !important;
+}
+
+.nav-link:hover {
+  color: var(--prem-primary) !important;
+}
+
+.dropdown-menu {
+  background-color: var(--prem-surface) !important;
+  border: 1px solid var(--prem-border) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+}
+.dropdown-item {
+  color: var(--prem-text-main) !important;
+  transition: all 0.2s ease;
+}
+.dropdown-item:hover {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+  color: var(--prem-primary) !important;
+}
+.dropdown-header, .dropdown-footer {
+  color: var(--prem-text-muted) !important;
+}
+
+/* Cards & Widgets */
+.card, .info-box, .small-box, .callout {
+  background-color: var(--prem-surface) !important;
+  border: 1px solid var(--prem-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+[data-bs-theme="dark"] .card, [data-bs-theme="dark"] .info-box, [data-bs-theme="dark"] .small-box, [data-bs-theme="dark"] .callout {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+
+.card:hover, .info-box:hover, .small-box:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.15) !important;
+  border-color: rgba(212, 175, 55, 0.5) !important;
+}
+
+.card-header {
+  border-bottom: 1px solid var(--prem-border) !important;
+}
+.card-footer {
+  border-top: 1px solid var(--prem-border) !important;
+  background-color: transparent !important;
+}
+
+/* Base Widget & Badge Utilities */
+/* Dark text on light widgets, light text on dark widgets */
+.text-bg-primary { background: linear-gradient(135deg, #1A1A1A, #000000) !important; color: #D4AF37 !important; border: 1px solid #D4AF37 !important;}
+.text-bg-success { background: linear-gradient(135deg, #D4AF37, #B38F22) !important; color: #000000 !important; border: none !important;}
+.text-bg-warning { background: linear-gradient(135deg, #E5E7EB, #9CA3AF) !important; color: #000000 !important; border: none !important;}
+.text-bg-danger { background: linear-gradient(135deg, #8B0000, #5C0000) !important; color: #FFFFFF !important; border: 1px solid rgba(255,255,255,0.2) !important;}
+
+.text-bg-success *, .text-bg-warning * {
+  color: #000000 !important;
+}
+.text-bg-danger * { color: #FFFFFF !important; }
+
+/* Typography Enhancements */
+h1, h2, h3, h4, h5, h6, .card-title {
+  font-weight: 600 !important;
+  color: var(--prem-secondary) !important;
+}
+.breadcrumb-item a { color: var(--prem-primary); }
+.breadcrumb-item.active { color: var(--prem-text-muted); }
+
+/* Forms & Inputs */
+.form-control, .form-select {
+  background-color: transparent !important;
+  border: 1px solid var(--prem-border) !important;
+  color: var(--prem-secondary) !important;
+  transition: all 0.3s ease;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--prem-primary) !important;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3) !important;
+}
+
+/* Buttons */
+.btn {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-weight: 600;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn-primary {
+  background-color: var(--prem-primary) !important;
+  color: #FFFFFF !important;
+  border-color: var(--prem-primary) !important;
+}
+.btn-primary:hover {
+  background-color: var(--prem-primary-hover) !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Table Styling */
+.table {
+  color: var(--prem-text-main);
+  vertical-align: middle;
+}
+.table th {
+  border-bottom: 2px solid var(--prem-primary) !important;
+  color: var(--prem-secondary) !important;
+  font-weight: 600;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(212, 175, 55, 0.03);
+}
+.table > :not(caption) > * > * {
+  border-bottom-color: var(--prem-border);
+}
+.table-hover > tbody > tr:hover > * {
+  background-color: rgba(212, 175, 55, 0.08) !important;
+}
+
+/* Pagination */
+.page-link {
+  background-color: transparent !important;
+  border-color: var(--prem-border) !important;
+  color: var(--prem-text-muted) !important;
+}
+.page-item.active .page-link {
+  background-color: var(--prem-primary) !important;
+  border-color: var(--prem-primary) !important;
+  color: #FFFFFF !important;
+}
+.page-link:hover {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+  color: var(--prem-primary) !important;
+}
+
+/* Progress Bars */
+.progress {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+  border-radius: 4px;
+}
+.progress-bar {
+  border-radius: 4px;
+}
+
+/* Badges */
+.badge:not(.navbar-badge) {
+  font-weight: 600;
+  padding: 0.5em 0.8em;
+  border-radius: 6px;
+}
+.badge.text-bg-warning:not(.navbar-badge), 
+.badge.text-bg-success:not(.navbar-badge) {
+  color: #000 !important;
+}
+
+/* Navbar Notification Badges Fix */
+.navbar-badge {
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  padding: 3px 5px !important;
+  border-radius: 50% !important;
+  position: absolute !important;
+  top: 5px !important;
+  right: 5px !important;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--prem-header-bg) !important;
+  color: #fff !important;
+}
+
+/* ApexCharts specific fixes */
+.apexcharts-canvas { filter: none; }
+.apexcharts-tooltip {
+  background: var(--prem-surface) !important;
+  border: 1px solid var(--prem-primary) !important;
+  color: var(--prem-secondary) !important;
+}
