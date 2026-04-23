@@ -28,6 +28,15 @@
                             Dashboard
                         </p>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('tenant') }}" class="nav-link">
+                        <i class="nav-icon bi bi-people"></i>
+                        <p>
+                            Tenants
+                        </p>
+                    </a>
+                </li>
             </ul>
 
         </nav>
