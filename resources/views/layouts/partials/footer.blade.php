@@ -11,6 +11,8 @@
       All rights reserved.
       <!--end::Copyright-->
     </footer>
+    @stack("scripts")
+    @livewireScripts
      <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
         crossorigin="anonymous"></script>
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
@@ -49,7 +51,5 @@
             }
         });
     </script>
-    @stack("scripts")
-    @livewireScripts
 
 <!--end::Footer-->
