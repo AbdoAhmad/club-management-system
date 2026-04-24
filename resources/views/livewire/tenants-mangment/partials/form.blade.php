@@ -45,11 +45,37 @@
                             </div>
                         </div>
                     @else
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">{{ __('Admin Name ar') }}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control" placeholder="{{ __('Admin Name ar') }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">{{ __('Admin Name en') }}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control" placeholder="{{ __('Admin Name en') }}">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
-                            <label class="form-label fw-bold">{{ __('Domain Name') }}</label>
+                            <label class="form-label fw-bold">{{ __('Admin Email') }}</label>
                             <div class="input-group">
-                                <span class="input-group-text">https://</span>
-                                <input type="text" class="form-control" placeholder="domain.com">
+                                <span class="input-group-text">@</span>
+                                <input type="email" class="form-control" placeholder="[EMAIL_ADDRESS]">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{{ __('Admin Password') }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control" placeholder="********">
                             </div>
                         </div>
                     @endif

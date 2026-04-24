@@ -11,5 +11,9 @@
     "Add Tenant": "إضافة نادى",
     "Status": "الحالة",
     "Actions": "الإجراءات",
-    "Search": "بحث"
+    "Search": "بحث",
+    "Admin Name ar": "اسم المدير بالعربية",
+    "Admin Name en": "اسم المدير بالانجليزية",
+    "Admin Email": "البريد الالكتروني للمدير",
+    "Admin Password": "كلمة مرور المدير"
 }
