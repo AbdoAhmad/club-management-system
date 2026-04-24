@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Model;
 use \App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends Factory<Model>
@@ -34,6 +35,13 @@ class TenantFactory extends Factory
             $tenant->domains()->create([
                 'domain' => $tenant->id . '.localhost',
             ]);
+            tenancy()->initialize($tenant->id);
+            User::factory()->create([
+                'name' => 'Test Admin',
+                'email' => 'test@example.com',
+            ]);
+            tenancy()->end();
+
         });
     }
 }
