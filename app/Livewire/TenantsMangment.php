@@ -30,7 +30,6 @@ class TenantsMangment extends Component
 
     public function save()
     {
-        dd(tenancy()->initialize($tenant->id));
         $this->validate();
 
         $tenant = Tenant::create([
@@ -50,7 +49,7 @@ class TenantsMangment extends Component
         //         'password' => bcrypt($this->tenant_manger_password),
         //     ]);
         // });
-        tenancy()->initialize($tenant);
+        tenancy()->initialize($tenant->id);
 
         User::create([
             'name' => [
