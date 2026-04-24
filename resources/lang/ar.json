@@ -1,3 +1,15 @@
 {
-
+    "Add New Tenant": "إضافة نادى جديد",
+    "Tenant Credentials": "بيانات النادى",
+    "Tenant Admin Credentials": "بيانات مدير النادى",
+    "Tenant Name": "اسم النادى",
+    "Name": "اسم",
+    "Domain Name": "اسم النطاق",
+    "Next Step": "التالي",
+    "Back": "رجوع",
+    "Save Tenant": "حفظ النادى",
+    "Add Tenant": "إضافة نادى",
+    "Status": "الحالة",
+    "Actions": "الإجراءات",
+    "Search": "بحث"
 }

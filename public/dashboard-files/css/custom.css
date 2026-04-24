@@ -48,7 +48,7 @@ body {
 /* Sidebar Styling */
 .app-sidebar {
   background-color: var(--prem-sidebar-bg) !important;
-  border-right: 1px solid var(--prem-border);
+  border-inline-end: 1px solid var(--prem-border);
 }
 
 .brand-link {
@@ -64,13 +64,16 @@ body {
 .sidebar-menu .nav-link.active {
   background: linear-gradient(90deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0) 100%) !important;
   color: var(--prem-primary) !important;
-  border-left: 3px solid var(--prem-primary);
+  border-inline-start: 3px solid var(--prem-primary);
 }
 
 .sidebar-menu .nav-link:hover {
   background: rgba(212,175,55,0.08);
   color: var(--prem-secondary) !important;
-  transform: translateX(4px);
+  transform: translateX(var(--sidebar-hover-translate, 4px));
+}
+[dir="rtl"] .sidebar-menu .nav-link:hover {
+  --sidebar-hover-translate: -4px;
 }
 
 /* Header & Dropdowns Styling */
@@ -250,7 +253,7 @@ h1, h2, h3, h4, h5, h6, .card-title {
   border-radius: 50% !important;
   position: absolute !important;
   top: 5px !important;
-  right: 5px !important;
+  inset-inline-end: 5px !important;
   min-width: 18px;
   height: 18px;
   display: inline-flex !important;

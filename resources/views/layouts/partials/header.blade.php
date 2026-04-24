@@ -43,7 +43,11 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
 
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="{{ asset('dashboard-files/css/adminlte.css') }}" />
+    @if(app()->getLocale() == 'ar')
+        <link rel="stylesheet" href="{{ asset('dashboard-files/css/adminlte.rtl.css') }}" />
+    @else
+        <link rel="stylesheet" href="{{ asset('dashboard-files/css/adminlte.css') }}" />
+    @endif
     <link rel="stylesheet" href="{{ asset('dashboard-files/css/custom.css') }}" />
     <!--end::Required Plugin(AdminLTE)-->
 

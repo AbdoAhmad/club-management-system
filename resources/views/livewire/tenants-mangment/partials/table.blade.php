@@ -6,14 +6,14 @@
                     <div class="d-flex align-items-center position-relative my-1">
                         <i class="bi bi-search position-absolute ms-3 fs-6"></i>
                         <input type="text" wire:model.live="search" class="form-control ps-10"
-                            placeholder="Search Tenant" style="width: 250px; padding-left: 40px;">
+                            placeholder="{{ __('Search') }}" style="width: 250px; padding-inline-start: 40px;">
                     </div>
                 </div>
 
                 <div class="card-toolbar ms-auto">
                     <button type="button" wire:click="openAddTenantModal" class="btn btn-primary"
                         data-bs-toggle="modal">
-                        <i class="bi bi-plus me-1 fs-6"></i> Add Tenant
+                        <i class="bi bi-plus me-1 fs-6"></i> {{ __('Add Tenant') }}
                     </button>
                 </div>
             </div>
@@ -22,11 +22,11 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 10px">No.</th>
-                            <th>Tenant Name</th>
-                            <th>Domain Name</th>
-                            <th style="width: 40px">Status</th>
-                            <th style="width: 40px">Actions</th>
+                            <th style="width: 10px">#</th>
+                            <th>{{ __('Tenant Name') }}</th>
+                            <th>{{ __('Domain Name') }}</th>
+                            <th style="width: 40px">{{ __('Status') }}</th>
+                            <th style="width: 40px">{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>

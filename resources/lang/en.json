@@ -1,3 +1,15 @@
 {
-
+    "Add New Tenant": "Add New Tenant",
+    "Tenant Credentials": "Tenant Credentials",
+    "Tenant Admin Credentials": "Tenant Admin Credentials",
+    "Tenant Name": "Tenant Name",
+    "Name": "Name",
+    "Domain Name": "Domain Name",
+    "Next Step": "Next Step",
+    "Back": "Back",
+    "Save Tenant": "Save Tenant",
+    "Add Tenant": "Add Tenant",
+    "Status": "Status",
+    "Actions": "Actions",
+    "Search": "Search"
 }
