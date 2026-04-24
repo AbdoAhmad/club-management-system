@@ -15,5 +15,9 @@
     "Admin Name ar": "اسم المدير بالعربية",
     "Admin Name en": "اسم المدير بالانجليزية",
     "Admin Email": "البريد الالكتروني للمدير",
-    "Admin Password": "كلمة مرور المدير"
+    "Admin Password": "كلمة مرور المدير",
+    "Admin Password Confirmation": "تأكيد كلمة مرور المدير",
+    "Tenant created successfully": "تم إنشاء النادى بنجاح"
+
+
 }

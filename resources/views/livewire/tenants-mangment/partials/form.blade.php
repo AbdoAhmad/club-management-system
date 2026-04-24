@@ -50,7 +50,10 @@
                                 <label class="form-label fw-bold">{{ __('Admin Name ar') }}</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                    <input type="text" class="form-control" placeholder="{{ __('Admin Name ar') }}">
+                                    <input wire:model="tenant_manger_name_ar" type="text" class="form-control" placeholder="{{ __('Admin Name ar') }}">
+                                    @error('tenant_manger_name_ar')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -58,7 +61,10 @@
                                 <label class="form-label fw-bold">{{ __('Admin Name en') }}</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                    <input type="text" class="form-control" placeholder="{{ __('Admin Name en') }}">
+                                    <input wire:model="tenant_manger_name_en" type="text" class="form-control" placeholder="{{ __('Admin Name en') }}">
+                                    @error('tenant_manger_name_en')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -67,7 +73,10 @@
                             <label class="form-label fw-bold">{{ __('Admin Email') }}</label>
                             <div class="input-group">
                                 <span class="input-group-text">@</span>
-                                <input type="email" class="form-control" placeholder="tenant@exmple.com">
+                                <input wire:model="tenant_manger_email" type="email" class="form-control" placeholder="tenant@exmple.com">
+                                @error('tenant_manger_email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -75,7 +84,10 @@
                             <label class="form-label fw-bold">{{ __('Admin Password') }}</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" class="form-control" placeholder="********">
+                                <input wire:model="tenant_manger_password" type="password" class="form-control" placeholder="********">
+                                @error('tenant_manger_password')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     @endif
@@ -87,7 +99,7 @@
                         <button type="button" class="btn btn-primary" wire:click="setStep(2)">{{ __('Next Step') }}</button>
                     @else
                         <button type="button" class="btn btn-light" wire:click="setStep(1)">{{ __('Back') }}</button>
-                        <button type="submit" class="btn btn-success">{{ __('Save Tenant') }}</button>
+                        <button type="submit"  class="btn btn-success" wire:click="save">{{ __('Save Tenant') }}</button>
                     @endif
                 </div>
             </form>

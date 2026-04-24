@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Model;
+use \App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,7 +30,7 @@ class TenantFactory extends Factory
      */
     public function configure()
     {
-        return $this->afterCreating(function (\App\Models\Tenant $tenant) {
+        return $this->afterCreating(function (Tenant $tenant) {
             $tenant->domains()->create([
                 'domain' => $tenant->id . '.localhost',
             ]);
