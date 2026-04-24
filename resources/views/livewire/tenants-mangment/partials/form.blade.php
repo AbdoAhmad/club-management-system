@@ -67,7 +67,7 @@
                             <label class="form-label fw-bold">{{ __('Admin Email') }}</label>
                             <div class="input-group">
                                 <span class="input-group-text">@</span>
-                                <input type="email" class="form-control" placeholder="[EMAIL_ADDRESS]">
+                                <input type="email" class="form-control" placeholder="tenant@exmple.com">
                             </div>
                         </div>
 
