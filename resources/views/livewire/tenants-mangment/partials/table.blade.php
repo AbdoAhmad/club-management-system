@@ -1,3 +1,12 @@
+@push('styles')
+    <style>
+        /* Custom styles for the modal */
+        .btn-close:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+@endpush
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
@@ -11,9 +20,10 @@
                 </div>
 
                 <div class="card-toolbar ms-auto">
-                        <button type="button" class="btn btn-primary" wire:click="openCreateModal">
-                            <i class="bi bi-plus me-1 fs-6"></i> Add Tenant
-                        </button>
+                    <button type="button" wire:click="openAddTenantModal" class="btn btn-primary"
+                        data-bs-toggle="modal">
+                        <i class="bi bi-plus me-1 fs-6"></i> Add Tenant
+                    </button>
                 </div>
             </div>
 
@@ -40,39 +50,110 @@
                             <td><span class="badge text-bg-danger">55%</span></td>
                             <td style="width: 100px;">
                                 <div class="d-flex justify-content-center gap-2">
-                                    <button class="btn btn-outline-primary btn-sm" title="Edit">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-outline-danger btn-sm" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-end">
-                    <li class="page-item">
-                        <a class="page-link" href="#">&laquo;</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
         </div>
-        <!-- /.card -->
     </div>
 </div>
+
+<div wire:ignore.self class="modal fade" id="addTenantModal" tabindex="-1" data-bs-backdrop="false"
+    style="background-color: rgba(0,0,0,0.5); z-index: 1060 !important;" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="z-index: 1070 !important;">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title" tabindex="-1">Add New Tenant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form wire:submit.prevent="save">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-around mb-4 text-center">
+                        <div
+                            class="flex-fill pb-2 {{ $currentStep == 1 ? 'text-warning fw-bold border-bottom border-warning border-2' : 'text-muted' }}">
+                            1. Tenant Credentials
+                        </div>
+                        <div
+                            class="flex-fill pb-2 {{ $currentStep == 2 ? 'text-warning fw-bold border-bottom border-warning border-2' : 'text-muted' }}">
+                            2. Tenant Admin Credentials
+                        </div>
+                    </div>
+
+                    @if ($currentStep == 1)
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tenant Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                <input type="text" wire:model.live="tenant_name" class="form-control"
+                                    placeholder="Name">
+                            </div>
+                            @error('tenant_name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                            <br>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Domain Name</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">https://</span>
+                                    <input type="text" wire:model="tenant_domain" class="form-control"
+                                        placeholder= 'domain.com' readonly>
+
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Domain Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text">https://</span>
+                                <input type="text" class="form-control" placeholder="domain.com">
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="modal-footer d-flex justify-content-between">
+                    @if ($currentStep == 1)
+                        <div></div>
+                        <button type="button" class="btn btn-primary" wire:click="setStep(2)">Next Step</button>
+                    @else
+                        <button type="button" class="btn btn-light" wire:click="setStep(1)">Back</button>
+                        <button type="submit" class="btn btn-success">Save Tenant</button>
+                    @endif
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+    <script>
+        // عشان لو عملت Submit المودال يقفل لوحده
+        window.addEventListener('close-modal', event => {
+            var myModal = bootstrap.Modal.getInstance(document.getElementById('addTenantModal'));
+            myModal.hide();
+        });
+
+
+        window.addEventListener('open-modal', event => {
+            var myModal = new bootstrap.Modal(document.getElementById('addTenantModal'));
+            document.querySelector('#addTenantModal input').focus();
+            myModal.show();
+        });
+        // close when click outside modal
+        document.getElementById('addTenantModal').addEventListener('click', function(
+            event) {
+            if (event.target === this) {
+                var myModal = bootstrap.Modal.getInstance(document.getElementById('addTenantModal'));
+                myModal.hide();
+            }
+        });
+    </script>
+@endpush
