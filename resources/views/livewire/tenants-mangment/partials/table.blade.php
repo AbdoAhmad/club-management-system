@@ -1,18 +1,31 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <div class="card-header">
-                <h3 class="card-title">Bordered Table</h3>
+            <div class="card-header border-0 pt-6 d-flex align-items-center justify-content-between pe-6">
+                <div class="card-title">
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <i class="bi bi-search position-absolute ms-3 fs-6"></i>
+                        <input type="text" wire:model.live="search" class="form-control ps-10"
+                            placeholder="Search Tenant" style="width: 250px; padding-left: 40px;">
+                    </div>
+                </div>
+
+                <div class="card-toolbar ms-auto">
+                        <button type="button" class="btn btn-primary" wire:click="openCreateModal">
+                            <i class="bi bi-plus me-1 fs-6"></i> Add Tenant
+                        </button>
+                </div>
             </div>
-            <!-- /.card-header -->
+
             <div class="card-body">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Task</th>
-                            <th>Progress</th>
-                            <th style="width: 40px">Label</th>
+                            <th style="width: 10px">No.</th>
+                            <th>Tenant Name</th>
+                            <th>Domain Name</th>
+                            <th style="width: 40px">Status</th>
+                            <th style="width: 40px">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,41 +38,15 @@
                                 </div>
                             </td>
                             <td><span class="badge text-bg-danger">55%</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                            <td>2.</td>
-                            <td>Clean database</td>
-                            <td>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar text-bg-warning" style="width: 70%"></div>
+                            <td style="width: 100px;">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </div>
-                            </td>
-                            <td>
-                                <span class="badge text-bg-warning">70%</span>
-                            </td>
-                        </tr>
-                        <tr class="align-middle">
-                            <td>3.</td>
-                            <td>Cron job running</td>
-                            <td>
-                                <div class="progress progress-xs progress-striped active">
-                                    <div class="progress-bar text-bg-primary" style="width: 30%"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="badge text-bg-primary">30%</span>
-                            </td>
-                        </tr>
-                        <tr class="align-middle">
-                            <td>4.</td>
-                            <td>Fix and squish bugs</td>
-                            <td>
-                                <div class="progress progress-xs progress-striped active">
-                                    <div class="progress-bar text-bg-success" style="width: 90%"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="badge text-bg-success">90%</span>
                             </td>
                         </tr>
                     </tbody>
