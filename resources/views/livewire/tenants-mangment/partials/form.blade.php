@@ -74,10 +74,10 @@
                             <div class="input-group">
                                 <span class="input-group-text">@</span>
                                 <input wire:model="tenant_manger_email" type="email" class="form-control" placeholder="tenant@exmple.com">
-                                @error('tenant_manger_email')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
+                            @error('tenant_manger_email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -85,10 +85,10 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
                                 <input wire:model="tenant_manger_password" type="password" class="form-control" placeholder="********">
-                                @error('tenant_manger_password')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
+                            @error('tenant_manger_password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     @endif
                 </div>
