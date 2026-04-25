@@ -134,12 +134,13 @@ class TenantsMangment extends Component
 
     public function openTenantModal(Tenant $tenant)
     {
-        if (! $tenant) {
+        if (! $tenant->exists) {
             $this->reset(['tenant_name', 'tenant_domain', 'tenant_status', 'currentStep', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password']);
             $this->dispatch('open-modal');
 
             return;
         }
+        $this->editingTenant = $tenant;
         $this->isEditMode = true;
         $this->tenant_name = $tenant->id;
         $this->tenant_manger_email = $tenant->manager_email ?? '';
@@ -148,8 +149,8 @@ class TenantsMangment extends Component
         $this->tenant_status = $tenant->status === 'active';
         tenancy()->initialize($this->editingTenant);
         $user = User::where('email', $this->tenant_manger_email)->first();
-        $this->tenant_manger_name_ar = $user->getTranslations('name', 'ar') ?? '';
-        $this->tenant_manger_name_en == $user->getTranslations('name', 'en') ?? '';
+        $this->tenant_manger_name_ar = $user->getTranslation('name', 'ar') ?? '';
+        $this->tenant_manger_name_en = $user->getTranslation('name', 'en') ?? '';
 
         tenancy()->end();
 
