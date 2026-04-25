@@ -58,8 +58,12 @@
 
                     </tbody>
                 </table>
-                <div class="mt-4 pt-3 border-top d-flex justify-content-end">
-                    {{ $tenants->links('pagination::bootstrap-5') }}
+                <div class="mt-4 pt-3 border-top">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <div class="text-muted small">
+                            {{ $tenants->withPath(route('tenant'))->links('pagination::bootstrap-5') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

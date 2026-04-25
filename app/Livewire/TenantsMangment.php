@@ -1,18 +1,21 @@
 <?php
-
 namespace App\Livewire;
 
 use App\Models\Tenant;
 use App\Models\User;
-use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TenantsMangment extends Component
 {
-    public $paginationTheme = 'bootstrap';
-    public $currentStep = 1; // متغير لحفظ الخطوة الحالية
+    use WithPagination;
 
-    public  $editingTenantId;
+    public $paginationTheme = 'bootstrap';
+    public $currentStep     = 1; // متغير لحفظ الخطوة الحالية
+    public $search          = '';
+    protected $queryString  = ['search' => ['except' => '']];
+
+    public $editingTenantId;
 
     public $tenant_name;
 
@@ -24,23 +27,21 @@ class TenantsMangment extends Component
 
     public $tenant_manger_email;
 
-    public $tenant_status= false;
+    public $tenant_status = false;
 
     public $tenant_manger_password;
 
     protected function rules()
-{
-    return [
-        'tenant_name' => 'required|min:2|regex:/^[a-zA-Z0-9\s]+$/|unique:tenants,id,' . ($this->editingTenantId ?? 'NULL'),
-        'tenant_manger_name_ar' => 'required|min:3',
-        'tenant_manger_name_en' => 'required|min:3',
-        'tenant_manger_email' => 'required|email|unique:tenants,manager_email,' . ($this->editingTenantId ?? 'NULL'),
-        'tenant_status' => 'required',
-         'tenant_manger_password' => $this->editingTenantId ? 'nullable|min:6' : 'required|min:6',
-    ];
-}
-
- 
+    {
+        return [
+            'tenant_name'            => 'required|min:2|regex:/^[a-zA-Z0-9\s]+$/|unique:tenants,id,' . ($this->editingTenantId ?? 'NULL'),
+            'tenant_manger_name_ar'  => 'required|min:3',
+            'tenant_manger_name_en'  => 'required|min:3',
+            'tenant_manger_email'    => 'required|email|unique:tenants,manager_email,' . ($this->editingTenantId ?? 'NULL'),
+            'tenant_status'          => 'required',
+            'tenant_manger_password' => $this->editingTenantId ? 'nullable|min:6' : 'required|min:6',
+        ];
+    }
 
     public function toggleTenantStatus(Tenant $tenant)
     {
@@ -59,7 +60,7 @@ class TenantsMangment extends Component
             'id' => $this->tenant_name ?? null,
         ], [
             'manager_email' => $this->tenant_manger_email,
-            'status' => $statusValue,
+            'status'        => $statusValue,
         ]);
         $tenant->domains()->updateOrCreate([
             'domain' => $this->tenant_domain,
@@ -68,18 +69,18 @@ class TenantsMangment extends Component
         User::updateOrCreate([
             'email' => $this->tenant_manger_email,
         ], [
-            'name' => [
+            'name'     => [
                 'en' => $this->tenant_manger_name_en,
                 'ar' => $this->tenant_manger_name_ar,
             ],
-            'email' => $this->tenant_manger_email,
+            'email'    => $this->tenant_manger_email,
             'password' => bcrypt($this->tenant_manger_password),
         ]);
         tenancy()->end();
         $this->reset(['tenant_name', 'tenant_domain', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password']);
         $this->reset('currentStep');
         $this->dispatch('close-modal');
-        if (!$this->editingTenantId) {
+        if (! $this->editingTenantId) {
             session()->flash('success', __('Tenant updated successfully!'));
             $this->reset('editingTenantId');
 
@@ -93,15 +94,20 @@ class TenantsMangment extends Component
     {
         $this->reset(['tenant_name', 'tenant_domain', 'tenant_status', 'currentStep', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password', 'editingTenantId']);
     }
-    public function openTenantModal(Tenant $tenant)
+
+    public function updatingSearch()
     {
-        if (! $tenant->exists) {
+        $this->resetPage();
+    }
+    public function openTenantModal(?Tenant $tenant = null)
+    {
+        if (! $tenant || ! $tenant->exists) {
             $this->resetTenantForm();
             $this->dispatch('open-modal');
             return;
         }
-        $this->editingTenantId = $tenant->id;
-        $this->tenant_name = $tenant->id;
+        $this->editingTenantId     = $tenant->id;
+        $this->tenant_name         = $tenant->id;
         $this->tenant_manger_email = $tenant->manager_email ?? '';
 
         $this->currentStep = 2;
@@ -109,7 +115,7 @@ class TenantsMangment extends Component
         $this->tenant_domain = $tenant->domains()->first()->domain ?? '';
         $this->tenant_status = $tenant->status === 'active';
         tenancy()->initialize($tenant);
-        $user = User::where('email', $this->tenant_manger_email)->first();
+        $user                        = User::where('email', $this->tenant_manger_email)->first();
         $this->tenant_manger_name_ar = $user->getTranslation('name', 'ar') ?? '';
         $this->tenant_manger_name_en = $user->getTranslation('name', 'en') ?? '';
 
@@ -138,7 +144,7 @@ class TenantsMangment extends Component
         }
         $this->tenant_domain = '.localhost';
 
-        $this->tenant_domain = strtolower(str_replace(' ', '-', $this->tenant_name)).$this->tenant_domain;
+        $this->tenant_domain = strtolower(str_replace(' ', '-', $this->tenant_name)) . $this->tenant_domain;
 
     }
 
@@ -150,9 +156,17 @@ class TenantsMangment extends Component
 
     public function render()
     {
+        $query = Tenant::query();
+
+        if ($this->search) {
+            $query->where('id', 'like', '%' . $this->search . '%')
+                ->orWhereHas('domains', function ($q) {
+                    $q->where('domain', 'like', '%' . $this->search . '%');
+                });
+        }
 
         return view('livewire.tenants-mangment.main', [
-            'tenants' => Tenant::paginate(3),
+            'tenants' => $query->paginate(3),
         ]);
     }
 }
