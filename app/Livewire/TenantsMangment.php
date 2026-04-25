@@ -138,9 +138,11 @@ class TenantsMangment extends Component
         $this->currentStep = $step;
     }
 
-    public function restoreTenant(Tenant $tenant)
+    public function restoreTenant($id)
     {
+        $tenant = Tenant::withTrashed()->findOrFail($id);
         $tenant->restore();
+        $this->resetPage();
         session()->flash('success', __('Tenant restored successfully!'));
     }
 
@@ -157,16 +159,25 @@ class TenantsMangment extends Component
 
     }
 
-    public function archiveTenant(Tenant $tenant)
+    public function archiveTenant($id)
     {
+        $tenant = Tenant::findOrFail($id);
         $tenant->delete();
         session()->flash('success', __('Tenant archived successfully!'));
     }
 
-    public function deleteTenant(Tenant $tenant)
+    public function deleteTenant($id)
     {
+        $tenant = Tenant::withTrashed()->findOrFail($id);
         $tenant->forceDelete();
         session()->flash('success', __('Tenant deleted successfully!'));
+    }
+
+    public function forceDeleteTenant($id)
+    {
+        $tenant = Tenant::withTrashed()->findOrFail($id);
+        $tenant->forceDelete();
+        session()->flash('success', __('Tenant permanently deleted successfully!'));
     }
 
     public function updatingSearch()

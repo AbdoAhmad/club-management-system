@@ -74,7 +74,7 @@
                                     @endif
                                 </td>
                                 <td style="width: 100px;">
-                                    @if ($tenant->deleted_at)
+                                    @if ($trashed)
                                         <div class="d-flex justify-content-center gap-2">
                                             <button class="btn btn-outline-success btn-sm"
                                                 wire:confirm="{{ __('Are you sure you want to restore this tenant?') }}"
@@ -83,7 +83,7 @@
 
                                             <button class="btn btn-outline-danger btn-sm"
                                                 wire:confirm="{{ __('Are you sure you want to permanently delete this tenant?') }}"
-                                                wire:click="forceDeleteTenant('{{ $tenant->id }}')"><i
+                                                wire:click="deleteTenant('{{ $tenant->id }}')"><i
                                                     class="bi bi-x-lg"></i></button>
                                         </div>
                                     @else

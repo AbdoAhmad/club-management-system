@@ -25,6 +25,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'id',
             'manager_email',
             'status',
+            'deleted_at',
             // ضيف اسم العمود هنا بدقة
         ];
     }
