@@ -25,11 +25,20 @@ class TenantsMangment extends Component
     #[Rule('required|email|unique:tenants,manager_email')]
     public $tenant_manger_email;
 
-    #[Rule('required|in:active,inactive')]
+    #[Rule('required')]
     public $tenant_status;
 
     #[Rule('required|min:8')]
     public $tenant_manger_password;
+
+
+    public function toggleTenantStatus($tenantId)
+    {
+        $tenant = Tenant::find($tenantId);
+        $tenant->status = $tenant->status == 'active' ? 'inactive' : 'active';
+        $tenant->save();
+        session()->flash('success', __('Tenant :tenant status updated to :status successfully!',  [ 'tenant' => $tenant->id, 'status' => $tenant->status]));        
+    }   
 
     public function save()
     {

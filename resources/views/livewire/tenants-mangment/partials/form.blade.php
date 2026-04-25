@@ -52,6 +52,9 @@
                                 <label class="form-check-label fw-bold"
                                     for="tenantStatusSwitch">{{ $tenant_status ? __('Active') : __('Inactive') }}</label>
                             </div>
+                            @error('tenant_status')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
 
                         </div>
                     @else

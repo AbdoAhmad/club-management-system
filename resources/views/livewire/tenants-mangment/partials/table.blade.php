@@ -36,11 +36,12 @@
                                 <td>{{ $tenant->id }}</td>
                                 <td>{{ $tenant->domains()->first()->domain }}</td>
                                 <td>
-                                    <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="toggleStatus"
+                                            wire:click="toggleTenantStatus({{ $tenant->id }})"
+                                            {{ $tenant->status == 'active' ? 'checked' : '' }}>
                                     </div>
                                 </td>
-                                <td><span class="badge text-bg-danger">55%</span></td>
                                 <td style="width: 100px;">
                                     <div class="d-flex justify-content-center gap-2">
                                         <button class="btn btn-outline-primary btn-sm"><i

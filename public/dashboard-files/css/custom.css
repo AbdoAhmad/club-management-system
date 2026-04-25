@@ -263,6 +263,27 @@ h1, h2, h3, h4, h5, h6, .card-title {
   color: #fff !important;
 }
 
+/* Form Switch (Toggle) - Gold Theme */
+.form-check-input[type="checkbox"] {
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-check-input[type="checkbox"]:checked {
+  background-color: var(--prem-primary) !important;
+  border-color: var(--prem-primary) !important;
+}
+.form-check-input[type="checkbox"]:focus {
+  border-color: var(--prem-primary) !important;
+  box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25) !important;
+}
+.form-check-input[type="checkbox"]:not(:checked) {
+  background-color: transparent !important;
+  border-color: var(--prem-border) !important;
+}
+.form-switch .form-check-input:checked {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
+}
+
 /* ApexCharts specific fixes */
 .apexcharts-canvas { filter: none; }
 .apexcharts-tooltip {
