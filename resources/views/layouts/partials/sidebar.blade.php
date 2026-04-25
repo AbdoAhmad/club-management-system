@@ -21,16 +21,16 @@
             <!--begin::Sidebar Menu-->
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
                 aria-label="Main navigation" data-accordion="false" id="navigation">
-                <li class="nav-item menu-open">
-                    <a href="{{ route('home') }}" class="nav-link active">
+                <li class="nav-item {{ request()->routeIs('home') ? 'menu-open' : '' }}">
+                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('tenant') }}" class="nav-link">
+                <li class="nav-item {{ request()->routeIs('tenant') ? 'menu-open' : '' }}">
+                    <a href="{{ route('tenant') }}" class="nav-link {{ request()->routeIs('tenant') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-people"></i>
                         <p>
                             Tenants
