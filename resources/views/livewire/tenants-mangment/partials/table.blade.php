@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="card-toolbar ms-auto">
-                    <button type="button" wire:click="openAddTenantModal" class="btn btn-primary"
+                    <button type="button"  wire:click="openTenantModal" class="btn btn-primary"
                         data-bs-toggle="modal">
                         <i class="bi bi-plus me-1 fs-6"></i> {{ __('Add Tenant') }}
                     </button>
@@ -44,8 +44,9 @@
                                 </td>
                                 <td style="width: 100px;">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <button class="btn btn-outline-primary btn-sm"><i
-                                                class="bi bi-pencil"></i></button>
+                                        <button type ="button" class="btn btn-outline-primary btn-sm" wire:click="openTenantModal('{{ $tenant->id }}')">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
                                         <button class="btn btn-outline-danger btn-sm"><i
                                                 class="bi bi-trash"></i></button>
                                     </div>
