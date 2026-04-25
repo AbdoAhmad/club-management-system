@@ -11,27 +11,35 @@ class TenantsMangment extends Component
 {
     public $currentStep = 1; // متغير لحفظ الخطوة الحالية
 
-    public Tenant $tenant;
+    public  $editingTenantId;
 
-    #[Rule('required|min:2|unique:tenants,id|regex:/^[a-zA-Z0-9\s]+$/')]
     public $tenant_name;
 
     public $tenant_domain;
 
-    #[Rule('required|min:3')]
     public $tenant_manger_name_ar;
 
-    #[Rule('required|min:3')]
     public $tenant_manger_name_en;
 
-    #[Rule('required|email|unique:tenants,manager_email')]
     public $tenant_manger_email;
 
-    #[Rule('required')]
-    public $tenant_status;
+    public $tenant_status= false;
 
-    #[Rule('required|min:8')]
     public $tenant_manger_password;
+
+    protected function rules()
+{
+    return [
+        'tenant_name' => 'required|min:2|regex:/^[a-zA-Z0-9\s]+$/|unique:tenants,id,' . ($this->editingTenantId ?? 'NULL'),
+        'tenant_manger_name_ar' => 'required|min:3',
+        'tenant_manger_name_en' => 'required|min:3',
+        'tenant_manger_email' => 'required|email|unique:tenants,manager_email,' . ($this->editingTenantId ?? 'NULL'),
+        'tenant_status' => 'required',
+         'tenant_manger_password' => $this->editingTenantId ? 'nullable|min:6' : 'required|min:6',
+    ];
+}
+
+ 
 
     public function toggleTenantStatus(Tenant $tenant)
     {
@@ -47,7 +55,7 @@ class TenantsMangment extends Component
         $this->validate();
 
         $tenant = Tenant::updateorCreate([
-            'id' => $this->editingTenant->id ?? null,
+            'id' => $this->tenant_name ?? null,
         ], [
             'manager_email' => $this->tenant_manger_email,
             'status' => $statusValue,
@@ -70,84 +78,36 @@ class TenantsMangment extends Component
         $this->reset(['tenant_name', 'tenant_domain', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password']);
         $this->reset('currentStep');
         $this->dispatch('close-modal');
-        session()->flash('success', __('Tenant created successfully!'));
-
-        // if ($this->editingTenant->exists) {
-        //     $this->editingTenant->update([
-        //         'manager_email' => $this->tenant_manger_email,
-        //         'status' => $this->tenant_status ? 'active' : 'inactive',
-        //     ]);
-        //     tenancy()->initialize($this->editingTenant);
-        //     $user = User::where('email', $this->tenant_manger_email)->first();
-        //     if ($user) {
-        //         $user->update([
-        //             'name' => [
-        //                 'en' => $this->tenant_manger_name_en,
-        //                 'ar' => $this->tenant_manger_name_ar,
-        //             ],
-        //             'email' => $this->tenant_manger_email,
-        //             'password' => bcrypt($this->tenant_manger_password),
-        //         ]);
-        //     }
-
-        //     tenancy()->end();
-
-        //     session()->flash('success', __('Tenant updated successfully!'));
-        //     $this->reset('editingTenant');
-        //     $this->dispatch('close-modal');
-
-        //     return;
-        // }
-
-        // $tenant->domains()->create([
-        //     'domain' => $this->tenant_domain,
-        // ]);
-
-        // $tenant->run(function () {
-        //     User::create([
-        //         'name' => [
-        //             'en' => $this->tenant_manger_name_en,
-        //             'ar' => $this->tenant_manger_name_ar,
-        //         ],
-        //         'email' => $this->tenant_manger_email,
-        //         'password' => bcrypt($this->tenant_manger_password),
-        //     ]);
-        // });
-        // tenancy()->initialize($tenant);
-
-        // User::create([
-        //     'name' => [
-        //         'en' => $this->tenant_manger_name_en,
-        //         'ar' => $this->tenant_manger_name_ar,
-        //     ],
-        //     'email' => $this->tenant_manger_email,
-        //     'password' => bcrypt($this->tenant_manger_password),
-        // ]);
-        // tenancy()->end();
-
-        // $this->reset(['tenant_name', 'tenant_domain', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password']);
-        // $this->reset('currentStep');
-        // $this->dispatch('close-modal');
-        // session()->flash('success', __('Tenant created successfully!'));
-
-    }
-
-    public function openTenantModal(Tenant $tenant)
-    {
-        if (! $tenant->exists) {
-            $this->reset(['tenant_name', 'tenant_domain', 'tenant_status', 'currentStep', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password']);
-            $this->dispatch('open-modal');
+        if (!$this->editingTenantId) {
+            session()->flash('success', __('Tenant updated successfully!'));
+            $this->reset('editingTenantId');
 
             return;
         }
-        $this->editingTenant = $tenant;
-        $this->isEditMode = true;
+        session()->flash('success', __('Tenant created successfully!'));
+
+    }
+
+    public function resetTenantForm()
+    {
+        $this->reset(['tenant_name', 'tenant_domain', 'tenant_status', 'currentStep', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password', 'editingTenantId']);
+    }
+    public function openTenantModal(Tenant $tenant)
+    {
+        if (! $tenant->exists) {
+            $this->resetTenantForm();
+            $this->dispatch('open-modal');
+            return;
+        }
+        $this->editingTenantId = $tenant->id;
         $this->tenant_name = $tenant->id;
         $this->tenant_manger_email = $tenant->manager_email ?? '';
 
+        $this->currentStep = 2;
+
         $this->tenant_domain = $tenant->domains()->first()->domain ?? '';
         $this->tenant_status = $tenant->status === 'active';
-        tenancy()->initialize($this->editingTenant);
+        tenancy()->initialize($tenant);
         $user = User::where('email', $this->tenant_manger_email)->first();
         $this->tenant_manger_name_ar = $user->getTranslation('name', 'ar') ?? '';
         $this->tenant_manger_name_en = $user->getTranslation('name', 'en') ?? '';

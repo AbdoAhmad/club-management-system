@@ -11,6 +11,11 @@
             <form wire:submit.prevent="save">
                 <div class="modal-body">
                     <div class="d-flex justify-content-around mb-4 text-center">
+                        @if($editingTenantId)
+                            <div class="flex-fill pb-2 text-warning fw-bold border-bottom border-warning border-2">
+                                {{ __('Edit Tenant Admin Credentials') }}
+                            </div>
+                        @else
                         <div
                             class="flex-fill pb-2 {{ $currentStep == 1 ? 'text-warning fw-bold border-bottom border-warning border-2' : 'text-muted' }}">
                             1. {{ __('Tenant Credentials') }}
@@ -19,8 +24,9 @@
                             class="flex-fill pb-2 {{ $currentStep == 2 ? 'text-warning fw-bold border-bottom border-warning border-2' : 'text-muted' }}">
                             2. {{ __('Tenant Admin Credentials') }}
                         </div>
+                        @endif
                     </div>
-
+                
                     @if ($currentStep == 1)
                         <div class="mb-3">
                             <label class="form-label fw-bold">{{ __('Tenant Name') }}</label>
