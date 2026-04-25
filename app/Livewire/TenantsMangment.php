@@ -22,23 +22,31 @@ class TenantsMangment extends Component
     #[Rule('required|min:3')]
     public $tenant_manger_name_en;
 
-    #[Rule('required|email')]
+    #[Rule('required|email|unique:tenants,manager_email')]
     public $tenant_manger_email;
+
+    #[Rule('required|in:active,inactive')]
+    public $tenant_status;
 
     #[Rule('required|min:8')]
     public $tenant_manger_password;
 
     public function save()
     {
+
+        $statusValue = $this->tenant_status ? 'active' : 'inactive';
         $this->validate();
 
         $tenant = Tenant::create([
             'id' => $this->tenant_name,
+            'manager_email' => $this->tenant_manger_email,
+            'status' => $statusValue,
         ]);
 
         $tenant->domains()->create([
             'domain' => $this->tenant_domain,
         ]);
+
         // $tenant->run(function () {
         //     User::create([
         //         'name' => [
@@ -49,7 +57,7 @@ class TenantsMangment extends Component
         //         'password' => bcrypt($this->tenant_manger_password),
         //     ]);
         // });
-        tenancy()->initialize($tenant->id);
+        tenancy()->initialize($tenant);
 
         User::create([
             'name' => [
@@ -60,14 +68,17 @@ class TenantsMangment extends Component
             'password' => bcrypt($this->tenant_manger_password),
         ]);
         tenancy()->end();
+
         $this->reset(['tenant_name', 'tenant_domain', 'tenant_manger_name_ar', 'tenant_manger_name_en', 'tenant_manger_email', 'tenant_manger_password']);
         $this->reset('currentStep');
         $this->dispatch('close-modal');
+        session()->flash('success', __('Tenant created successfully!'));
+
     }
 
     public function openAddTenantModal()
     {
-        $this->reset(['tenant_name', 'tenant_domain', 'currentStep']);
+        $this->reset(['tenant_name', 'tenant_domain', 'tenant_status', 'currentStep']);
         $this->dispatch('open-modal');
 
     }
@@ -97,6 +108,8 @@ class TenantsMangment extends Component
     public function render()
     {
 
-        return view('livewire.tenants-mangment.main');
+        return view('livewire.tenants-mangment.main', [
+            'tenants' => Tenant::all(),
+        ]);
     }
 }

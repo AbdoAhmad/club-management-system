@@ -21,6 +21,8 @@ class TenantFactory extends Factory
     {
         return [
             'id' => $this->faker->unique()->word(),
+            'manager_email' => $this->faker->unique()->safeEmail(),
+            'status' => $this->faker->randomElement(['active', 'inactive']),
         ];
     }
 
@@ -38,7 +40,7 @@ class TenantFactory extends Factory
             tenancy()->initialize($tenant->id);
             User::factory()->create([
                 'name' => 'Test Admin',
-                'email' => 'test@example.com',
+                'email' => $tenant->manager_email,
             ]);
             tenancy()->end();
 

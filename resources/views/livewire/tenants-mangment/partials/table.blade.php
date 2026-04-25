@@ -30,22 +30,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="align-middle">
-                            <td>1.</td>
-                            <td>Update software</td>
-                            <td>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                </div>
-                            </td>
-                            <td><span class="badge text-bg-danger">55%</span></td>
-                            <td style="width: 100px;">
-                                <div class="d-flex justify-content-center gap-2">
-                                    <button class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></button>
-                                    <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach ($tenants as $tenant)
+                            <tr class="align-middle">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $tenant->id }}</td>
+                                <td>{{ $tenant->domains()->first()->domain }}</td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                    </div>
+                                </td>
+                                <td><span class="badge text-bg-danger">55%</span></td>
+                                <td style="width: 100px;">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-outline-primary btn-sm"><i
+                                                class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-outline-danger btn-sm"><i
+                                                class="bi bi-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>
