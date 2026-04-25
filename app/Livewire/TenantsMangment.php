@@ -138,6 +138,12 @@ class TenantsMangment extends Component
         $this->currentStep = $step;
     }
 
+    public function restoreTenant(Tenant $tenant)
+    {
+        $tenant->restore();
+        session()->flash('success', __('Tenant restored successfully!'));
+    }
+
     public function updatedTenantName()
     {
 

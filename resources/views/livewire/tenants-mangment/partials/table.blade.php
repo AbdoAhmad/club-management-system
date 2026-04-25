@@ -60,21 +60,38 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $tenant->id }}</td>
                                 <td>{{ $tenant->domains()->first()->domain }}</td>
+                                </td>
                                 <td>
+                                    @if ($tenant->deleted_at)
+                                        <span class="badge bg-danger">{{ __('Archived') }}</span>
+                                    @else
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox"
                                             id="toggleStatus-{{ $tenant->id }}"
                                             wire:click="toggleTenantStatus('{{ $tenant->id }}')"
                                             {{ $tenant->status === 'active' ? 'checked' : '' }}>
                                     </div>
+                                    @endif
                                 </td>
                                 <td style="width: 100px;">
+                                    @if ($tenant->deleted_at)
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <button class="btn btn-outline-success btn-sm"
+                                                wire:confirm="{{ __('Are you sure you want to restore this tenant?') }}"
+                                                wire:click="restoreTenant('{{ $tenant->id }}')"><i
+                                                    class="bi bi-arrow-clockwise"></i></button>
+
+                                            <button class="btn btn-outline-danger btn-sm"
+                                                wire:confirm="{{ __('Are you sure you want to permanently delete this tenant?') }}"
+                                                wire:click="forceDeleteTenant('{{ $tenant->id }}')"><i
+                                                    class="bi bi-x-lg"></i></button>
+                                        </div>
+                                    @else
                                     <div class="d-flex justify-content-center gap-2">
                                         <button type ="button" class="btn btn-outline-primary btn-sm"
                                             wire:click="openTenantModal('{{ $tenant->id }}')">
                                             <i class="bi bi-pencil"></i>
                                         </button>
-
                                         <button class="btn btn-outline-warning btn-sm"
                                             wire:confirm="{{ __('Are you sure you want to archive this tenant?') }}"
                                             wire:click="archiveTenant('{{ $tenant->id }}')"><i
@@ -86,6 +103,7 @@
                                                 class="bi bi-trash"></i>
                                         </button>
                                     </div>
+                                    @endif
                                 </td>
 
                             </tr>
