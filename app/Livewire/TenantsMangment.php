@@ -34,11 +34,11 @@ class TenantsMangment extends Component
 
     public function toggleTenantStatus($tenantId)
     {
-        $tenant = Tenant::find($tenantId);
-        $tenant->status = $tenant->status == 'active' ? 'inactive' : 'active';
+        $tenant = Tenant::findOrFail($tenantId);
+        $tenant->status = $tenant->status === 'active' ? 'inactive' : 'active';
         $tenant->save();
-        session()->flash('success', __('Tenant :tenant status updated to :status successfully!',  [ 'tenant' => $tenant->id, 'status' => $tenant->status]));        
-    }   
+        session()->flash('success', __('Tenant :tenant status updated to :status successfully!', ['tenant' => $tenant->id, 'status' => $tenant->status]));
+    }
 
     public function save()
     {

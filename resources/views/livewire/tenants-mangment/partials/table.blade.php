@@ -37,9 +37,9 @@
                                 <td>{{ $tenant->domains()->first()->domain }}</td>
                                 <td>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="toggleStatus"
-                                            wire:click="toggleTenantStatus({{ $tenant->id }})"
-                                            {{ $tenant->status == 'active' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="checkbox" id="toggleStatus-{{ $tenant->id }}"
+                                            wire:click="toggleTenantStatus('{{ $tenant->id }}')"
+                                            {{ $tenant->status === 'active' ? 'checked' : '' }}>
                                     </div>
                                 </td>
                                 <td style="width: 100px;">
