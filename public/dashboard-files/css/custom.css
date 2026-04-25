@@ -170,6 +170,10 @@ h1, h2, h3, h4, h5, h6, .card-title {
   border-color: var(--prem-primary) !important;
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.3) !important;
 }
+.form-select option {
+  background-color: var(--prem-surface) !important;
+  color: var(--prem-secondary) !important;
+}
 
 /* Buttons */
 .btn {

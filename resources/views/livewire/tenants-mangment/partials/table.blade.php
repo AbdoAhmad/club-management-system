@@ -12,8 +12,9 @@
 
                 <div class="card-toolbar ms-auto d-flex align-items-center gap-3">
                     {{-- filter by status --}}
-                    <div class="position-relative">
-                        <select wire:model.live="statusFilter" class="form-select">
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <i class="bi bi-funnel position-absolute ms-3 fs-6 text-muted"></i>
+                        <select wire:model.live="statusFilter" class="form-select cursor-pointer ps-10" style="width: 160px; padding-inline-start: 40px;">
                             <option value="">{{ __('All Status') }}</option>
                             <option value="active">{{ __('Active') }}</option>
                             <option value="inactive">{{ __('Inactive') }}</option>
@@ -49,6 +50,7 @@
                             <th style="width: 10px">#</th>
                             <th>{{ __('Tenant Name') }}</th>
                             <th>{{ __('Domain Name') }}</th>
+                            <th>{{ __('Manager Email') }}</th>
                             <th style="width: 40px">{{ __('Status') }}</th>
                             <th style="width: 40px">{{ __('Actions') }}</th>
                         </tr>
@@ -60,6 +62,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $tenant->id }}</td>
                                 <td>{{ $tenant->domains()->first()->domain }}</td>
+                                <td>
+                                    {{ $tenant->manager_email }}
                                 </td>
                                 <td>
                                     @if ($tenant->deleted_at)
@@ -73,6 +77,7 @@
                                     </div>
                                     @endif
                                 </td>
+
                                 <td style="width: 100px;">
                                     @if ($trashed)
                                         <div class="d-flex justify-content-center gap-2">
