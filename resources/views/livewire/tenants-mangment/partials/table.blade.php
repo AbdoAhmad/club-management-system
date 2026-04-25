@@ -10,10 +10,34 @@
                     </div>
                 </div>
 
-                <div class="card-toolbar ms-auto">
-                    <button type="button"  wire:click="openTenantModal" class="btn btn-primary"
-                        data-bs-toggle="modal">
-                        <i class="bi bi-plus me-1 fs-6"></i> {{ __('Add Tenant') }}
+                <div class="card-toolbar ms-auto d-flex align-items-center gap-3">
+                    {{-- filter by status --}}
+                    <div class="position-relative">
+                        <select wire:model.live="statusFilter" class="form-select">
+                            <option value="">{{ __('All Status') }}</option>
+                            <option value="active">{{ __('Active') }}</option>
+                            <option value="inactive">{{ __('Inactive') }}</option>
+                        </select>
+                    </div>
+                    <div class="position-relative">
+                        <label for="toggleTrashed"
+                            class="btn {{ $trashed ? 'btn-light-danger' : 'btn-light-secondary' }} d-flex align-items-center gap-2 cursor-pointer transition-all">
+                            <input type="checkbox" id="toggleTrashed" wire:model.live="trashed" class="d-none">
+
+                            @if ($trashed)
+                                <i class="bi bi-collection-fill fs-6"></i>
+                                <span>{{ __('Show All') }}</span>
+                            @else
+                                <i class="bi bi-archive fs-6"></i>
+                                <span>{{ __('Archived') }}</span>
+                            @endif
+                        </label>
+                    </div>
+
+                    <button type="button" wire:click="openTenantModal"
+                        class="btn btn-primary d-flex align-items-center shadow-sm">
+                        <i class="bi bi-plus-lg me-2 fs-6"></i>
+                        <span>{{ __('Add Tenant') }}</span>
                     </button>
                 </div>
             </div>
@@ -30,6 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($tenants as $tenant)
                             <tr class="align-middle">
                                 <td>{{ $loop->iteration }}</td>
@@ -37,22 +62,32 @@
                                 <td>{{ $tenant->domains()->first()->domain }}</td>
                                 <td>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="toggleStatus-{{ $tenant->id }}"
+                                        <input class="form-check-input" type="checkbox"
+                                            id="toggleStatus-{{ $tenant->id }}"
                                             wire:click="toggleTenantStatus('{{ $tenant->id }}')"
                                             {{ $tenant->status === 'active' ? 'checked' : '' }}>
                                     </div>
                                 </td>
                                 <td style="width: 100px;">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <button type ="button" class="btn btn-outline-primary btn-sm" wire:click="openTenantModal('{{ $tenant->id }}')">
+                                        <button type ="button" class="btn btn-outline-primary btn-sm"
+                                            wire:click="openTenantModal('{{ $tenant->id }}')">
                                             <i class="bi bi-pencil"></i>
                                         </button>
+
+                                        <button class="btn btn-outline-warning btn-sm"
+                                            wire:confirm="{{ __('Are you sure you want to archive this tenant?') }}"
+                                            wire:click="archiveTenant('{{ $tenant->id }}')"><i
+                                                class="bi bi-archive"></i></button>
+
                                         <button class="btn btn-outline-danger btn-sm"
-                                         wire:confirm="{{ __('Are you sure you want to delete this tenant?') }}"
-                                         wire:click="deleteTenant('{{ $tenant->id }}')"><i
-                                                class="bi bi-trash"></i></button>
+                                            wire:confirm="{{ __('Are you sure you want to delete this tenant?') }}"
+                                            wire:click="deleteTenant('{{ $tenant->id }}')"><i
+                                                class="bi bi-trash"></i>
+                                        </button>
                                     </div>
                                 </td>
+
                             </tr>
                         @endforeach
 
@@ -61,7 +96,7 @@
                 <div class="mt-4 pt-3 border-top">
                     <div class="d-flex align-items-center justify-content-end">
                         <div class="text-muted small">
-                            {{ $tenants->withPath(route('tenant'))->links('pagination::bootstrap-5') }}
+                            {{ $tenants->links() }}
                         </div>
                     </div>
                 </div>
