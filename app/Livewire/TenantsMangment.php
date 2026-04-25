@@ -9,6 +9,7 @@ use Livewire\Component;
 
 class TenantsMangment extends Component
 {
+    public $paginationTheme = 'bootstrap';
     public $currentStep = 1; // متغير لحفظ الخطوة الحالية
 
     public  $editingTenantId;
@@ -141,11 +142,17 @@ class TenantsMangment extends Component
 
     }
 
+    public function deleteTenant(Tenant $tenant)
+    {
+        $tenant->delete();
+        session()->flash('success', __('Tenant deleted successfully!'));
+    }
+
     public function render()
     {
 
         return view('livewire.tenants-mangment.main', [
-            'tenants' => Tenant::all(),
+            'tenants' => Tenant::paginate(3),
         ]);
     }
 }

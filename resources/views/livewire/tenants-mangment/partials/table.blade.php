@@ -47,7 +47,9 @@
                                         <button type ="button" class="btn btn-outline-primary btn-sm" wire:click="openTenantModal('{{ $tenant->id }}')">
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        <button class="btn btn-outline-danger btn-sm"><i
+                                        <button class="btn btn-outline-danger btn-sm"
+                                         wire:confirm="{{ __('Are you sure you want to delete this tenant?') }}"
+                                         wire:click="deleteTenant('{{ $tenant->id }}')"><i
                                                 class="bi bi-trash"></i></button>
                                     </div>
                                 </td>
@@ -56,6 +58,9 @@
 
                     </tbody>
                 </table>
+                <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+                    {{ $tenants->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         </div>
     </div>

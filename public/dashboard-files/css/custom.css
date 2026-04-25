@@ -291,3 +291,101 @@ h1, h2, h3, h4, h5, h6, .card-title {
   border: 1px solid var(--prem-primary) !important;
   color: var(--prem-secondary) !important;
 }
+
+/* ===== PAGINATION STYLING ===== */
+.pagination {
+  gap: 0.5rem !important;
+  margin: 0 !important;
+}
+
+.pagination .page-link {
+  border: 1px solid var(--prem-border) !important;
+  border-radius: 0.5rem !important;
+  padding: 0.6rem 0.85rem !important;
+  min-width: 2.75rem;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: var(--prem-primary) !important;
+  text-decoration: none;
+  background-color: transparent !important;
+  font-weight: 500;
+}
+
+.pagination .page-link:hover {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+  border-color: var(--prem-primary) !important;
+  color: var(--prem-primary) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.15);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--prem-primary) !important;
+  border-color: var(--prem-primary) !important;
+  color: #FFFFFF !important;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: var(--prem-text-muted) !important;
+  pointer-events: none;
+  background-color: transparent !important;
+  border-color: var(--prem-border) !important;
+  opacity: 0.5;
+}
+
+.pagination .page-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25) !important;
+  border-color: var(--prem-primary) !important;
+}
+
+/* Pagination Wrapper */
+.pagination-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Pagination Info Text */
+.pagination-info {
+  color: var(--prem-text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Responsive Pagination */
+@media (max-width: 768px) {
+  .pagination {
+    gap: 0.25rem !important;
+  }
+  
+  .pagination .page-link {
+    padding: 0.5rem 0.6rem !important;
+    min-width: 2.3rem;
+    font-size: 0.9rem;
+  }
+  
+  .pagination-wrapper {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .pagination {
+    gap: 0.2rem !important;
+  }
+  
+  .pagination .page-link {
+    padding: 0.4rem 0.5rem !important;
+    min-width: 2rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .pagination-wrapper {
+  justify-content: flex-start;
+}

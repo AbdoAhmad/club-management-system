@@ -19,6 +19,7 @@ class CreateTenantsTable extends Migration
             // your custom columns may go here
             $table->string('manager_email')->unique();
             $table->string('status')->default('active');
+            $table->softDeletes();
 
             $table->timestamps();
             $table->json('data')->nullable();
