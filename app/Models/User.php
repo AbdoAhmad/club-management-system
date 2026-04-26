@@ -13,18 +13,19 @@ use Spatie\Translatable\Attributes\Translatable;
 use Spatie\Translatable\HasTranslations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Permission\Traits\HasRoles;
 
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 #[Translatable('name')]
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
     use HasTranslations;
-    use HasMedia;
     use InteractsWithMedia;
+    use HasRoles;
 
 
     /**
@@ -42,7 +43,7 @@ class User extends Authenticatable
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatars')
-            ->singleFile()
-            ->useDisk('public');
+            ->singleFile();
+        
     }
 }

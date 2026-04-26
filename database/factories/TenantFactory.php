@@ -6,6 +6,7 @@ use App\Models\Model;
 use \App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 /**
  * @extends Factory<Model>
@@ -38,10 +39,14 @@ class TenantFactory extends Factory
                 'domain' => $tenant->id . '.localhost',
             ]);
             tenancy()->initialize($tenant->id);
-            User::factory()->create([
+            \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RolesSeeder']);
+            
+            $user = User::factory()->create([
                 'name' => 'Test Admin',
                 'email' => $tenant->manager_email,
             ]);
+            //assign role manager to user
+            $user->assignRole('manager');
             tenancy()->end();
 
         });
