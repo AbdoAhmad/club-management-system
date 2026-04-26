@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Football Club Management</title>
-    <link rel="stylesheet" href="{{ asset('tenant-dashbard-files/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('tenant-dashbard-files/styles.css') }}" />
     <style>
         .content-main {
             margin-left: 280px;
