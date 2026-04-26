@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms - Football Club Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .content-main {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+        }
+
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group.two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group.three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .checkbox-group,
+        .radio-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+        }
+
+        .checkbox-item input,
+        .radio-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--accent-green);
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .full-width-form {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            max-width: 800px;
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        .form-section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .textarea-field {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .required {
+            color: var(--error-red);
+        }
+
+        @media (max-width: 768px) {
+            .content-main {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .forms-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .form-card {
+                padding: 1.5rem;
+            }
+
+            .form-group.two-col,
+            .form-group.three-col {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .full-width-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">⚽</div>
+                <div>
+                    <div>Football Club</div>
+                    <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7);">Management</div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-item-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="tables.html" class="nav-item">
+                <span class="nav-item-icon">👥</span>
+                <span>Players</span>
+            </a>
+            <a href="forms.html" class="nav-item active">
+                <span class="nav-item-icon">📋</span>
+                <span>Forms</span>
+            </a>
+            <a href="#matches" class="nav-item">
+                <span class="nav-item-icon">⚽</span>
+                <span>Matches</span>
+            </a>
+            <a href="#training" class="nav-item">
+                <span class="nav-item-icon">💪</span>
+                <span>Training</span>
+            </a>
+            <a href="#settings" class="nav-item">
+                <span class="nav-item-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content-main">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Forms & Data Entry</h1>
+            <p class="page-subtitle">Professional form layouts for player registration, match scheduling, and settings</p>
+        </div>
+
+        <!-- Forms Grid -->
+        <div class="forms-grid">
+            <!-- Player Registration Form -->
+            <div class="form-card">
+                <h2>Player Registration</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="player-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="player-name" class="input-field" placeholder="Enter player's full name" required>
+                    </div>
+
+                    <div class="form-group two-col">
+                        <div>
+                            <label for="player-dob">Date of Birth <span class="required">*</span></label>
+                            <input type="date" id="player-dob" class="input-field" required>
+                        </div>
+                        <div>
+                            <label for="player-jersey">Jersey Number <span class="required">*</span></label>
+                            <input type="number" id="player-jersey" class="input-field" placeholder="e.g., 7" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="player-position">Position <span class="required">*</span></label>
+                        <select id="player-position" class="input-field" required>
+                            <option value="">Select a position</option>
+                            <option value="goalkeeper">Goalkeeper</option>
+                            <option value="defender">Defender</option>
+                            <option value="midfielder">Midfielder</option>
+                            <option value="forward">Forward</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group two-col">
+                        <div>
+                            <label for="player-height">Height (cm)</label>
+                            <input type="number" id="player-height" class="input-field" placeholder="180">
+                        </div>
+                        <div>
+                            <label for="player-weight">Weight (kg)</label>
+                            <input type="number" id="player-weight" class="input-field" placeholder="75">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="player-email">Email <span class="required">*</span></label>
+                        <input type="email" id="player-email" class="input-field" placeholder="player@example.com" required>
+                        <span class="input-hint">We'll use this for notifications</span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Register Player</button>
+                        <button type="reset" class="btn btn-outline">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Match Scheduling Form -->
+            <div class="form-card">
+                <h2>Schedule Match</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="match-opponent">Opponent <span class="required">*</span></label>
+                        <input type="text" id="match-opponent" class="input-field" placeholder="Opponent team name" required>
+                    </div>
+
+                    <div class="form-group two-col">
+                        <div>
+                            <label for="match-date">Date <span class="required">*</span></label>
+                            <input type="date" id="match-date" class="input-field" required>
+                        </div>
+                        <div>
+                            <label for="match-time">Time <span class="required">*</span></label>
+                            <input type="time" id="match-time" class="input-field" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="match-venue">Venue <span class="required">*</span></label>
+                        <input type="text" id="match-venue" class="input-field" placeholder="Stadium or location" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="match-competition">Competition</label>
+                        <select id="match-competition" class="input-field">
+                            <option value="">Select competition</option>
+                            <option value="league">League</option>
+                            <option value="cup">Cup</option>
+                            <option value="friendly">Friendly</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="match-notes">Notes</label>
+                        <textarea id="match-notes" class="input-field textarea-field" placeholder="Additional match details..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Schedule Match</button>
+                        <button type="reset" class="btn btn-outline">Clear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Full Width Settings Form -->
+        <div class="full-width-form">
+            <h2 style="margin-bottom: 2rem;">Club Settings</h2>
+
+            <!-- Basic Information Section -->
+            <div class="form-section">
+                <h3 class="form-section-title">Basic Information</h3>
+                <p class="form-section-subtitle">Update your club's basic details</p>
+
+                <div class="form-group">
+                    <label for="club-name">Club Name <span class="required">*</span></label>
+                    <input type="text" id="club-name" class="input-field" value="Football Club" required>
+                </div>
+
+                <div class="form-group two-col">
+                    <div>
+                        <label for="club-founded">Founded <span class="required">*</span></label>
+                        <input type="number" id="club-founded" class="input-field" placeholder="Year" value="2010" required>
+                    </div>
+                    <div>
+                        <label for="club-city">City <span class="required">*</span></label>
+                        <input type="text" id="club-city" class="input-field" placeholder="City name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="club-description">Description</label>
+                    <textarea id="club-description" class="input-field textarea-field" placeholder="Club description..."></textarea>
+                </div>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="form-section">
+                <h3 class="form-section-title">Contact Information</h3>
+                <p class="form-section-subtitle">How fans can reach you</p>
+
+                <div class="form-group two-col">
+                    <div>
+                        <label for="club-email">Email <span class="required">*</span></label>
+                        <input type="email" id="club-email" class="input-field" placeholder="contact@club.com" required>
+                    </div>
+                    <div>
+                        <label for="club-phone">Phone</label>
+                        <input type="tel" id="club-phone" class="input-field" placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="club-website">Website</label>
+                    <input type="url" id="club-website" class="input-field" placeholder="https://yourclub.com">
+                </div>
+            </div>
+
+            <!-- Preferences Section -->
+            <div class="form-section">
+                <h3 class="form-section-title">Preferences</h3>
+                <p class="form-section-subtitle">Customize your experience</p>
+
+                <div class="checkbox-group">
+                    <h4 style="margin-bottom: 1rem; font-weight: 600;">Notifications</h4>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="notify-matches" checked>
+                        <label for="notify-matches">Send match reminders</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="notify-players" checked>
+                        <label for="notify-players">Player status updates</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="notify-news">
+                        <label for="notify-news">Weekly newsletter</label>
+                    </div>
+                </div>
+
+                <div class="radio-group">
+                    <h4 style="margin-bottom: 1rem; font-weight: 600;">Theme</h4>
+                    <div class="radio-item">
+                        <input type="radio" id="theme-light" name="theme" value="light" checked>
+                        <label for="theme-light">Light</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="theme-dark" name="theme" value="dark">
+                        <label for="theme-dark">Dark</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="theme-auto" name="theme" value="auto">
+                        <label for="theme-auto">Auto (System)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Section -->
+            <div class="form-section">
+                <h3 class="form-section-title">Privacy & Security</h3>
+                <p class="form-section-subtitle">Manage your account privacy</p>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="public-profile" checked>
+                        <label for="public-profile">Make my profile public</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="show-stats" checked>
+                        <label for="show-stats">Show statistics publicly</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="allow-comments">
+                        <label for="allow-comments">Allow comments on posts</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; gap: 1rem;">
+                <button class="btn btn-primary" onclick="UI.notify('Settings saved successfully!', 'success')">
+                    Save Settings
+                </button>
+                <button class="btn btn-outline">
+                    Cancel
+                </button>
+                <button class="btn btn-ghost" style="margin-left: auto;">
+                    Reset to Default
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="scripts.js"></script>
+</body>
+</html>

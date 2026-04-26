@@ -2,12 +2,12 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
     dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" >
 
-    @include('layouts.partials.header')
+    @include('layouts.admin_dashboard.partials.header')
 
     <body class="layout-fixed sidebar-expand-lg">
     <div class="app-wrapper">
-        @include('layouts.partials.navbar')
-        @include('layouts.partials.sidebar')
+        @include('layouts.admin_dashboard.partials.navbar')
+        @include('layouts.admin_dashboard.partials.sidebar')
 
         <main class="app-main">
             <div class="container-fluid p-4">
@@ -15,6 +15,6 @@
             </div>
         </main>
 
-        @include('layouts.partials.footer')
+        @include('layouts.admin_dashboard.partials.footer')
     </div>
 </html>

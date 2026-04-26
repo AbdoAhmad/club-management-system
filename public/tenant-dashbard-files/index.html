@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Football Club Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .content-main {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-green);
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--success-green);
+        }
+
+        .stat-change.negative {
+            color: var(--error-red);
+        }
+
+        .content-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: rgba(34, 197, 94, 0.1);
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+        }
+
+        .quick-link:hover {
+            border-color: var(--accent-green);
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+
+        .quick-link-icon {
+            font-size: 1.5rem;
+        }
+
+        .quick-link-content {
+            flex: 1;
+        }
+
+        .quick-link-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .quick-link-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .content-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-main {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">⚽</div>
+                <div>
+                    <div>Football Club</div>
+                    <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7);">Management</div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item active">
+                <span class="nav-item-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="tables.html" class="nav-item">
+                <span class="nav-item-icon">👥</span>
+                <span>Players</span>
+            </a>
+            <a href="forms.html" class="nav-item">
+                <span class="nav-item-icon">📋</span>
+                <span>Forms</span>
+            </a>
+            <a href="#matches" class="nav-item">
+                <span class="nav-item-icon">⚽</span>
+                <span>Matches</span>
+            </a>
+            <a href="#training" class="nav-item">
+                <span class="nav-item-icon">💪</span>
+                <span>Training</span>
+            </a>
+            <a href="#settings" class="nav-item">
+                <span class="nav-item-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content-main">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Welcome Back! 👋</h1>
+            <p class="page-subtitle">Here's what's happening with your football club today</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-label">Total Players</div>
+                <div class="stat-value">48</div>
+                <div class="stat-change">↑ 3 new this month</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⚽</div>
+                <div class="stat-label">Upcoming Matches</div>
+                <div class="stat-value">6</div>
+                <div class="stat-change">Next in 4 days</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-label">Win Rate</div>
+                <div class="stat-value">75%</div>
+                <div class="stat-change">↑ 8 points</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">💪</div>
+                <div class="stat-label">Training Sessions</div>
+                <div class="stat-value">24</div>
+                <div class="stat-change">2 scheduled this week</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-section">
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="section-title">Recent Activity</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">➕</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Marcus Johnson added to roster</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">✏️</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Match against City FC scheduled</div>
+                                <div class="activity-time">5 hours ago</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">📊</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Weekly report generated</div>
+                                <div class="activity-time">Yesterday at 4:30 PM</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">🏆</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Won against United 3-2</div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">💬</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Training feedback received</div>
+                                <div class="activity-time">3 days ago</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Links Sidebar -->
+            <div>
+                <h3 class="section-title">Quick Actions</h3>
+                <div class="quick-links">
+                    <a href="forms.html" class="quick-link">
+                        <div class="quick-link-icon">➕</div>
+                        <div class="quick-link-content">
+                            <div class="quick-link-title">Add Player</div>
+                            <div class="quick-link-desc">Register new player</div>
+                        </div>
+                    </a>
+                    <a href="forms.html" class="quick-link">
+                        <div class="quick-link-icon">📅</div>
+                        <div class="quick-link-content">
+                            <div class="quick-link-title">Schedule Match</div>
+                            <div class="quick-link-desc">Plan next match</div>
+                        </div>
+                    </a>
+                    <a href="tables.html" class="quick-link">
+                        <div class="quick-link-icon">👥</div>
+                        <div class="quick-link-content">
+                            <div class="quick-link-title">View Team</div>
+                            <div class="quick-link-desc">See roster details</div>
+                        </div>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <div class="quick-link-icon">📊</div>
+                        <div class="quick-link-content">
+                            <div class="quick-link-title">View Reports</div>
+                            <div class="quick-link-desc">Performance analytics</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="scripts.js"></script>
+</body>
+</html>
