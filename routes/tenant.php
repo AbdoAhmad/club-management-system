@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Livewire\tenant\Home;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -23,8 +25,20 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-         Route::get('/', function () {
-            return redirect()->route('login');
+
+    Route::group(['prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
+    ], function () {
+        require __DIR__.'/auth.php';
+        Route::middleware('userAuth')->group(function () {
+            Route::get('tenant/home', Home::class)->name('tenant_dashboard');
         });
-                require __DIR__.'/auth.php';
+
+    });
+
+    Route::get('/', function () {
+        return redirect()->route('tenant_dashboard');
+
+    });
+
 });

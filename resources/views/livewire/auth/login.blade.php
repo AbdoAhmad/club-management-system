@@ -20,28 +20,38 @@
                     <div class="form-group">
                         <label class="block text-sm font-medium text-gray-200 mb-2">Email Address</label>
                         <input 
+                        wire:model="email"
                             type="email" 
                             class="w-full input-field" 
                             placeholder="you@example.com"
                             required
                         >
                     </div>
+                    @error('email')
+                    <p class="text-red-500">{{ $message }}</p>
+                    @enderror
 
                     <!-- Password Input -->
                     <div class="form-group">
                         <label class="block text-sm font-medium text-gray-200 mb-2">Password</label>
                         <input 
+                        wire:model="password"
                             type="password" 
                             class="w-full input-field" 
                             placeholder="••••••••"
                             required
                         >
                     </div>
+                    @error('password')
+                    <p class="text-red-500">{{ $message }}</p>
+                    @enderror
+
+
 
                     <!-- Remember Me & Forgot -->
                     <div class="flex items-center justify-between my-6 text-sm">
                         <label class="flex items-center cursor-pointer">
-                            <input type="checkbox" class="w-4 h-4 accent-green-500 cursor-pointer">
+                            <input wire:model="remember" type="checkbox" class="w-4 h-4 accent-green-500 cursor-pointer">
                             <span class="ml-2 text-gray-300">Remember me</span>
                         </label>
                         <a href="#" class="text-link">Forgot password?</a>
@@ -49,7 +59,7 @@
 
                     <!-- Login Button -->
                     <div class="btn-container">
-                        <button type="submit" class="w-full btn-primary">Sign In</button>
+                        <button wire:click="login" type="submit" class="w-full btn-primary">Sign In</button>
                     </div>
                 </form>
 

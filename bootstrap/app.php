@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeSessionRedirect' => LocaleSessionRedirect::class,
             'localeCookieRedirect' => LocaleCookieRedirect::class,
             'localeViewPath' => LaravelLocalizationViewPath::class,
+            'userAuth' => App\Http\Middleware\UserAuth::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
