@@ -95,7 +95,7 @@
                 <!-- Sign Up Link -->
                 <p class="text-center text-gray-300 text-sm mt-8" style="animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;">
                     Don't have an account? 
-                    <a href="register.html" class="text-link">Create one now</a>
+                    <a href='{{ route('register') }}' class="text-link">Create one now</a>
                 </p>
             </div>
 

@@ -29,6 +29,14 @@ Route::middleware([
     Route::group(['prefix' => LaravelLocalization::setLocale(),
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
     ], function () {
+
+
+
+
+
+
+
+
         require __DIR__.'/auth.php';
         Route::middleware('userAuth')->group(function () {
             Route::get('tenant/home', Home::class)->name('tenant_dashboard');
@@ -41,4 +49,12 @@ Route::middleware([
 
     });
 
+
+
+
+
+
+
+
+    
 });

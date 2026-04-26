@@ -61,7 +61,11 @@
                             <tr class="align-middle">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $tenant->id }}</td>
-                                <td>{{ $tenant->domains()->first()->domain }}</td>
+                                <td> 
+                                   <a href="http://{{ $tenant->domains()->first()->domain }}:8000" target="_blank" class="text-decoration-none">
+    {{ $tenant->domains()->first()->domain }}
+</a>
+                                </td>
                                 <td>
                                     {{ $tenant->manager_email }}
                                 </td>

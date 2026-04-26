@@ -32,6 +32,7 @@ class Login extends Component
         }
 
         $this->addError('email', __('auth.failed'));
+    
     }
     public function render()
     {
