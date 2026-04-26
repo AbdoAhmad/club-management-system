@@ -14,7 +14,7 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::group(['prefix' => LaravelLocalization::setLocale(),
             'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
         ], function () {
-            require __DIR__.'/dashbard.php';
+            require __DIR__.'/dashboard.php';
         });
 
     });
