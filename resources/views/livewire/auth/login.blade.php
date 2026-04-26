@@ -12,7 +12,7 @@
             </div>
 
             <!-- Glass Card Form -->
-            <div class="glass-card p-8 card-container" style="animation-delay: 0.1s;">
+            <div wire:submit.prevent="login" class="glass-card p-8 card-container" style="animation-delay: 0.1s;">
                 <h2 class="text-2xl font-bold text-white mb-8 text-center">Welcome Back</h2>
 
                 <form id="loginForm" class="space-y-4">
@@ -59,7 +59,7 @@
 
                     <!-- Login Button -->
                     <div class="btn-container">
-                        <button wire:click="login" type="submit" class="w-full btn-primary">Sign In</button>
+                        <button  type="submit" class="w-full btn-primary">Sign In</button>
                     </div>
                 </form>
 

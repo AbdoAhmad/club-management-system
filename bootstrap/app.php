@@ -16,7 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->appendToGroup('web', [
+            \App\Http\Middleware\InitializeTenancy::class,
+        ]);
+
         $middleware->alias([
             /**** OTHER MIDDLEWARE ALIASES ****/
             'localize' => LaravelLocalizationRoutes::class,

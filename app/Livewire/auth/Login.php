@@ -20,14 +20,18 @@ class Login extends Component
     public $remember = false;
 
     public function login(){
+
         $this->validate();
-        Auth::attempt([
+        
+        if (Auth::guard('web')->attempt([
             'email' => $this->email,
             'password' => $this->password
-        ], $this->remember);
-        
-        dd(Auth::user());
+        ], $this->remember)) {
+            session()->regenerate();
+            return redirect()->intended(route('tenant_dashboard'));
+        }
 
+        $this->addError('email', __('auth.failed'));
     }
     public function render()
     {
