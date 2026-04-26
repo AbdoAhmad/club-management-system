@@ -36,7 +36,7 @@ class Register extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed:password_confirmation',
             'role' => 'required|exists:roles,name',
             'terms' => 'accepted',
             'avatar' => 'nullable|image|max:1024',
@@ -54,11 +54,14 @@ class Register extends Component
             $user->addMedia($this->avatar->getRealPath())
                 ->toMediaCollection('attachments');
         }
+
         
         Auth::login($user, $this->remember);
 
         return redirect()->route('tenant_dashboard');
     }
+
+    
 
     public function render()
     {
