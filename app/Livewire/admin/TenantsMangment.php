@@ -213,7 +213,7 @@ class TenantsMangment extends Component
             $query->onlyTrashed();
         }
 
-        return view('livewire.tenants-mangment.main', [
+        return view('livewire.admin.tenants-mangment.main', [
             'tenants' => $query->paginate(3),
         ]);
     }

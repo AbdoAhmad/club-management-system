@@ -14,8 +14,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    @include('livewire.tenants-mangment.partials.table')
-    @include('livewire.tenants-mangment.partials.form')
+    @include('livewire.admin.tenants-mangment.partials.table')
+    @include('livewire.admin.tenants-mangment.partials.form')
 </div>
 @push('scripts')
     <script>

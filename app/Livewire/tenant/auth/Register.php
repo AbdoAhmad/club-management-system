@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\auth;
+namespace App\Livewire\tenant\auth;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -65,7 +65,7 @@ class Register extends Component
 
     public function render()
     {
-        return view('livewire.auth.register', [
+        return view('livewire.tenant.auth.register', [
             'roles' => Role::all(),
         ]);
     }

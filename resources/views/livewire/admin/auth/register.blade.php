@@ -210,7 +210,7 @@
                         <button type="submit" class="btn-primary w-full">Create Account</button>
                         <p class="text-center text-gray-300 text-sm">
                             Already have an account? 
-                            <a href="{{ route('login') }}" class="text-link">Sign in here</a>
+                            <a href="{{ route('admin.login') }}" class="text-link">Sign in here</a>
                         </p>
                     </div>
                 </form>
