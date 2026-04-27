@@ -1,5 +1,3 @@
-
-
 <div>
     <!-- Page Header -->
     <div class="page-header">
@@ -36,22 +34,32 @@
             </thead>
             <tbody>
                 <!-- Row 1 -->
-                <tr>
-                    {{-- example data --}}
-                    <td>1</td>
-                    <td>speed</td> 
-                    <td><i class="fas fa-bolt">speed</i></td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="table-action-btn" data-tooltip="View">👁️</button>
-                            <button class="table-action-btn" data-tooltip="Edit">✏️</button>
-                            <button class="table-action-btn" data-tooltip="Delete">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
+                @foreach ($skills as $skill)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $skill->name }}</td>
+                        <td>
+                            @if($skill->hasMedia('skills'))
+                                <img src="{{ $skill->getFirstMediaUrl('skills') }}" 
+                                     alt="{{ $skill->name }}" 
+                                     style="width: 45px; height: 45px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @else
+                                <div style="width: 45px; height: 45px; border-radius: 10px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size: 10px; color: rgba(255,255,255,0.3);">No Icon</span>
+                                </div>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="table-action-btn" data-tooltip="Edit">✏️</button>
+                                <button class="table-action-btn" data-tooltip="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
 
                 <!-- Additional rows for pagination -->
-        
+
             </tbody>
         </table>
 

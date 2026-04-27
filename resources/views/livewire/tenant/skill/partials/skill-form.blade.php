@@ -50,6 +50,19 @@
             font-weight: 500;
         }
 
+        .text-danger {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .required {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
         .avatar-preview-img {
             position: absolute;
             inset: 0;
@@ -100,46 +113,58 @@
                 <p style="color: #94a3b8; font-size: 14px;">Define a new ability for your club's training system</p>
             </div>
 
-            <form>
+            <form wire:submit.prevent="save">
                 <!-- Avatar Section at the Top -->
                 <div class="avatar-section text-center mb-5">
                     <div class="avatar-container" style="margin: 0 auto;">
                         <label for="avatar-input" class="avatar-circle">
                             <!-- Image Preview -->
-                            <img class="avatar-preview-img" src="#" alt="Preview" style="display: none;">
-
-                            <!-- Upload Placeholder -->
-                            <div class="upload-placeholder text-center">
-                                <svg class="mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    style="width: 28px; height: 28px; color: #22c55e; margin: 0 auto;">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <div style="font-size: 10px; color: #22c55e; font-weight: 700; letter-spacing: 1px;">
-                                    UPLOAD ICON</div>
-                            </div>
+                            @if ($icon)
+                                <img class="avatar-preview-img" src="{{ $icon->temporaryUrl() }}" alt="Preview">
+                            @else
+                                <!-- Upload Placeholder -->
+                                <div class="upload-placeholder text-center">
+                                    <svg class="mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        style="width: 28px; height: 28px; color: #22c55e; margin: 0 auto;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <div
+                                        style="font-size: 10px; color: #22c55e; font-weight: 700; letter-spacing: 1px;">
+                                        UPLOAD ICON</div>
+                                </div>
+                            @endif
                         </label>
-                        <input type="file" id="avatar-input" style="display: none;" accept="image/*">
+                        <input type="file" id="avatar-input" wire:model.live="icon" style="display: none;"
+                            accept="image/*">
+                        @error('icon')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
                 </div>
-                <br><br> <br>
+                
                 <div class="row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="form-group">
-                        <label for="skill-name">Skill Name (EN) <span class="required"
-                                style="color: #22c55e;">*</span></label>
-                        <input type="text" id="skill-name" class="input-field" placeholder="e.g. Shooting" required
+                        <label for="skill-name">Skill Name (EN) <span class="required">*</span></label>
+                        <input type="text" id="skill-name" wire:model="skill_name_en" class="input-field"
+                            placeholder="e.g. Shooting"
                             style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.1);">
+                        @error('skill_name_en')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
-                      {{-- rtl direction --}}
-                        <label for="skill-name-ar" style="text-align: right;">اسم المهارة (AR) <span class="required"
-                                style="color: #22c55e;">*</span></label>
-                        <input type="text" id="skill-name-ar" class="input-field" placeholder="مثال: التسديد"
-                            required dir="rtl"
+                        <label for="skill-name-ar" style="text-align: right;">اسم المهارة (AR) <span class="required">*</span></label>
+                        <input type="text" wire:model="skill_name_ar" id="skill-name-ar" class="input-field"
+                            placeholder="مثال: التسديد" dir="rtl"
                             style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.1);">
+                        @error('skill_name_ar')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
@@ -147,7 +172,7 @@
                     <button type="submit" class="btn btn-primary" style="flex: 2; padding: 12px; font-weight: 600;">
                         Create Skill
                     </button>
-                    <button type="reset" class="btn btn-outline"
+                    <button wire:click="cancel" type="button" class="btn btn-outline"
                         style="flex: 1; padding: 12px; border-color: rgba(255,255,255,0.1); color: #94a3b8;">
                         Cancel
                     </button>

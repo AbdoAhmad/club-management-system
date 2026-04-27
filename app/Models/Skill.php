@@ -6,13 +6,17 @@ use Database\Factories\SkillFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Skill extends Model
+class Skill extends Model implements HasMedia
 {
     /** @use HasFactory<SkillFactory> */
     use HasFactory;
 
     use HasTranslations;
+
+    use InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -23,5 +27,11 @@ class Skill extends Model
     public function players()
     {
         return $this->belongsToMany(Player::class, 'player_skill')->withPivot('skill_level', 'skill_level_type');
+    }
+    
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('skills')
+            ->singleFile();   
     }
 }
