@@ -210,7 +210,7 @@
                         <!--begin::Menu Footer-->
                         <li class="user-footer">
                             <a href="#" class="btn btn-outline-secondary">Profile</a>
-                            <a href="#" class="btn btn-outline-danger float-end">Sign out</a>
+                            <a href="{{ route('admin.logout') }}" class="btn btn-outline-danger float-end">Sign out</a>
                         </li>
                         <!--end::Menu Footer-->
                     </ul>

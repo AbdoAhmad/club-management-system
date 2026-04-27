@@ -34,5 +34,10 @@
                 <span class="nav-item-icon">⚙️</span>
                 <span>Settings</span>
             </a>
+
+            <a href="{{ route('tenant.logout') }}" class="nav-item">
+                <span class="nav-item-icon">🚪</span>
+                <span>Logout</span>
+            </a>
         </nav>
     </aside>
