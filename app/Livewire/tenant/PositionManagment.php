@@ -6,10 +6,10 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('layouts.tenant_dashboard.app')]
-class PlayerManagment extends Component
+class PositionManagment extends Component
 {
     public function render()
     {
-        return view('livewire.tenant.player-managment');
+        return view('livewire.tenant.position-managment');
     }
 }

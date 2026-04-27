@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('player_skill', function (Blueprint $table) {
             $table->id();
-            $table->json('name');
-            $table->integer('age');
-            $table->integer('jersey_number');
-            $table->double('height');
-            $table->double('weight');
+            $table->foreignId('player_id')->constrained('players')->cascadeOnDelete();
+            $table->foreignId('skill_id')->constrained('skills')->cascadeOnDelete();
+            $table->integer('skill_level');
+            $table->enum('skill_level_type', ['percentage','stars']);
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('player_skill');
     }
 };

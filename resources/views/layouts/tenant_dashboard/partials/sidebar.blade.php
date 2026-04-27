@@ -10,21 +10,21 @@
         </div>
 
         <nav class="sidebar-nav">
-            <a href="index.html" class="nav-item active">
+            <a href="{{ route('tenant_dashboard') }}" class="nav-item active">
                 <span class="nav-item-icon">📊</span>
                 <span>Dashboard</span>
             </a>
-            <a href="tables.html" class="nav-item">
+            <a href="{{ route('players') }}" class="nav-item">
                 <span class="nav-item-icon">👥</span>
                 <span>Players</span>
             </a>
-            <a href="forms.html" class="nav-item">
+            <a href="{{ route('skills') }}" class="nav-item">
                 <span class="nav-item-icon">📋</span>
-                <span>Forms</span>
+                <span>Skills</span>
             </a>
-            <a href="#matches" class="nav-item">
+            <a href="{{ route('positions') }}" class="nav-item">
                 <span class="nav-item-icon">⚽</span>
-                <span>Matches</span>
+                <span>Positions</span>
             </a>
             <a href="#training" class="nav-item">
                 <span class="nav-item-icon">💪</span>
