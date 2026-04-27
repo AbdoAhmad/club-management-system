@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('jersey_number');
             $table->double('height');
             $table->double('weight');
+            $table->enum('status', ['active', 'banned', 'injured'])->default('active');
             $table->timestamps();
         });
     }

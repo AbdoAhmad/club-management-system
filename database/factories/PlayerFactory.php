@@ -19,6 +19,15 @@ class PlayerFactory extends Factory
     {
         return [
             //
+            'name' => [
+                'en' => $this->faker->name,
+                'ar' => $this->faker->name,
+            ],
+            'age' => $this->faker->numberBetween(18, 35),
+            'height' => $this->faker->numberBetween(160, 200),
+            'weight' => $this->faker->numberBetween(50, 100),
+            'jersey_number' => $this->faker->unique()->numberBetween(1, 99),
+            'status' => $this->faker->randomElement(['active', 'banned', 'injured']),
         ];
     }
 }

@@ -18,7 +18,11 @@ class SkillFactory extends Factory
     public function definition(): array
     {
         return [
-            //
-        ];
+            'name' => [
+                'en' => $this->faker->unique()->word,
+                'ar' => $this->faker->unique()->word,
+            ],
+            'created_at' => now(),
+            'updated_at' => now(),        ];
     }
 }
