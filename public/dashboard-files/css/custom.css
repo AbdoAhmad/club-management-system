@@ -165,6 +165,13 @@ h1, h2, h3, h4, h5, h6, .card-title {
   border: 1px solid var(--prem-border) !important;
   color: var(--prem-secondary) !important;
   transition: all 0.3s ease;
+  background-repeat: no-repeat !important;
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23C59B27' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-position: right 0.75rem center !important;
+  background-size: 16px 12px !important;
 }
 .form-control:focus, .form-select:focus {
   border-color: var(--prem-primary) !important;

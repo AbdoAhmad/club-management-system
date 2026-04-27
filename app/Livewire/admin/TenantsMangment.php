@@ -13,6 +13,13 @@ class TenantsMangment extends Component
 
     public $paginationTheme = 'bootstrap';
 
+    public function mount()
+    {
+        if (request()->query('action') === 'create') {
+            $this->openTenantModal();
+        }
+    }
+
     public $currentStep = 1; // متغير لحفظ الخطوة الحالية
 
     public $trashed = false;
