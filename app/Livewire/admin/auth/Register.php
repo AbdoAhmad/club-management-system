@@ -2,7 +2,7 @@
 
 namespace App\Livewire\admin\auth;
 
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
@@ -23,7 +23,7 @@ class Register extends Component
 
     public $password_confirmation;
 
-    public $role;
+    // public $role;
 
     public $avatar;
 
@@ -35,20 +35,20 @@ class Register extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:admins',
             'password' => 'required|string|min:8|confirmed:password_confirmation',
-            'role' => 'required|exists:roles,name',
+            // 'role' => 'required|exists:roles,name',
             'terms' => 'accepted',
             'avatar' => 'nullable|image|max:1024',
         ]);
-
         $user = Admin::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
+        
 
-        $user->assignRole($this->role);
+        // $user->assignRole($this->role);
 
         if ($this->avatar) {
             $user->addMedia($this->avatar->getRealPath())
@@ -57,6 +57,7 @@ class Register extends Component
 
         
         Auth::guard('admin')->login($user, $this->remember);
+     
 
         return redirect()->route('home');
     }
@@ -66,7 +67,7 @@ class Register extends Component
     public function render()
     {
         return view('livewire.admin.auth.register', [
-            'roles' => Role::all(),
+            // 'roles' => Role::all(),
         ]);
     }
 }

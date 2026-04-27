@@ -20,7 +20,7 @@
                 width: 100%;
                 height: 100%;
                 border-radius: 50%;
-                border: 2px dashed rgba(34, 197, 94, 0.4);
+                border: 2px dashed rgba(212, 175, 55, 0.4);
                 background: rgba(255, 255, 255, 0.05);
                 display: flex;
                 flex-direction: column;
@@ -33,13 +33,13 @@
             }
 
             .avatar-circle:hover {
-                border-color: #22c55e;
-                background: rgba(34, 197, 94, 0.08);
+                border-color: #D4AF37;
+                background: rgba(212, 175, 55, 0.08);
                 transform: scale(1.02);
             }
 
             .avatar-circle i, .avatar-circle svg {
-                color: rgba(34, 197, 94, 0.8);
+                color: rgba(212, 175, 55, 0.8);
                 margin-bottom: 4px;
             }
 
@@ -72,18 +72,18 @@
                 border-radius: 10px;
             }
             .custom-scrollbar::-webkit-scrollbar-thumb {
-                background: rgba(34, 197, 94, 0.3);
+                background: rgba(212, 175, 55, 0.3);
                 border-radius: 10px;
             }
             .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: rgba(34, 197, 94, 0.5);
+                background: rgba(212, 175, 55, 0.5);
             }
         </style>
 
         <div class="w-full max-w-md">
             <!-- Logo / Brand -->
             <div class="text-center mb-8 card-container" style="animation-delay: 0s;">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl mb-6 shadow-lg">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-2xl mb-6 shadow-lg">
                     <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
                     </svg>
@@ -145,7 +145,7 @@
                         </div>
 
                         <!-- Club Position -->
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label class="block text-sm font-medium text-gray-200 mb-2">Club Position</label>
                             <div class="relative">
                                 <select wire:model="role" class="input-field appearance-none cursor-pointer">
@@ -160,7 +160,7 @@
                                     </svg>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <!-- Password Input -->
                         <div class="form-group">

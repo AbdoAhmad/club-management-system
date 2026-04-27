@@ -169,7 +169,7 @@ function initPasswordStrength() {
         } else if (strength < 75) {
             strengthBar.style.background = 'linear-gradient(90deg, #eab308, #ca8a04)';
         } else {
-            strengthBar.style.background = 'linear-gradient(90deg, #22c55e, #16a34a)';
+            strengthBar.style.background = 'linear-gradient(90deg, #D4AF37, #B38F22)';
         }
     });
 }

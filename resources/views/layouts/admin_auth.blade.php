@@ -1,60 +1,71 @@
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? config('app.name') }}</title>
+    <title>Football Club Management - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ global_asset('dashboard-files/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ global_asset('dashboard-files/css/custom.css') }}" />
+    <script src="{{ global_asset('dashboard-files/js/script.js') }}" defer></script>
+    <style>
+        /* Global Gold Theme Overrides for Auth Pages */
+        :root {
+            --accent: #D4AF37 !important;
+            --accent-dark: #B38F22 !important;
+            --border: rgba(212, 175, 55, 0.2);
+        }
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous" />
-    
-    <!-- Third Party Plugins -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
-    
-    <!-- AdminLTE CSS -->
-    @if(app()->getLocale() == 'ar')
-        <link rel="stylesheet" href="{{ asset('dashboard-files/css/adminlte.rtl.css') }}" />
-    @else
-        <link rel="stylesheet" href="{{ asset('dashboard-files/css/adminlte.css') }}" />
-    @endif
-    <link rel="stylesheet" href="{{ asset('dashboard-files/css/custom.css') }}" />
+        .btn-primary, .primary-button {
+            background: linear-gradient(135deg, #D4AF37, #B38F22) !important;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.18) !important;
+            border: none !important;
+        }
 
-    <!-- Theme Script -->
-    <script>
-        (() => {
-            'use strict';
-            const storedTheme = localStorage.getItem('theme');
-            const getPreferredTheme = () => storedTheme || (globalThis.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            const setTheme = theme => document.documentElement.setAttribute('data-bs-theme', theme === 'auto' && globalThis.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : theme);
-            setTheme(getPreferredTheme());
-        })();
-    </script>
-    
-    @livewireStyles
+        .btn-primary:hover, .primary-button:hover {
+            box-shadow: 0 24px 48px rgba(212, 175, 55, 0.24) !important;
+            transform: translateY(-2px);
+        }
+
+        .text-link {
+            color: #D4AF37 !important;
+        }
+
+        .text-link::after {
+            background: #D4AF37 !important;
+        }
+
+        .checkbox-input:checked, .input[type="checkbox"]:checked {
+            border-color: #D4AF37 !important;
+            background: linear-gradient(135deg, #D4AF37, #B38F22) !important;
+        }
+
+        .input-field:focus, .input:focus {
+            border-color: #D4AF37 !important;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+        }
+        
+        .stadium-bg {
+            filter: grayscale(0.5) brightness(0.4) sepia(0.2);
+        }
+    </style>
 </head>
 
-<body class="login-page bg-body-secondary">
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="/"><b>Football</b>Club</a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
-            {{ $slot }}
-        </div>
-    </div>
-    <!-- /.login-box -->
+<body>
+    <!-- Stadium Background -->
+    <div class="stadium-bg"></div>
 
-    <!-- Required Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('dashboard-files/js/adminlte.js') }}"></script>
-    
-    @livewireScripts
-    @stack('scripts')
+    <!-- Floating Decorative Elements -->
+    <div class="floating-circle"
+        style="width: 300px; height: 300px; top: 10%; left: 5%; background: linear-gradient(135deg, #D4AF37, #B38F22); animation-delay: 0s; opacity: 0.08;">
+    </div>
+    <div class="floating-circle"
+        style="width: 200px; height: 200px; bottom: 15%; right: 10%; background: linear-gradient(135deg, #1A1A1A, #D4AF37); animation-delay: 2s; opacity: 0.08;">
+    </div>
+
+    {{ $slot }}
+
 </body>
 
-</html> --}}
+</html>
