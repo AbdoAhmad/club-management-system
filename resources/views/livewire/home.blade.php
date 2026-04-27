@@ -149,7 +149,7 @@
                             <h4 class="fw-bold mb-3">{{ __('System Overview') }}</h4>
                             <p class="opacity-75 mb-4">{{ __('Manage your football club network from one central dashboard.') }}</p>
                             <div class="d-grid">
-                                <a href="{{ route('tenant') }}" class="btn btn-light fw-bold py-2 rounded-3 text-primary">{{ __('Add New Club') }}</a>
+                                <a href="{{ route('tenant', ['action' => 'create']) }}" class="btn btn-light fw-bold py-2 rounded-3 text-primary">{{ __('Add New Club') }}</a>
                             </div>
                         </div>
                     </div>
