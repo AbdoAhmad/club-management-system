@@ -28,6 +28,8 @@ class SkillManagment extends Component
 
     public $edit_skill;
 
+    protected $queryString = ['screan'];
+
     public function mount()
     {
         
