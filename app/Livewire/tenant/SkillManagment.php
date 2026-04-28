@@ -7,14 +7,18 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
+
 
 #[Layout('layouts.tenant_dashboard.app')]
 class SkillManagment extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
-    public $screan = 'list';
+    public $paginationTheme = 'bootstrap';
 
+    public $showModal = false;
     public $search = '';
 
     #[Rule('required')]
@@ -28,14 +32,18 @@ class SkillManagment extends Component
 
     public $edit_skill;
 
-    protected $queryString = ['screan'];
-
-    public function mount()
+    public function openModal()
     {
-        
-        $this->screan = request('screan', 'list');
-
+        $this->reset(['skill_name_en', 'skill_name_ar', 'icon', 'edit_skill']);
+        $this->showModal = true;
     }
+
+    public function closeModal()
+    {
+        $this->reset();
+        $this->showModal = false;
+    }
+
 
     public function render()
     {
@@ -48,7 +56,7 @@ class SkillManagment extends Component
                     ->orWhere('name->ar', 'like', '%'.$this->search.'%');
             });
         }
-        $skills = $query->get();
+        $skills = $query->paginate(10);
 
         return view('livewire.tenant.skill.skill-managment', ['skills' => $skills]);
     }
@@ -56,38 +64,46 @@ class SkillManagment extends Component
     public function save()
     {
         $this->validate();
-        $skill = Skill::create([
+
+        $data = [
             'name' => [
                 'en' => $this->skill_name_en,
                 'ar' => $this->skill_name_ar,
             ],
-        ]);
+        ];
+
+        if ($this->edit_skill) {
+            $this->edit_skill->update($data);
+            $skill = $this->edit_skill;
+            session()->flash('success', 'Skill updated successfully');
+        } else {
+            $skill = Skill::create($data);
+            session()->flash('success', 'Skill created successfully');
+        }
 
         if ($this->icon) {
             $skill->addMedia($this->icon)->toMediaCollection('skills');
         }
-        session()->flash('success', 'Skill created successfully');
-        $this->reset();
-        $this->screan = 'list';
+
+        $this->closeModal();
     }
 
-    public function changeScreen($screen)
-    {
-        $this->screan = $screen;
-    }
-
+  
     public function edit(Skill $skill)
     {
+        $this->resetValidation();
         $this->skill_name_en = $skill->getTranslation('name', 'en');
         $this->skill_name_ar = $skill->getTranslation('name', 'ar');
-        $this->icon = $skill->getFirstMediaUrl('skills');
+        $this->icon = null;
         $this->edit_skill = $skill;
-        $this->changeScreen('form');
+        $this->showModal = true;
     }
 
-    public function cancel()
+    public function delete(Skill $skill)
     {
-        $this->reset();
-        $this->screan = 'list';
+        $skill->delete();
+        session()->flash('success', 'Skill deleted successfully');
     }
+
+ 
 }

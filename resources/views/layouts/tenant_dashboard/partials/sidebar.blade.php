@@ -121,11 +121,11 @@
                     <span class="fw-bold">Players Management</span>
                 </div>
                 <div class="nav-submenu {{ request()->routeIs('players') ? 'show' : '' }}">
-                    <a href="{{ route('players',['screan' => 'list']) }}"  class="nav-submenu-item {{ request()->routeIs('players') && request('screan') == 'list' ? 'active-sub' : '' }}">
+                    <a href="{{ route('players', ['screan' => 'list']) }}"  class="nav-submenu-item {{ request()->routeIs('players') && request('screan') == 'list' ? 'active-sub' : '' }}">
                         <span class="me-2">📁</span>
                         <span>Show All Players</span>
                     </a>
-                    <a href="{{ route('players',['screan' => 'form']) }}" class="nav-submenu-item {{ request()->routeIs('players') && request('screan') == 'form' ? 'active-sub' : '' }}">
+                    <a href="{{ route('players', ['screan' => 'form']) }}" class="nav-submenu-item {{ request()->routeIs('players') && request('screan') == 'form' ? 'active-sub' : '' }}">
                         <span class="me-2">➕</span>
                         <span>Register New Player</span>
                     </a>
@@ -133,22 +133,10 @@
             </div>
 
             <!-- Skills Dropdown -->
-            <div class="nav-dropdown">
-                <div class="nav-item nav-header {{ request()->routeIs('skills') ? 'active' : '' }}">
+            <a href="{{ route('skills') }}" class="nav-item nav-header {{ request()->routeIs('skills') ? 'active' : '' }}">
                     <span class="nav-item-icon">⚡</span>
                     <span class="fw-bold">Skills & Abilities</span>
-                </div>
-                <div class="nav-submenu {{ request()->routeIs('skills') ? 'show' : '' }}">
-                    <a href="{{ route('skills', ['screan' => 'list']) }}" class="nav-submenu-item {{ request()->routeIs('skills') && request('screan') == 'list' ? 'active-sub' : '' }}">
-                        <span class="me-2">📊</span>
-                        <span>Skill Registry</span>
-                    </a>
-                    <a href="{{ route('skills', ['screan' => 'form']) }}" class="nav-submenu-item {{ request()->routeIs('skills') && request('screan') == 'form' ? 'active-sub' : '' }}">
-                        <span class="me-2">✨</span>
-                        <span>Create New Skill</span>
-                    </a>
-                </div>
-            </div>
+            </a>
 
             <!-- Positions Dropdown -->
             <div class="nav-dropdown">

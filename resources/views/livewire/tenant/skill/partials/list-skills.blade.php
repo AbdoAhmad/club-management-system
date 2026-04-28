@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="toolbar-actions">
-            <button class="btn btn-primary" wire:click="changeScreen('form')">
+            <button class="btn btn-primary" wire:click="openModal">
                 <span>➕</span> Add Skill
             </button>
         </div>
@@ -64,6 +64,11 @@
 
             </tbody>
         </table>
+
+        
+        <div class="pagination-container">
+            {{ $skills->links() }}
+        </div>
 
         {{-- <!-- Pagination -->
         <div class="pagination-wrapper">
