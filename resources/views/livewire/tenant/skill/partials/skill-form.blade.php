@@ -120,7 +120,9 @@
                         <label for="avatar-input" class="avatar-circle">
                             <!-- Image Preview -->
                             @if ($icon)
-                                <img class="avatar-preview-img" src="{{ $icon->temporaryUrl() }}" alt="Preview">
+                                <img class="avatar-preview-img"
+                                    src="{{ $icon instanceof \Illuminate\Http\UploadedFile ? $icon->temporaryUrl() : $edit_skill->getFirstMediaUrl('skills') }}"
+                                    alt="Preview">
                             @else
                                 <!-- Upload Placeholder -->
                                 <div class="upload-placeholder text-center">
@@ -145,7 +147,7 @@
                     </div>
 
                 </div>
-                
+
                 <div class="row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="form-group">
                         <label for="skill-name">Skill Name (EN) <span class="required">*</span></label>
@@ -158,7 +160,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="skill-name-ar" style="text-align: right;">اسم المهارة (AR) <span class="required">*</span></label>
+                        <label for="skill-name-ar" style="text-align: right;">اسم المهارة (AR) <span
+                                class="required">*</span></label>
                         <input type="text" wire:model="skill_name_ar" id="skill-name-ar" class="input-field"
                             placeholder="مثال: التسديد" dir="rtl"
                             style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.1);">
@@ -170,7 +173,7 @@
 
                 <div class="form-actions" style="margin-top: 40px; display: flex; gap: 12px;">
                     <button type="submit" class="btn btn-primary" style="flex: 2; padding: 12px; font-weight: 600;">
-                        Create Skill
+                        {{ $edit_skill ? 'Update Skill' : 'Create Skill' }}
                     </button>
                     <button wire:click="cancel" type="button" class="btn btn-outline"
                         style="flex: 1; padding: 12px; border-color: rgba(255,255,255,0.1); color: #94a3b8;">

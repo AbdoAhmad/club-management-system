@@ -26,19 +26,27 @@ class SkillManagment extends Component
     #[Rule('nullable|image|mimes:png,jpg,jpeg,gif|max:1024')]
     public $icon;
 
+    public $edit_skill;
+
     public function mount()
     {
+        
         $this->screan = request('screan', 'list');
+
     }
 
     public function render()
     {
-        $skills = Skill::all();
+        $query = Skill::query();
+
         if ($this->search) {
-            // json search 
-            $skills = Skill::where('name->en', 'like', '%' . $this->search . '%')->
-            orWhere('name->ar', 'like', '%' . $this->search . '%')->get();
+            // حط الـ OR جوه function عشان تعزلها
+            $query->where(function ($q) {
+                $q->where('name->en', 'like', '%'.$this->search.'%')
+                    ->orWhere('name->ar', 'like', '%'.$this->search.'%');
+            });
         }
+        $skills = $query->get();
 
         return view('livewire.tenant.skill.skill-managment', ['skills' => $skills]);
     }
@@ -64,6 +72,15 @@ class SkillManagment extends Component
     public function changeScreen($screen)
     {
         $this->screan = $screen;
+    }
+
+    public function edit(Skill $skill)
+    {
+        $this->skill_name_en = $skill->getTranslation('name', 'en');
+        $this->skill_name_ar = $skill->getTranslation('name', 'ar');
+        $this->icon = $skill->getFirstMediaUrl('skills');
+        $this->edit_skill = $skill;
+        $this->changeScreen('form');
     }
 
     public function cancel()

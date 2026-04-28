@@ -51,8 +51,10 @@
                         </td>
                         <td>
                             <div class="table-actions">
-                                <button class="table-action-btn" data-tooltip="Edit">✏️</button>
-                                <button class="table-action-btn" data-tooltip="Delete">🗑️</button>
+                                <button class="table-action-btn" wire:click="edit({{ $skill->id }})" data-tooltip="Edit">✏️</button>
+                                <button class="table-action-btn" wire:confirm="Are you sure you want to delete {{ $skill->name }} skill?" 
+                                    wire:click="delete({{ $skill->id }})" 
+                                    data-tooltip="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
