@@ -55,15 +55,23 @@
                 <!-- Inputs -->
                 <div class="row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="form-group">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Skill Name (EN) <span class="required">*</span></label>
-                        <input type="text" wire:model="skill_name_en" class="input-field" placeholder="e.g. Dribbling">
-                        @error('skill_name_en') <div class="text-danger" style="font-size: 12px; margin-top: 5px;">{{ $message }}</div> @enderror
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Skill Name (EN) <span
+                                class="required">*</span></label>
+                        <input type="text" wire:model="skill_name_en" class="input-field"
+                            placeholder="e.g. Dribbling">
+                        @error('skill_name_en')
+                            <div class="text-danger" style="font-size: 12px; margin-top: 5px;">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">اسم المهارة (AR) <span class="required">*</span></label>
-                        <input type="text" wire:model="skill_name_ar" class="input-field" dir="rtl" placeholder="مثال: المراوغة">
-                        @error('skill_name_ar') <div class="text-danger" style="font-size: 12px; margin-top: 5px;">{{ $message }}</div> @enderror
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">اسم المهارة (AR) <span
+                                class="required">*</span></label>
+                        <input type="text" wire:model="skill_name_ar" class="input-field" dir="rtl"
+                            placeholder="مثال: المراوغة">
+                        @error('skill_name_ar')
+                            <div class="text-danger" style="font-size: 12px; margin-top: 5px;">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 

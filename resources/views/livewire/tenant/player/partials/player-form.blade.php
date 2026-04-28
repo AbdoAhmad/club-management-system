@@ -121,15 +121,15 @@
                     <div>
                         {{-- english name player --}}
                         <label for="en-player-name">Player Name (EN) <span class="required">*</span></label>
-                        <input type="text" id="en-player-name" class="input-field" placeholder="Enter player's full name"
-                            required>
+                        <input type="text" id="en-player-name" class="input-field"
+                            placeholder="Enter player's full name" required>
                     </div>
                     <div dir="rtl">
                         {{-- arbic name player --}}
-                        
+
                         <label for="ar-player-name">اسم اللاعب (AR) <span class="required">*</span></label>
                         <input type="text" id="ar-player-name" class="input-field"
-                            placeholder="أدخل اسم اللاعب باللغة العربية"  required>
+                            placeholder="أدخل اسم اللاعب باللغة العربية" required>
                     </div>
                     <div class="avatar-section text-center mb-5">
                         <div class="avatar-container" style="margin: 0 auto;">
@@ -187,6 +187,115 @@
                     </select>
                 </div>
 
+                <!-- Interactive Multi-Select Tags (JS Only) -->
+                <div class="form-group" style="position: relative;" id="skills-multi-select">
+                    <label>Player Skills (Expertise)</label>
+                    <div class="static-multi-select input-field" id="tags-container"
+                        onclick="document.getElementById('skills-dropdown').classList.toggle('show'); this.classList.toggle('focused')"
+                        style="min-height: 48px; height: auto; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 6px 12px; cursor: pointer; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; transition: all 0.2s ease-in-out;">
+                        
+                        <span id="placeholder-text" style="color: #94a3b8; font-size: 14px; margin-left: 5px; user-select: none;">Select player skills...</span>
+
+                        <div style="margin-left: auto; color: rgba(255,255,255,0.2);">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown List -->
+                    <div class="ui-dropdown custom-scrollbar" id="skills-dropdown"
+                        style="position: absolute; top: 100%; left: 0; right: 0; z-index: 100; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-top: 8px; max-height: 220px; overflow-y: auto; display: none; box-shadow: 0 15px 35px rgba(0,0,0,0.4); padding: 8px;">
+                        
+                        <div class="ui-item" onclick="toggleSkillUI(this, 'SPEED')" style="padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; transition: 0.2s;">
+                            <span style="font-size: 13px; color: #94a3b8;">Speed</span>
+                            <span class="check-mark" style="color: #22c55e; display: none;">✓</span>
+                        </div>
+                        <div class="ui-item" onclick="toggleSkillUI(this, 'AGILITY')" style="padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; transition: 0.2s;">
+                            <span style="font-size: 13px; color: #94a3b8;">Agility</span>
+                            <span class="check-mark" style="color: #22c55e; display: none;">✓</span>
+                        </div>
+                        <div class="ui-item" onclick="toggleSkillUI(this, 'ENDURANCE')" style="padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; transition: 0.2s;">
+                            <span style="font-size: 13px; color: #94a3b8;">Endurance</span>
+                            <span class="check-mark" style="color: #22c55e; display: none;">✓</span>
+                        </div>
+                        <div class="ui-item" onclick="toggleSkillUI(this, 'STRENGTH')" style="padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; transition: 0.2s;">
+                            <span style="font-size: 13px; color: #94a3b8;">Strength</span>
+                            <span class="check-mark" style="color: #22c55e; display: none;">✓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .static-multi-select:hover { border-color: rgba(34, 197, 94, 0.4) !important; background: rgba(34, 197, 94, 0.05) !important; }
+                    .static-multi-select.focused { border-color: #22c55e !important; background: rgba(34, 197, 94, 0.05) !important; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1); }
+                    .ui-dropdown.show { display: block !important; animation: slideDown 0.2s ease; }
+                    .ui-item:hover { background: rgba(255, 255, 255, 0.03); }
+                    .ui-item.selected { background: rgba(34, 197, 94, 0.05); }
+                    .ui-item.selected span:first-child { color: #22c55e !important; font-weight: 600; }
+                    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+                    .ui-badge { animation: badgeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+                    @keyframes badgeIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+                </style>
+
+                <script>
+                    function toggleSkillUI(element, skillName) {
+                        const container = document.getElementById('tags-container');
+                        const placeholder = document.getElementById('placeholder-text');
+                        const isSelected = element.classList.toggle('selected');
+                        const checkMark = element.querySelector('.check-mark');
+                        
+                        if (isSelected) {
+                            checkMark.style.display = 'block';
+                            placeholder.style.display = 'none';
+                            
+                            // Create Badge
+                            const badge = document.createElement('div');
+                            badge.className = 'ui-badge';
+                            badge.id = 'badge-' + skillName;
+                            badge.style = "background: rgba(34, 197, 94, 0.1); color: #22c55e; padding: 4px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(34, 197, 94, 0.2);";
+                            badge.innerHTML = `${skillName} <span onclick="removeBadgeUI(event, '${skillName}')" style="cursor: pointer; opacity: 0.5; font-size: 14px; margin-left: 4px;">×</span>`;
+                            
+                            // Insert before the arrow
+                            container.insertBefore(badge, container.lastElementChild);
+                        } else {
+                            checkMark.style.display = 'none';
+                            const badgeToRemove = document.getElementById('badge-' + skillName);
+                            if (badgeToRemove) badgeToRemove.remove();
+                            
+                            if (container.querySelectorAll('.ui-badge').length === 0) {
+                                placeholder.style.display = 'block';
+                            }
+                        }
+                    }
+
+                    function removeBadgeUI(event, skillName) {
+                        event.stopPropagation();
+                        const badge = document.getElementById('badge-' + skillName);
+                        if (badge) badge.remove();
+                        
+                        // Find and unselect in dropdown
+                        const items = document.querySelectorAll('.ui-item');
+                        items.forEach(item => {
+                            if (item.textContent.trim().toUpperCase().includes(skillName)) {
+                                item.classList.remove('selected');
+                                item.querySelector('.check-mark').style.display = 'none';
+                            }
+                        });
+
+                        const container = document.getElementById('tags-container');
+                        if (container.querySelectorAll('.ui-badge').length === 0) {
+                            document.getElementById('placeholder-text').style.display = 'block';
+                        }
+                    }
+
+                    window.addEventListener('click', function(e) {
+                        if (!e.target.closest('#skills-multi-select')) {
+                            document.getElementById('skills-dropdown').classList.remove('show');
+                            document.getElementById('tags-container').classList.remove('focused');
+                        }
+                    });
+                </script>
                 <div class="form-group two-col">
                     <div>
                         <label for="player-height">Height (cm)</label>
@@ -198,12 +307,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="player-email">Email <span class="required">*</span></label>
-                    <input type="email" id="player-email" class="input-field" placeholder="player@example.com"
-                        required>
-                    <span class="input-hint">We'll use this for notifications</span>
-                </div>
+
 
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Register Player</button>
