@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\Attributes\Translatable;
 use Spatie\Translatable\HasTranslations;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 
-class Player extends Model
+class Player extends Model implements HasMedia
 {
     /** @use HasFactory<PlayerFactory> */
     use HasFactory;
 
     use HasTranslations;
+    
+    use InteractsWithMedia;
+
     protected $fillable = [
         'name',
         'age',
