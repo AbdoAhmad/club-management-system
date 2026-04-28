@@ -147,13 +147,13 @@
                 <span class="fw-bold">Players Management</span>
             </div>
             <div class="nav-submenu {{ request()->routeIs('players') ? 'show' : '' }}">
-                <a href="{{ route('players', ['screan' => 'list']) }}"
-                    class="nav-submenu-item {{ request()->routeIs('players') && request('screan') == 'list' ? 'active-sub' : '' }}">
+                <a href="{{ route('players', ['screen' => 'list']) }}"
+                    class="nav-submenu-item {{ request()->routeIs('players') && request('screen') == 'list' ? 'active-sub' : '' }}">
                     <span class="me-2">📁</span>
                     <span>Show All Players</span>
                 </a>
-                <a href="{{ route('players', ['screan' => 'form']) }}"
-                    class="nav-submenu-item {{ request()->routeIs('players') && request('screan') == 'form' ? 'active-sub' : '' }}">
+                <a href="{{ route('players', ['screen' => 'form']) }}"
+                    class="nav-submenu-item {{ request()->routeIs('players') && request('screen') == 'form' ? 'active-sub' : '' }}">
                     <span class="me-2">➕</span>
                     <span>Register New Player</span>
                 </a>

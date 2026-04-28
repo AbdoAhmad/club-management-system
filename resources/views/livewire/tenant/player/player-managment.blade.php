@@ -1,8 +1,8 @@
 <div>
 
-    @if ($screan == 'list')
+    @if ($screen == 'list')
         @include('livewire.tenant.player.partials.list-players')
-    @elseif($screan == 'form')
+    @elseif($screen == 'form')
         @include('livewire.tenant.player.partials.player-form')
     @endif
 </div>
