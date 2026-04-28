@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="toolbar-actions">
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" wire:click="changeScreen('form')">
                 <span>➕</span> Add Skill
             </button>
         </div>

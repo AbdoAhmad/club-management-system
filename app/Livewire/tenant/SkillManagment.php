@@ -52,6 +52,11 @@ class SkillManagment extends Component
         $this->screan = 'list';
     }
 
+    public function changeScreen($screen)
+    {
+        $this->screan = $screen;
+    }
+
     public function cancel()
     {
         $this->reset();
