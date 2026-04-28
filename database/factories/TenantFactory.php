@@ -45,7 +45,7 @@ class TenantFactory extends Factory
             \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RolesSeeder' ]);
             //seed position , skill , player
             \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'PositionSeeder']);
-            \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SkillSeeder']);
+            // \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SkillSeeder']);
             \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'PlayerSeeder']);
 
             $user = User::factory()->create([

@@ -10,7 +10,7 @@
         <div class="toolbar-search">
             <div class="input-with-icon">
                 <input type="text" class="input-field" placeholder="Search skills by name, level, or category..."
-                    data-table-search>
+                    wire:model.live="search">
                 <span class="icon">🔍</span>
             </div>
         </div>
@@ -39,12 +39,12 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $skill->name }}</td>
                         <td>
-                            @if($skill->hasMedia('skills'))
-                                <img src="{{ $skill->getFirstMediaUrl('skills') }}" 
-                                     alt="{{ $skill->name }}" 
-                                     style="width: 45px; height: 45px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            @if ($skill->hasMedia('skills'))
+                                <img src="{{ $skill->getFirstMediaUrl('skills') }}" alt="{{ $skill->name }}"
+                                    style="width: 45px; height: 45px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                             @else
-                                <div style="width: 45px; height: 45px; border-radius: 10px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+                                <div
+                                    style="width: 45px; height: 45px; border-radius: 10px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
                                     <span style="font-size: 10px; color: rgba(255,255,255,0.3);">No Icon</span>
                                 </div>
                             @endif

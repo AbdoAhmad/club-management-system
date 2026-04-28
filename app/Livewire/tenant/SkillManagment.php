@@ -15,6 +15,8 @@ class SkillManagment extends Component
 
     public $screan = 'list';
 
+    public $search = '';
+
     #[Rule('required')]
     public $skill_name_en;
 
@@ -31,10 +33,17 @@ class SkillManagment extends Component
 
     public function render()
     {
-        return view('livewire.tenant.skill.skill-managment',['skills' => Skill::latest()->get()]);
+        $skills = Skill::all();
+        if ($this->search) {
+            // json search 
+            $skills = Skill::where('name->en', 'like', '%' . $this->search . '%')->
+            orWhere('name->ar', 'like', '%' . $this->search . '%')->get();
+        }
+
+        return view('livewire.tenant.skill.skill-managment', ['skills' => $skills]);
     }
 
-        public function save()
+    public function save()
     {
         $this->validate();
         $skill = Skill::create([
@@ -57,6 +66,4 @@ class SkillManagment extends Component
         $this->reset();
         $this->screan = 'list';
     }
-
-
 }
