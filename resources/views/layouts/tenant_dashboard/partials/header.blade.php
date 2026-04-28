@@ -527,6 +527,227 @@
         }
     }
 </style>
+<style>
+    .pagination-container {
+        margin-top: 2rem;
+        padding: 1.5rem 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Dark mode support for border */
+    @media (prefers-color-scheme: dark) {
+        .pagination-container {
+            border-top-color: rgba(255, 255, 255, 0.05);
+        }
+    }
+
+    .pagination-container nav {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .pagination-container .pagination {
+        display: flex;
+        gap: 5px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+
+    .pagination-container .page-item .page-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 38px;
+        height: 38px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        color: #64748b;
+        padding: 0 12px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .pagination-container .page-item.active .page-link {
+        background: #22c55e;
+        border-color: #22c55e;
+        color: white;
+        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.25);
+    }
+
+    .pagination-container .page-item .page-link:hover:not(.active) {
+        background: #f8fafc;
+        border-color: #22c55e;
+        color: #22c55e;
+    }
+
+    .pagination-container .page-item.disabled .page-link {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: #f1f5f9;
+    }
+
+    .pagination-container nav div:first-child p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* Hidden small screen parts that sometimes appear in Bootstrap/Livewire pagination */
+    .pagination-container nav>div:first-child span {
+        display: none;
+    }
+</style>
+<style>
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 1 !important;
+        pointer-events: all !important;
+        backdrop-filter: blur(4px);
+    }
+
+    .modal-container {
+        background: white;
+        padding: 35px;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 550px;
+        position: relative;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+    }
+
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+        .modal-container {
+            background: #1e293b;
+            color: white;
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-container h2 {
+            color: white !important;
+        }
+
+        .modal-container p {
+            color: #94a3b8 !important;
+        }
+
+        .modal-container label {
+            color: #cbd5e1 !important;
+        }
+
+        .modal-container .input-field {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+        }
+
+        .modal-container .btn-outline {
+            color: white !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+    }
+
+    /* If user has a manual .dark class toggle */
+    .dark .modal-container {
+        background: #1e293b;
+        color: white;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dark .modal-container h2 {
+        color: white !important;
+    }
+
+    .dark .modal-container p {
+        color: #94a3b8 !important;
+    }
+
+    .dark .modal-container label {
+        color: #cbd5e1 !important;
+    }
+
+    .dark .modal-container .input-field {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 10;
+        transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+        color: var(--error-red);
+    }
+
+    .avatar-container {
+        width: 100px;
+        height: 100px;
+        position: relative;
+    }
+
+    .avatar-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: rgba(34, 197, 94, 0.05);
+        border: 2px dashed rgba(34, 197, 94, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .avatar-circle:hover {
+        border-color: #22c55e;
+        background: rgba(34, 197, 94, 0.1);
+    }
+
+    .avatar-preview-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .upload-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
     @stack("styles")
     @livewireStyles
 
