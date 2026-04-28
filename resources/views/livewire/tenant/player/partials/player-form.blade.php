@@ -187,125 +187,17 @@
                     </select>
                 </div>
 
-                <!-- Livewire Connected Multi-Select Tags -->
-                <div class="form-group" style="position: relative;" id="skills-multi-select">
-                            <label>Player Skills (Expertise)</label>
-                            <div class="static-multi-select input-field" id="tags-container"
-                                onclick="document.getElementById('skills-dropdown').classList.toggle('show'); this.classList.toggle('focused')"
-                                style="min-height: 48px; height: auto; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 6px 12px; cursor: pointer; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; transition: all 0.2s ease-in-out;">
-
-                                @if (empty($selected_skills))
-                                    <span id="placeholder-text"
-                                        style="color: #94a3b8; font-size: 14px; margin-left: 5px; user-select: none;">Select
-                                        player
-                                        skills...</span>
-                                @endif
-
-                                @foreach ($skills->whereIn('id', $selected_skills) as $selectedSkill)
-                                    <div class="ui-badge"
-                                        style="background: rgba(34, 197, 94, 0.1); color: #22c55e; padding: 4px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(34, 197, 94, 0.2);">
-                                        {{ strtoupper($selectedSkill->name) }}
-                                        <span wire:click.stop="toggleSkill({{ $selectedSkill->id }})"
-                                            style="cursor: pointer; opacity: 0.5; font-size: 14px; margin-left: 4px;">×</span>
-                                    </div>
-                                @endforeach
-
-                                <div style="margin-left: auto; color: rgba(255,255,255,0.2);">
-                                    <svg width="14" height="14" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <!-- Livewire Dropdown List -->
-                            <div class="ui-dropdown custom-scrollbar" id="skills-dropdown"
-                                style="position: absolute; top: 100%; left: 0; right: 0; z-index: 100; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-top: 8px; max-height: 220px; overflow-y: auto; display: none; box-shadow: 0 15px 35px rgba(0,0,0,0.4); padding: 8px;">
-
-                                @foreach ($skills as $skill)
-                                    <div class="ui-item {{ in_array($skill->id, $selected_skills) ? 'selected' : '' }}"
-                                        wire:click="toggleSkill({{ $skill->id }})"
-                                        style="padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; transition: 0.2s;">
-                                        <span
-                                            style="font-size: 13px; color: {{ in_array($skill->id, $selected_skills) ? '#22c55e' : '#94a3b8' }};">
-                                            {{ $skill->name }}
-                                        </span>
-                                        @if (in_array($skill->id, $selected_skills))
-                                            <span class="check-mark" style="color: #22c55e;">✓</span>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-
-                            <style>
-                                .static-multi-select:hover {
-                                    border-color: rgba(34, 197, 94, 0.4) !important;
-                                    background: rgba(34, 197, 94, 0.05) !important;
-                                }
-
-                                .static-multi-select.focused {
-                                    border-color: #22c55e !important;
-                                    background: rgba(34, 197, 94, 0.05) !important;
-                                    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
-                                }
-
-                                .ui-dropdown.show {
-                                    display: block !important;
-                                    animation: slideDown 0.2s ease;
-                                }
-
-                                .ui-item:hover {
-                                    background: rgba(255, 255, 255, 0.03);
-                                }
-
-                                .ui-item.selected {
-                                    background: rgba(34, 197, 94, 0.05);
-                                }
-
-                                .ui-item.selected span:first-child {
-                                    color: #22c55e !important;
-                                    font-weight: 600;
-                                }
-
-                                @keyframes slideDown {
-                                    from {
-                                        opacity: 0;
-                                        transform: translateY(-10px);
-                                    }
-
-                                    to {
-                                        opacity: 1;
-                                        transform: translateY(0);
-                                    }
-                                }
-
-                                .ui-badge {
-                                    animation: badgeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                                }
-
-                                @keyframes badgeIn {
-                                    from {
-                                        transform: scale(0.5);
-                                        opacity: 0;
-                                    }
-
-                                    to {
-                                        transform: scale(1);
-                                        opacity: 1;
-                                    }
-                                }
-                            </style>
-
-                            <script>
-                                window.addEventListener('click', function(e) {
-                                    if (!e.target.closest('#skills-multi-select')) {
-                                        document.getElementById('skills-dropdown').classList.remove('show');
-                                        document.getElementById('tags-container').classList.remove('focused');
-                                    }
-                                });
-                            </script>
-                        </div>
+                <!-- Premium Select2 Multi-Select -->
+                <div class="form-group" wire:ignore>
+                    <label>Player Skills (Expertise)</label>
+                    <select id="skills-select2" class="input-field" multiple="multiple">
+                        @foreach ($skills as $skill)
+                            <option value="{{ $skill->id }}" {{ in_array($skill->id, $selected_skills) ? 'selected' : '' }}>
+                                {{ $skill->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                         <div class="form-group two-col">
                             <div>
                                 <label for="player-height">Height (cm)</label>
@@ -327,3 +219,143 @@
         </div>
 
     </div>
+</div>
+
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        /* Premium Select2 Custom Styling */
+        .select2-container--default .select2-selection--multiple {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 5px !important;
+            min-height: 48px !important;
+            transition: all 0.2s ease-in-out;
+            display: flex !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+        }
+
+        .select2-container--default .select2-selection--multiple:hover {
+            border-color: rgba(34, 197, 94, 0.4) !important;
+            background: rgba(34, 197, 94, 0.02) !important;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #22c55e !important;
+            background: rgba(34, 197, 94, 0.05) !important;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+        }
+
+        .select2-container--default .select2-selection__rendered {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 4px !important;
+            width: 100% !important;
+            padding: 0 5px !important;
+            list-style: none !important;
+        }
+
+        .select2-container--default .select2-search--inline {
+            flex: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background: rgba(34, 197, 94, 0.1) !important;
+            border: 1px solid rgba(34, 197, 94, 0.2) !important;
+            color: #22c55e !important;
+            border-radius: 8px !important;
+            padding: 4px 12px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            margin: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: #22c55e !important;
+            margin-right: 8px !important;
+            border: none !important;
+            transition: color 0.2s;
+            position: relative;
+            top: auto;
+            left: auto;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            background: transparent !important;
+            color: #ef4444 !important;
+        }
+
+        .select2-dropdown {
+            background: #0f172a !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
+            overflow: hidden !important;
+            z-index: 9999 !important;
+        }
+
+        .select2-results__option {
+            color: #94a3b8 !important;
+            padding: 10px 15px !important;
+            font-size: 13px !important;
+            transition: 0.2s;
+        }
+
+        .select2-results__option--highlighted[aria-selected] {
+            background: rgba(34, 197, 94, 0.1) !important;
+            color: #22c55e !important;
+        }
+
+        .select2-results__option[aria-selected=true] {
+            background: rgba(34, 197, 94, 0.05) !important;
+            color: #22c55e !important;
+        }
+
+        .select2-search__field {
+            background: transparent !important;
+            color: white !important;
+            margin-top: 0 !important;
+        }
+
+        .select2-container--default .select2-search--inline .select2-search__field {
+            font-family: inherit !important;
+            color: #e2e8f0 !important;
+            margin-left: 10px !important;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        function initSkillsSelect() {
+            const selectElement = $('#skills-select2');
+            if (selectElement.length) {
+                selectElement.select2({
+                    placeholder: "Select player skills...",
+                    allowClear: true,
+                    width: '100%',
+                    
+                }).on('change', function(e) {
+                    let data = $(this).val();
+                    @this.set('selected_skills', data);
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            initSkillsSelect();
+        });
+
+        document.addEventListener('livewire:navigated', () => {
+            initSkillsSelect();
+        });
+    </script>
+@endpush
