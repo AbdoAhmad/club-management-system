@@ -77,8 +77,11 @@ class TenancyServiceProvider extends ServiceProvider
                 Listeners\RevertToCentralContext::class,
             ],
 
-            Events\BootstrappingTenancy::class => [],
-            Events\TenancyBootstrapped::class => [],
+            Events\TenancyBootstrapped::class => [
+                function (Events\TenancyBootstrapped $event) {
+                    config(['filesystems.disks.public.url' => url('tenancy/assets')]);
+                }
+            ],
             Events\RevertingToCentralContext::class => [],
             Events\RevertedToCentralContext::class => [],
 
