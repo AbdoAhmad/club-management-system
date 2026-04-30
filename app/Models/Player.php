@@ -39,5 +39,10 @@ class Player extends Model implements HasMedia
     {
         return $this->belongsToMany(Position::class, 'player_position')->withPivot('position_level');
     }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('player_image')
+            ->singleFile();   
+    }
 
 }
