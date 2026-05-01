@@ -27,15 +27,16 @@
         <div class="container-fluid">
             <!-- Stats Row -->
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-3">
+                <div class="col-12 col-sm-6 col-md-3" onclick="window.location='{{ route('tenant') }}'" style="cursor: pointer;">
                     <div class="info-box shadow-lg">
                         <span class="info-box-icon text-bg-primary elevation-1">
                             <i class="bi bi-building-fill"></i>
                         </span>
-                        <div class="info-box-content">
+                        <div class="info-box-content" >
                             <span class="info-box-text">{{ __('Total Clubs') }}</span>
                             <span class="info-box-number">
                                 {{ $totalTenants }}
+                                
                             </span>
                         </div>
                     </div>
