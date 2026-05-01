@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل دمج CKEditor مع Livewire</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; padding: 40px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #22c55e; padding-bottom: 10px; }
+        h2 { color: #16a34a; margin-top: 30px; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 4px; font-family: Consolas, monospace; }
+        pre { background: #2d3436; color: #dfe6e9; padding: 15px; border-radius: 8px; overflow-x: auto; direction: ltr; text-align: left; }
+        .note { background: #e8f5e9; border-left: 5px solid #2ecc71; padding: 15px; margin: 20px 0; }
+        .footer { margin-top: 50px; font-size: 0.8em; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>📘 دليل دمج CKEditor 5 مع Livewire 3 (النسخة الاحترافية)</h1>
+    <p>هذا الدليل يلخص أفضل ممارسة لدمج محرر النصوص CKEditor مع إطار العمل Livewire، بناءً على تجربة عملية لضمان الأداء العالي وسلامة البيانات.</p>
+
+    <h2>1. الهيكل الأساسي (Blade Template)</h2>
+    <p>يجب وضع المحرر داخل حاوية تحتوي على <code>wire:ignore</code> لمنع Livewire من إعادة بناء العنصر ومسح حالة المحرر.</p>
+    <pre>
+&lt;div class="mb-4" wire:ignore&gt;
+    &lt;label&gt;وصف اللاعب&lt;/label&gt;
+    &lt;!-- textarea عادية بدون wire:model --&gt;
+    &lt;textarea id="player_description" class="input-field"&gt;{!! $description !!}&lt;/textarea&gt;
+&lt;/div&gt;</pre>
+
+    <h2>2. السر في الأداء: المزامنة اللحظية المؤجلة (Javascript)</h2>
+    <p>بدلاً من المزامنة التقليدية التي تستهلك موارد السيرفر، نستخدم التحديث المؤجل (Deferred Updates).</p>
+    <pre>
+ClassicEditor.create(document.querySelector('#player_description'), {
+    // الإعدادات الخاصة بك...
+}).then(editor => {
+    // المزامنة مع كل حرف يكتبه المستخدم
+    editor.model.document.on('change:data', () => {
+        const data = editor.getData();
+        
+        // استخدام @this.set مع المعامل الثالث 'true'
+        // هذا يحدّث الداتا في المتصفح فقط دون إرسال طلب للسيرفر فوراً
+        @this.set('description', data, true);
+    });
+});</pre>
+
+    <h2>3. التعامل مع نظام التنقل (Livewire Navigated)</h2>
+    <p>في تطبيقات Livewire 3، التنقل بين الصفحات لا يعيد تحميل الصفحة بالكامل. لذا يجب تنظيف الذاكرة وإعادة بناء المحرر.</p>
+    <pre>
+document.addEventListener('livewire:navigated', async () => {
+    // 1. مسح النسخ القديمة
+    if (myEditorInstance) {
+        await myEditorInstance.destroy();
+        myEditorInstance = null;
+    }
+    // 2. إعادة التشغيل
+    initCKEditor();
+});</pre>
+
+    <h2>4. التنسيق الجمالي (Premium UI)</h2>
+    <p>لجعل المحرر يبدو كجزء أصيل من نظامك، يجب تخصيص CSS ليتوافق مع باقي الحقول:</p>
+    <pre>
+.ck-editor__editable, .ck-content, .ck-content * {
+    color: #000000 !important;
+    opacity: 1 !important;
+}
+
+.ck-editor.ck-focused {
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+    border-color: #22c55e !important;
+}</pre>
+
+    <div class="note">
+        <strong>✅ لماذا هذا الحل هو الأفضل؟</strong>
+        <ul>
+            <li>سرعة فائقة في الكتابة.</li>
+            <li>استقرار كامل للبيانات (لا وجود للـ null).</li>
+            <li>توافق تام مع الـ SPA behavior الخاص بـ Livewire 3.</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        تم إعداد هذا الدليل بواسطة Antigravity AI - مشروع إدارة الأندية.
+    </div>
+</body>
+</html>

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->enum('skill_level_type', ['percentage', 'stars']);
             $table->timestamps();
         });
     }

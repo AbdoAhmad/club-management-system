@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('players', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->integer('age');
+            $table->json('description');
+            $table->json('description_plain')->nullable();
+            $table->date('date_of_birth');
+            $table->date('joined_at');
             $table->integer('jersey_number');
+            $table->enum('status', ['active', 'banned', 'injured'])->default('active');
             $table->double('height');
             $table->double('weight');
-            $table->enum('status', ['active', 'banned', 'injured'])->default('active');
             $table->timestamps();
         });
     }

@@ -11,48 +11,59 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Mews\Purifier\Facades\Purifier;
+
 
 #[Layout('layouts.tenant_dashboard.app')]
 class PlayerManagment extends Component
 {
     use WithFileUploads;
+
     public $screen = 'list';
 
     protected $queryString = ['screen'];
 
     // add form data inputs
-    #[Rule('nullable|image|mimes:jpeg,png,jpg,gif|max:2048')]
-    public $image;
-
     #[Rule('required|string|max:255')]
     public $name_ar;
 
     #[Rule('required|string|max:255')]
     public $name_en;
 
+    #[Rule('required|string|max:255')]
+    public $description_ar;
+
+    #[Rule('required|string|max:255')]
+    public $description_en;
+
+    #[Rule('nullable|image|mimes:jpeg,png,jpg,gif|max:2048')]
+    public $image;
+
     #[Rule('required|date')]
     public $birth_date;
 
+    #[Rule('required|date')]
+    public $joined_at;
+
     #[Rule('required|integer|min:1|max:100')]
     public $jersey_number;
+
+    #[Rule('required|string|in:active,banned,injured')]
+    public $status;
+
+    #[Rule('nullable|array|max:255')]
+    public $selected_position = [];
+
+    public $primary_position_id;
+
+    #[Rule('nullable|array|max:255')]
+    public $selected_skills = [];
 
     #[Rule('required|integer|min:0')]
     public $height;
 
     #[Rule('required|integer|min:0')]
     public $weight;
-
-    #[Rule('nullable|array|max:255')]
-    public $selected_position = [
-
-    ];
-
-    #[Rule('nullable|array|max:255')]
-    public $selected_skills = [];
-
-    #[Rule('required|string|in:active,banned,injured')]
-    public $status;
-    public $primary_position_id;
 
     #[Computed]
     public function age()
@@ -63,11 +74,6 @@ class PlayerManagment extends Component
 
         return null;
     }
-    #[computed]
-    public function getbirthDate()
-    {
-        return $this->birth_date ? Carbon::parse($this->birth_date)->format('Y-m-d') : null;
-    }
 
     public function switchScreen($screen)
     {
@@ -76,14 +82,28 @@ class PlayerManagment extends Component
 
     public function save()
     {
+
         $this->validate();
+    
+        // Clean the descriptions
+        $this->description_ar = Purifier::clean($this->description_ar);
+        $this->description_en = Purifier::clean($this->description_en);
 
         $player = Player::create([
             'name' => [
                 'ar' => $this->name_ar,
                 'en' => $this->name_en,
             ],
-            'age' => $this->age(),
+            'description' => [
+                'ar' => $this->description_ar,
+                'en' => $this->description_en,
+            ],
+            'description_plain' => [
+                'ar' => strip_tags(html_entity_decode($this->description_ar)),
+                'en' => strip_tags(html_entity_decode($this->description_en)),
+            ],
+            'date_of_birth' => $this->birth_date,
+            'joined_at' => $this->joined_at,
             'jersey_number' => $this->jersey_number,
             'height' => $this->height,
             'weight' => $this->weight,
@@ -98,19 +118,19 @@ class PlayerManagment extends Component
         foreach ($this->selected_skills as $skill) {
 
             $player->skills()->attach($skill['skill_id'], [
-                'skill_level' => $skill['level'],
-                'skill_level_type' => $skill['level_type'],
+                'value' => $skill['value'],
+
             ]);
         }
 
         foreach ($this->selected_position as $position) {
             if ($position == $this->primary_position_id) {
                 $player->positions()->attach($position, [
-                    'position_level' => 'primary',
+                    'is_primary' => true,
                 ]);
             } else {
                 $player->positions()->attach($position, [
-                    'position_level' => 'secondary',
+                    'is_primary' => false,
                 ]);
             }
         }
@@ -123,11 +143,10 @@ class PlayerManagment extends Component
 
     public function addSkill()
     {
-        // initialize the selected_skills array with default values
         $this->selected_skills[] = [
             'skill_id' => '',
-            'level' => '',
-            'level_type' => '',
+            'type' => '',
+            'value' => '',
         ];
 
     }
@@ -143,16 +162,18 @@ class PlayerManagment extends Component
     public function setLevelType($index, $type)
     {
         if (isset($this->selected_skills[$index])) {
-            $this->selected_skills[$index]['level_type'] = $type;
+            $this->selected_skills[$index]['type'] = $type;
             // Reset level when switching types
-            $this->selected_skills[$index]['level'] = $type === 'percentage' ? 0 : 1;
+            $this->selected_skills[$index]['value'] = $type === 'percentage' ? 0 : 1;
         }
     }
 
     public function setStarRating($index, $rating)
     {
-        if (isset($this->selected_skills[$index]) && $this->selected_skills[$index]['level_type'] === 'stars') {
-            $this->selected_skills[$index]['level'] = $rating;
+        if (isset($this->selected_skills[$index]) && $this->selected_skills[$index]['type'] === 'stars') {
+            // i  want 1 star to be 20 % and 5 stars to be 100%
+            //  the rating is between 1 and 5
+            $this->selected_skills[$index]['value'] = $rating * 20;
         }
     }
 

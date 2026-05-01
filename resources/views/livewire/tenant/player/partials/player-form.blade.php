@@ -1,5 +1,8 @@
 <div>
     <style>
+        /* CKEditor 5 Premium Features CSS */
+
+
         /* Custom Select Option Styling */
         .input-field option {
             background-color: #ffffff;
@@ -365,9 +368,10 @@
             <h2>Player Registration</h2>
             <form>
 
+                {{-- Name english , name arabic , image player --}}
                 <div class="form-group three-col">
+                    {{-- english name player --}}
                     <div>
-                        {{-- english name player --}}
                         <label for="en-player-name">Player Name (EN) <span class="required">*</span></label>
                         <input wire:model="name_en" type="text" id="en-player-name" class="input-field"
                             placeholder="Enter player's full name">
@@ -375,12 +379,8 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-
-
+                    {{-- arbic name player --}}
                     <div dir="rtl">
-                        {{-- arbic name player --}}
-
                         <label for="ar-player-name">اسم اللاعب (AR) <span class="required">*</span></label>
                         <input wire:model="name_ar" type="text" id="ar-player-name" class="input-field"
                             placeholder="أدخل اسم اللاعب باللغة العربية">
@@ -388,9 +388,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-
-
+                    {{-- image player --}}
                     <div class="avatar-section text-center mb-5">
                         <div class="avatar-container" style="margin: 0 auto;">
                             <label for="avatar-input" class="avatar-circle"
@@ -424,8 +422,29 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group three-col">
+                <div class="form-group two-col">
+                    {{-- Description En --}}
+                    <div class="mb-4" wire:ignore>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Player Description (EN) <span
+                                class="required">*</span></label>
+                        <textarea id="editor_en" class="input-field" style="display: none;">{!! $description_en !!}</textarea>
+                        @error('description_en')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    {{-- Description Ar --}}
+                    <div dir="rtl" class="mb-4" wire:ignore>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">وصف اللاعب (AR) <span
+                                class="required">*</span></label>
+                        <textarea id="editor_ar" class="input-field" style="display: none;">{!! $description_ar !!}</textarea>
+                        @error('description_ar')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                {{-- Date of birth , joined at --}}
+                <div class="form-group two-col">
+                    {{-- Date of birth --}}
                     <div>
                         <label for="player-dob">Date of Birth <span class="required">*</span></label>
                         <input wire:model="birth_date" type="date" id="player-dob" class="input-field">
@@ -433,8 +452,19 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    {{-- joined at --}}
+                    <div>
+                        <label for="joined_at">Joined at</label>
+                        <input wire:model="joined_at" type="date" id="joined_at" class="input-field">
+                        @error('joined_at')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
-
+                {{-- Date of birth , jersey number , status player --}}
+                <div class="form-group two-col">
+                    {{-- jersey number --}}
                     <div>
                         <label for="player-jersey">Jersey Number <span class="required">*</span></label>
                         <input wire:model="jersey_number" type="number" id="player-jersey" class="input-field"
@@ -443,8 +473,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-
+                    {{-- player status --}}
                     <div>
                         <label for="player-status">Player Status <span class="required">*</span></label>
                         <select wire:model="status" id="player-status" class="input-field">
@@ -457,9 +486,9 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                 </div>
 
+                {{-- Player positions --}}
                 <div class="form-group">
                     <div wire:ignore>
                         <label>Player Positions</label>
@@ -492,8 +521,7 @@
                         </div>
                     </div>
                 </div>
-
-
+                {{-- Player Skills --}}
                 <div class="form-group">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <label class="mb-0">Player Skills</label>
@@ -535,7 +563,7 @@
                                         <div class="type-toggle">
                                             <button type="button"
                                                 wire:click="setLevelType({{ $index }}, 'percentage')"
-                                                class="type-btn {{ $skill['level_type'] === 'percentage' ? 'active' : '' }}">
+                                                class="type-btn {{ $skill['type'] === 'percentage' ? 'active' : '' }}">
                                                 <svg width="11" height="11" viewBox="0 0 24 24"
                                                     fill="none" stroke="currentColor" stroke-width="2">
                                                     <circle cx="7" cy="7" r="2" />
@@ -546,7 +574,7 @@
                                             </button>
                                             <button type="button"
                                                 wire:click="setLevelType({{ $index }}, 'stars')"
-                                                class="type-btn {{ $skill['level_type'] === 'stars' ? 'active' : '' }}">
+                                                class="type-btn {{ $skill['type'] === 'stars' ? 'active' : '' }}">
                                                 <svg width="11" height="11" viewBox="0 0 24 24">
                                                     <polygon
                                                         points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
@@ -560,25 +588,25 @@
                                     <div class="skill-field">
                                         <span class="skill-field-label">Level</span>
 
-                                        @if ($skill['level_type'] === 'percentage')
+                                        @if ($skill['type'] === 'percentage')
                                             <div class="pct-wrap">
                                                 <input type="number"
-                                                    wire:model.live="selected_skills.{{ $index }}.level"
+                                                    wire:model.live="selected_skills.{{ $index }}.value"
                                                     class="input-field" min="0" max="100"
                                                     placeholder="0–100">
                                                 <span class="pct-sign">%</span>
                                             </div>
                                             <div class="pct-bar-track">
                                                 <div class="pct-bar-fill"
-                                                    style="width: {{ min(100, max(0, $skill['level'] ?? 0)) }}%">
+                                                    style="width: {{ min(100, max(0, $skill['value'] ?? 0)) }}%">
                                                 </div>
                                             </div>
                                         @else
                                             <div class="stars-wrap">
                                                 @for ($star = 1; $star <= 5; $star++)
                                                     <button type="button"
-                                                        wire:click="setStarRating({{ $index }}, {{ $star }})"
-                                                        class="star-btn {{ ($skill['level'] ?? 0) >= $star ? 'lit' : '' }}">
+                                                        wire:click="$set('selected_skills.{{ $index }}.value', {{ $star * 20 }})"
+                                                        class="star-btn {{ ($skill['value'] ?? 0) >= $star * 20 ? 'lit' : '' }}">
                                                         <svg width="22" height="22" viewBox="0 0 24 24">
                                                             <polygon
                                                                 points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -613,9 +641,9 @@
                         </div>
                     @endif
                 </div>
-
-
+                {{-- Height , Weight  --}}
                 <div class="form-group two-col">
+                    {{-- height --}}
                     <div>
                         <label for="player-height">Height (cm)</label>
                         <input wire:model="height" type="number" id="player-height" class="input-field"
@@ -624,9 +652,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-
-
+                    {{-- weight --}}
                     <div>
                         <label for="player-weight">Weight (kg)</label>
                         <input wire:model="weight" type="number" id="player-weight" class="input-field"
@@ -649,6 +675,98 @@
 </div>
 
 @push('styles')
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css" />
+    <link rel="stylesheet"
+        href="https://cdn.ckeditor.com/ckeditor5-premium-features/43.0.0/ckeditor5-premium-features.css" />
+    <style>
+        /* Premium CKEditor Integration */
+        :root {
+            --ck-color-base-border: #e2e8f0;
+            --ck-color-base-background: #ffffff;
+            --ck-color-focus-border: #22c55e;
+            --ck-color-shadow-drop: rgba(34, 197, 94, 0.1);
+            --ck-border-radius: 12px;
+            --ck-color-toolbar-background: #f8fafc;
+            --ck-color-toolbar-border: #e2e8f0;
+        }
+
+        .ck-editor {
+            margin-top: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border-radius: var(--ck-border-radius) !important;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .ck-editor:hover {
+            border-color: rgba(34, 197, 94, 0.4) !important;
+        }
+
+        .ck-editor.ck-focused {
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+        }
+
+        .ck-editor__editable,
+        .ck-editor__editable *,
+        .ck-content,
+        .ck-content * {
+            color: #000000 !important;
+            opacity: 1 !important;
+            -webkit-text-fill-color: #000000 !important;
+        }
+
+        .ck-editor__editable {
+            min-height: 250px !important;
+            background: #ffffff !important;
+            padding: 1.25rem 1.5rem !important;
+            font-size: 15px !important;
+            line-height: 1.7 !important;
+            border: none !important;
+        }
+
+        #editor_ar+.ck-editor .ck-editor__editable {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+
+        /* Toolbar Styling */
+        .ck-toolbar {
+            background: var(--ck-color-toolbar-background) !important;
+            border-bottom: 1px solid var(--ck-color-toolbar-border) !important;
+            padding: 0.5rem !important;
+        }
+
+        .ck-toolbar__items {
+            gap: 2px !important;
+        }
+
+        .ck.ck-button {
+            border-radius: 8px !important;
+            padding: 4px !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .ck.ck-button:hover {
+            background: rgba(34, 197, 94, 0.08) !important;
+            color: #16a34a !important;
+        }
+
+        .ck.ck-button.ck-on {
+            background: #22c55e !important;
+            color: #ffffff !important;
+        }
+
+        /* Border removal for seamless look */
+        .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+            border: 1px solid #e2e8f0 !important;
+            border-top: none !important;
+        }
+
+        .ck.ck-editor__main>.ck-editor__editable.ck-focused {
+            border: 1px solid #22c55e !important;
+            border-top: none !important;
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
@@ -1001,6 +1119,9 @@
 @endpush
 
 @push('scripts')
+    <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.umd.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5-premium-features.umd.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
@@ -1096,12 +1217,149 @@
             }
         }
 
+        let arEditorInstance, enEditorInstance;
+
+        function initCKEditor() {
+            if (typeof CKEDITOR === 'undefined') return;
+
+            // Prevent duplication
+            if (document.querySelector('#editor_ar + .ck-editor') || document.querySelector(
+                    '#editor_en + .ck-editor')) {
+                return;
+            }
+
+            const {
+                ClassicEditor,
+                Essentials,
+                Paragraph,
+                Bold,
+                Italic,
+                Underline,
+                Strikethrough,
+                FontSize,
+                FontFamily,
+                FontColor,
+                FontBackgroundColor,
+                Link,
+                List,
+                BlockQuote,
+                Alignment,
+                Table,
+                TableToolbar,
+                MediaEmbed,
+                Undo,
+                Heading,
+                RemoveFormat,
+                HorizontalLine,
+                SpecialCharacters,
+                SourceEditing,
+                Highlight,
+                FindAndReplace,
+                Base64UploadAdapter,
+                Image,
+                ImageToolbar,
+                ImageCaption,
+                ImageStyle,
+                ImageResize,
+                LinkImage,
+                ImageUpload,
+                ListProperties,
+                TodoList
+            } = CKEDITOR;
+
+            const commonConfig = {
+                plugins: [
+                    Essentials, Paragraph, Bold, Italic, Underline, Strikethrough,
+                    FontSize, FontFamily, FontColor, FontBackgroundColor,
+                    Link, List, ListProperties, TodoList, BlockQuote, Alignment,
+                    Table, TableToolbar, MediaEmbed, Undo, Heading, RemoveFormat,
+                    HorizontalLine, SpecialCharacters, SourceEditing, Highlight, FindAndReplace,
+                    Base64UploadAdapter, Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize,
+                    LinkImage, ImageUpload
+                ],
+                toolbar: {
+                    items: [
+                        'undo', 'redo', '|',
+                        'sourceEditing', 'findAndReplace', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'underline', 'strikethrough', 'highlight', '|',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+                        'link', 'uploadImage', 'insertTable', 'mediaEmbed', 'horizontalLine',
+                        'specialCharacters', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'alignment', 'outdent', 'indent', '|',
+                        'removeFormat'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                image: {
+                    toolbar: [
+                        'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
+                        'toggleImageCaption', 'imageTextAlternative', '|',
+                        'linkImage'
+                    ]
+                },
+                table: {
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells', '|',
+                        'tableProperties', 'tableCellProperties'
+                    ]
+                }
+            };
+
+            try {
+                // Initialize Arabic Editor
+                const arEditorEl = document.querySelector('#editor_ar');
+                if (arEditorEl) {
+                    ClassicEditor.create(arEditorEl, {
+                        ...commonConfig,
+                        language: 'ar',
+                        placeholder: 'اكتب وصف اللاعب باللغة العربية...',
+                    }).then(editor => {
+                        // Real-time Sync (Deferred)
+                        editor.model.document.on('change:data', () => {
+                            const data = editor.getData();
+                            @this.set('description_ar', data, true);
+                        });
+                    });
+                }
+
+                // Initialize English Editor
+                const enEditorEl = document.querySelector('#editor_en');
+                if (enEditorEl) {
+                    ClassicEditor.create(enEditorEl, {
+                        ...commonConfig,
+                        language: 'en',
+                        placeholder: 'Enter player description in English...',
+                    }).then(editor => {
+                        // Real-time Sync (Deferred)
+                        editor.model.document.on('change:data', () => {
+                            const data = editor.getData();
+                            @this.set('description_en', data, true);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('CKEditor Initialization Failed:', error);
+            }
+        }
+
         $(document).ready(function() {
             initSelect();
+            initCKEditor();
         });
 
-        document.addEventListener('livewire:navigated', () => {
+        document.addEventListener('livewire:navigated', async () => {
+            if (arEditorInstance) {
+                await arEditorInstance.destroy();
+                arEditorInstance = null;
+            }
+            if (enEditorInstance) {
+                await enEditorInstance.destroy();
+                enEditorInstance = null;
+            }
             initSelect();
+            initCKEditor();
         });
     </script>
 @endpush

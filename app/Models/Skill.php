@@ -26,7 +26,7 @@ class Skill extends Model implements HasMedia
 
     public function players()
     {
-        return $this->belongsToMany(Player::class, 'player_skill')->withPivot('skill_level', 'skill_level_type');
+        return $this->belongsToMany(Player::class, 'player_skill')->withPivot('value');
     }
     
     public function registerMediaCollections(): void

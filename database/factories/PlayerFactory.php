@@ -23,7 +23,12 @@ class PlayerFactory extends Factory
                 'en' => $this->faker->name,
                 'ar' => $this->faker->name,
             ],
-            'age' => $this->faker->numberBetween(18, 35),
+            'description' => [
+                'en' => $this->faker->sentence,
+                'ar' => $this->faker->sentence,
+            ],
+            'date_of_birth' => $this->faker->date(),
+            'joined_at' => $this->faker->date(),
             'height' => $this->faker->numberBetween(160, 200),
             'weight' => $this->faker->numberBetween(50, 100),
             'jersey_number' => $this->faker->unique()->numberBetween(1, 99),

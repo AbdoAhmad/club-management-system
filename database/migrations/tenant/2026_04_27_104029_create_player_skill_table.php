@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('player_id')->constrained('players')->cascadeOnDelete();
             $table->foreignId('skill_id')->constrained('skills')->cascadeOnDelete();
-            $table->integer('skill_level');
-            $table->enum('skill_level_type', ['percentage','stars']);
+            $table->integer('value');
             $table->timestamps();
         });
     }

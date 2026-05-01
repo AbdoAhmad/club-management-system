@@ -18,7 +18,7 @@ class Position extends Model
     
     public function players()
     {
-        return $this->belongsToMany(Player::class, 'player_position')->withPivot('position_level');
+        return $this->belongsToMany(Player::class, 'player_position')->withPivot('is_primary');
     }
 
 }

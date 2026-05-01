@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('player_id')->constrained('players')->cascadeOnDelete();
             $table->foreignId('position_id')->constrained('positions')->cascadeOnDelete();
-            $table->enum('position_level', ['primary', 'secondary'])->default('secondary');
+            $table->boolean('is_primary')->default(false);
             $table->timestamps();
         });
     }
