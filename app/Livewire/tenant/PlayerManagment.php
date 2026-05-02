@@ -6,13 +6,11 @@ use App\Models\Player;
 use App\Models\Position;
 use App\Models\Skill;
 use Carbon\Carbon;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Mews\Purifier\Facades\Purifier;
-
 
 #[Layout('layouts.tenant_dashboard.app')]
 class PlayerManagment extends Component
@@ -40,7 +38,7 @@ class PlayerManagment extends Component
     public $image;
 
     #[Rule('required|date')]
-    public $birth_date;
+    public $date_of_birth;
 
     #[Rule('required|date')]
     public $joined_at;
@@ -65,11 +63,10 @@ class PlayerManagment extends Component
     #[Rule('required|integer|min:0')]
     public $weight;
 
-    #[Computed]
-    public function age()
+    public function calculateAge($birth_date)
     {
-        if ($this->birth_date) {
-            return Carbon::parse($this->birth_date)->age;
+        if ($birth_date) {
+            return Carbon::parse($birth_date)->age;
         }
 
         return null;
@@ -84,7 +81,7 @@ class PlayerManagment extends Component
     {
 
         $this->validate();
-    
+
         // Clean the descriptions
         $this->description_ar = Purifier::clean($this->description_ar);
         $this->description_en = Purifier::clean($this->description_en);
@@ -102,8 +99,8 @@ class PlayerManagment extends Component
                 'ar' => strip_tags(html_entity_decode($this->description_ar)),
                 'en' => strip_tags(html_entity_decode($this->description_en)),
             ],
-            'date_of_birth' => $this->birth_date,
-            'joined_at' => $this->joined_at,
+            'date_of_birth' => Carbon::parse($this->date_of_birth)->format('Y-m-d'),
+            'joined_at' => Carbon::parse($this->joined_at)->format('Y-m-d'),
             'jersey_number' => $this->jersey_number,
             'height' => $this->height,
             'weight' => $this->weight,

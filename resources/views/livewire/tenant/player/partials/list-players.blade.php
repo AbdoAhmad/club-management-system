@@ -36,97 +36,134 @@
         </div>
     </div>
 
-    <!-- Table Wrapper -->
-    <div class="table-wrapper">
+    <!-- Top Scrollbar for the Table -->
+    <div class="top-scrollbar-container" id="top-scrollbar">
+        <div id="top-scroll-content"></div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-wrapper" id="main-table-wrapper">
         <table class="table">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Age</th>
-                    <th>Jersey</th>
-                    <th>Status</th>
-                    <th>Positions</th>
-                    <th>Skills</th>
-                    <th>Height</th>
-                    <th>Weight</th>
-                    <th>Joined</th>
-                    <th>Actions</th>
+                    <th class="sticky-left" style="min-width: 220px; text-align: left;">Player</th>
+                    <th style="text-align: left;">Description</th>
+                    <th style="text-align: left;">Age</th>
+                    <th style="text-align: left;">Status</th>
+                    <th style="text-align: left;">Positions</th>
+                    <th style="text-align: left;">Skills</th>
+                    <th style="text-align: left;">Height</th>
+                    <th style="text-align: left;">Weight</th>
+                    <th style="text-align: left;">Joined</th>
+                    <th class="sticky-right" style="text-align: center;">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
                 @forelse($players as $player)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $player->name }}</td>
-
-                        <td>
-                            @if ($player->getFirstMedia('player_image'))
-                                <img src="{{ $player->getFirstMediaUrl('player_image') }}" alt="Player Image"
-                                    style="width: 45px; height: 45px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                            @else
-                                <div
-                                    class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
-                                    👤
+                        <td class="sticky-left">
+                            <div class="player-info-block">
+                                <span
+                                    style="color: #94a3b8; font-weight: 700; font-size: 12px; min-width: 24px;">#{{ $loop->iteration }}</span>
+                                <div class="player-avatar-wrap">
+                                    @if ($player->getFirstMedia('player_image'))
+                                        <img src="{{ $player->getFirstMediaUrl('player_image') }}" alt="Player"
+                                            class="player-avatar">
+                                    @else
+                                        <div class="player-avatar-placeholder">👤</div>
+                                    @endif
                                 </div>
-                            @endif
+                                <div style="display: flex; flex-direction: column; gap: 2px;">
+                                    <span
+                                        style="font-weight: 700; color: #0f172a; font-size: 14px;">{{ $player->name }}</span>
+                                    <span style="font-size: 12px; color: #64748b; font-weight: 600;">Jersey:
+                                        {{ $player->jersey_number }}</span>
+                                </div>
+                            </div>
                         </td>
-
-
-                        <td>{{ $player->age }}</td>
-
-                        <td>{{ $player->jersey_number }}</td>
-
+                        <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
+                            <div
+                                style="font-size: 13.5px; color: #334155; line-height: 1.5; max-height: 42px; overflow: hidden; font-weight: 500;">
+                                {!! strip_tags($player->description) !!}
+                            </div>
+                        </td>
                         <td>
-                            <span
-                                class="badge bg-{{ $player->status === 'active' ? 'success' : ($player->status === 'banned' ? 'danger' : 'warning') }} text-white">
-                                {{ ucfirst($player->status) }}
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span
+                                    style="font-weight: 700; color: #0f172a; font-size: 14.5px;">{{ $this->calculateAge($player->date_of_birth) ?? '-' }}</span>
+                                <span class="badge-unit badge-unit-yrs">Yrs</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge-premium badge-status-{{ strtolower($player->status) }}">
+                                <span style="margin-right: 6px; font-size: 8px;">●</span> {{ ucfirst($player->status) }}
                             </span>
                         </td>
-
-                        <td>
-                            @foreach ($player->positions as $position)
-                                {{-- Badges types success, warning, danger, info  --}}
-                                <span
-                                    class="badge bg-{{ $position->pivot->position_level === 'primary' ? 'success' : 'info' }} text-white">
-                                    {{ $position->name }}
-                                </span>
-                            @endforeach
-
+                        <td style="max-width: 220px; white-space: normal;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                @foreach ($player->positions as $position)
+                                    @if ($position->pivot && $position->pivot->is_primary)
+                                        <span class="badge-premium badge-pos-primary" title="Primary Position">
+                                            ⭐ {{ $position->name }}
+                                        </span>
+                                    @else
+                                        <span class="badge-premium badge-pos-secondary">
+                                            {{ $position->name }}
+                                        </span>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </td>
+                        <td style="max-width: 220px; white-space: normal;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                @foreach ($player->skills as $skill)
+                                    <span class="badge-premium badge-skill">
+                                        ⚡ {{ $skill->name }}
+                                    </span>
+                                @endforeach
+                            </div>
                         </td>
                         <td>
-                            @foreach ($player->skills as $skill)
-                                {{-- Badges types success, warning, danger, info  --}}
+                            <div style="display: flex; align-items: center; gap: 6px;">
                                 <span
-                                    class="badge bg-{{ $skill->pivot->skill_level_type === 'percentage' ? 'success' : 'info' }} text-white">
-                                    {{ $skill->name }}
-                                </span>
-                            @endforeach
+                                    style="font-weight: 700; color: #0f172a; font-size: 14.5px;">{{ $player->height }}</span>
+                                <span class="badge-unit badge-unit-cm">Cm</span>
+                            </div>
                         </td>
-                        <td>{{ $player->weight }}</td>
-                        <td>{{ $player->height }}</td>
-                        <td>{{ $player->created_at->format('M d, Y') }}</td>
-
                         <td>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span
+                                    style="font-weight: 700; color: #0f172a; font-size: 14.5px;">{{ $player->weight }}</span>
+                                <span class="badge-unit badge-unit-kg">Kg</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color: #334155; font-size: 13.5px; font-weight: 700;">
+                                {{ $player->joined_at ?? '-' }}
+                            </div>
+                        </td>
+                        <td class="sticky-right">
                             <div class="table-actions">
-                                <button class="table-action-btn" data-tooltip="View">👁️</button>
-                                <button class="table-action-btn" data-tooltip="Edit">✏️</button>
-                                <button class="table-action-btn" data-tooltip="Delete">🗑️</button>
+                                <button class="action-btn action-view" title="View">👁️</button>
+                                <button class="action-btn action-edit" title="Edit">✏️</button>
+                                <button class="action-btn action-delete" title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">No players found</td>
+                        <td colspan="10" class="text-center" style="padding: 60px 20px;">
+                            <div style="font-size: 48px; margin-bottom: 20px; opacity: 0.8;">📭</div>
+                            <h3 style="color: #0f172a; font-weight: 800; font-size: 20px; margin-bottom: 8px;">No
+                                Players Found</h3>
+                            <p style="color: #64748b; margin-bottom: 24px; font-size: 14px;">Get started by adding a new
+                                player to your roster or adjust your filters.</p>
+                            <button class="btn btn-primary" style="box-shadow: 0 8px 16px rgba(34, 197, 94, 0.25);">➕
+                                Add First Player</button>
+                        </td>
                     </tr>
                 @endforelse
-
             </tbody>
         </table>
-
-        <!-- Pagination -->
-
     </div>
 </div>
