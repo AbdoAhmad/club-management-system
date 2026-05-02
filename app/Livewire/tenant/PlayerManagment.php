@@ -6,6 +6,7 @@ use App\Models\Player;
 use App\Models\Position;
 use App\Models\Skill;
 use Carbon\Carbon;
+use Doctrine\Inflector\Rules\English\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -49,12 +50,12 @@ class PlayerManagment extends Component
     #[Rule('required|string|in:active,banned,injured')]
     public $status;
 
-    #[Rule('nullable|array|max:255')]
+    #[Rule('required|array|max:255')]
     public $selected_position = [];
+   // costom error massege
+    public $primary_position_id='';
 
-    public $primary_position_id;
-
-    #[Rule('nullable|array|max:255')]
+    #[Rule('nullable|array|max:255' )]
     public $selected_skills = [];
 
     #[Rule('required|integer|min:0')]
@@ -62,6 +63,24 @@ class PlayerManagment extends Component
 
     #[Rule('required|integer|min:0')]
     public $weight;
+
+    public  function rules()
+    {
+        return [
+          'selected_skills.*.value' => 'required',
+          'selected_skills.*.skill_id' => 'required',
+          'selected_skills.*.type' => 'required',
+          
+        ];
+    }
+     public function messages()
+    {
+        return [
+            'selected_skills.*.value.required' => 'The skill level is required.',
+            'selected_skills.*.skill_id.required' => 'The skill is required.',
+            'selected_skills.*.type.required' => 'The skill type is required.',
+        ];
+    }
 
     public function calculateAge($birth_date)
     {
@@ -81,7 +100,6 @@ class PlayerManagment extends Component
 
     public function save()
     {
-
         $this->validate();
 
         // Clean the descriptions
@@ -135,7 +153,7 @@ class PlayerManagment extends Component
         }
 
         $this->dispatch('notify', [
-            'message' => 'رسالة تجريبية',
+            'message' => __('messages.player_added_successfully'),
             'type' => 'success',
         ]);
         $this->clear();

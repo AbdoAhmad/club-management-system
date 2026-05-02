@@ -360,6 +360,7 @@
         <h1 class="page-title">Forms & Data Entry</h1>
         <p class="page-subtitle">Professional form layouts for player registration, match scheduling, and settings</p>
     </div>
+    
 
     <!-- Forms Grid -->
     <div class="forms-grid">
@@ -424,19 +425,23 @@
                 </div>
                 <div class="form-group two-col">
                     {{-- Description En --}}
-                    <div class="mb-4" wire:ignore>
+                    <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-300 mb-2">Player Description (EN) <span
                                 class="required">*</span></label>
-                        <textarea id="editor_en" class="input-field" style="display: none;">{!! $description_en !!}</textarea>
+                        <div wire:ignore>
+                            <textarea id="editor_en" class="input-field" style="display: none;">{!! $description_en !!}</textarea>
+                        </div>
                         @error('description_en')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     {{-- Description Ar --}}
-                    <div dir="rtl" class="mb-4" wire:ignore>
+                    <div dir="rtl" class="mb-4">
                         <label class="block text-sm font-medium text-gray-300 mb-2">وصف اللاعب (AR) <span
                                 class="required">*</span></label>
-                        <textarea id="editor_ar" class="input-field" style="display: none;">{!! $description_ar !!}</textarea>
+                        <div wire:ignore>
+                            <textarea id="editor_ar" class="input-field" style="display: none;">{!! $description_ar !!}</textarea>
+                        </div>
                         @error('description_ar')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -500,10 +505,10 @@
                                 </option>
                             @endforeach
                         </select>
-                        @error('selected_position')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
                     </div>
+                    @error('selected_position')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
 
 
                     <!-- Position Management UI -->
@@ -616,7 +621,7 @@
                                             </div>
                                         @endif
 
-                                        @error("selected_skills.{$index}.level")
+                                        @error("selected_skills.{$index}.value")
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -665,7 +670,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <button wire:click="save" type="submit" class="btn btn-primary">Register Player</button>
+                    <button wire:click="save" type="button" class="btn btn-primary">Register Player</button>
                     <button wire:click="clear" class="btn btn-outline">Clear</button>
                 </div>
             </form>
