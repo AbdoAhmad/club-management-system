@@ -132,7 +132,10 @@ class PlayerManagment extends Component
             }
         }
 
-      
+        $this->dispatch('notify', [
+            'message' => 'رسالة تجريبية',
+            'type' => 'success',
+        ]);
         $this->clear();
         $this->screen = 'list';
 
