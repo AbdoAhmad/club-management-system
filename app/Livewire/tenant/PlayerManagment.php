@@ -132,7 +132,7 @@ class PlayerManagment extends Component
             }
         }
 
-        session()->flash('message', 'Player registered successfully!');
+      
         $this->clear();
         $this->screen = 'list';
 

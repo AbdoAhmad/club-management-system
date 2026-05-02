@@ -77,163 +77,7 @@ class Sidebar {
    2. FORM VALIDATION & HANDLING
    ===================================================== */
 
-class FormValidator {
-    constructor(formSelector) {
-        this.form = document.querySelector(formSelector);
-        this.errors = {};
-        this.init();
-    }
-
-    init() {
-        if (!this.form) return;
-
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        
-        // Real-time validation
-        this.form.querySelectorAll('.input-field').forEach(field => {
-            field.addEventListener('blur', () => this.validateField(field));
-            field.addEventListener('change', () => this.validateField(field));
-        });
-    }
-
-    validateField(field) {
-        const fieldName = field.name;
-        const value = field.value.trim();
-        const rules = this.getFieldRules(field);
-        const errors = [];
-
-        // Required
-        if (rules.required && !value) {
-            errors.push(`${fieldName} is required`);
-        }
-
-        // Email
-        if (rules.email && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
-                errors.push(`${fieldName} must be a valid email`);
-            }
-        }
-
-        // Min length
-        if (rules.minLength && value && value.length < rules.minLength) {
-            errors.push(`${fieldName} must be at least ${rules.minLength} characters`);
-        }
-
-        // Max length
-        if (rules.maxLength && value && value.length > rules.maxLength) {
-            errors.push(`${fieldName} must not exceed ${rules.maxLength} characters`);
-        }
-
-        // Phone
-        if (rules.phone && value) {
-            const phoneRegex = /^[\d\s\-\+\(\)]{7,}$/;
-            if (!phoneRegex.test(value)) {
-                errors.push(`${fieldName} must be a valid phone number`);
-            }
-        }
-
-        // Number
-        if (rules.number && value && isNaN(value)) {
-            errors.push(`${fieldName} must be a number`);
-        }
-
-        // Match
-        if (rules.match && value) {
-            const matchField = this.form.querySelector(`[name="${rules.match}"]`);
-            if (matchField && value !== matchField.value) {
-                errors.push(`${fieldName} must match ${rules.match}`);
-            }
-        }
-
-        this.setFieldError(field, errors);
-    }
-
-    getFieldRules(field) {
-        const rules = {};
-        if (field.hasAttribute('required')) rules.required = true;
-        if (field.type === 'email') rules.email = true;
-        if (field.type === 'tel') rules.phone = true;
-        if (field.type === 'number') rules.number = true;
-        if (field.hasAttribute('data-minlength')) rules.minLength = parseInt(field.getAttribute('data-minlength'));
-        if (field.hasAttribute('data-maxlength')) rules.maxLength = parseInt(field.getAttribute('data-maxlength'));
-        if (field.hasAttribute('data-match')) rules.match = field.getAttribute('data-match');
-        return rules;
-    }
-
-    setFieldError(field, errors) {
-        const fieldGroup = field.closest('.form-group') || field.parentElement;
-        const existingError = fieldGroup.querySelector('.error-message');
-        
-        if (existingError) {
-            existingError.remove();
-        }
-
-        if (errors.length > 0) {
-            field.classList.add('error');
-            const errorEl = document.createElement('p');
-            errorEl.className = 'error-message';
-            errorEl.textContent = errors[0];
-            fieldGroup.appendChild(errorEl);
-            this.errors[field.name] = errors;
-        } else {
-            field.classList.remove('error');
-            delete this.errors[field.name];
-        }
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        this.errors = {};
-
-        // Validate all fields
-        this.form.querySelectorAll('.input-field').forEach(field => {
-            this.validateField(field);
-        });
-
-        // If no errors, submit
-        if (Object.keys(this.errors).length === 0) {
-            this.submitForm();
-        }
-    }
-
-    submitForm() {
-        const submitBtn = this.form.querySelector('[type="submit"]');
-        const originalText = submitBtn.textContent;
-        
-        // Add loading state
-        submitBtn.classList.add('loading');
-        submitBtn.disabled = true;
-
-        // Simulate API call
-        setTimeout(() => {
-            submitBtn.classList.remove('loading');
-            submitBtn.disabled = false;
-            
-            // Show success message
-            this.showNotification('Form submitted successfully!', 'success');
-            
-            // Optional: Reset form
-            this.form.reset();
-        }, 1500);
-    }
-
-    showNotification(message, type = 'success') {
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.textContent = message;
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 10);
-
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
-    }
-}
+/* FormValidator class removed as requested */
 
 /* Style for error messages */
 const errorStyles = document.createElement('style');
@@ -623,9 +467,11 @@ document.addEventListener('DOMContentLoaded', () => {
     new Tooltip();
 
     // Initialize page-specific components
-    if (document.querySelector('form')) {
-        new FormValidator('form');
-    }
+    // Livewire Notification Listener
+    window.addEventListener('notify', event => {
+        const data = event.detail[0] || event.detail;
+        window.UI.notify(data.message, data.type || 'success');
+    });
 
     if (document.querySelector('table')) {
         new TableManager('table');
