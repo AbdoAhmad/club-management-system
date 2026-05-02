@@ -75,6 +75,8 @@ class PlayerManagment extends Component
     public function switchScreen($screen)
     {
         $this->screen = $screen;
+        
+
     }
 
     public function save()
