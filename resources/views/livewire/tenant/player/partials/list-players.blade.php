@@ -30,7 +30,7 @@
             </select>
         </div>
         <div class="toolbar-actions">
-            <button class="btn btn-primary">
+            <button wire:click="switchScreen('form')" class="btn btn-primary">
                 <span>➕</span> Add Player
             </button>
         </div>
