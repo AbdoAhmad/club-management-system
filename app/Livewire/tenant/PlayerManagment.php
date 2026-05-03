@@ -139,7 +139,6 @@ class PlayerManagment extends Component
 
     public function save()
     {
-        dd($this->image);
         $this->validate();
 
         // Clean the descriptions
@@ -224,7 +223,7 @@ class PlayerManagment extends Component
         }
         $player->skills()->sync($skillsSync);
 
-        if ($this->image && $this->image instanceof UploadedFile) {
+        if ($this->image ) {
             
             $player->addMedia($this->image)
                 ->toMediaCollection('player_image');
@@ -241,7 +240,9 @@ class PlayerManagment extends Component
         $this->name_en = $player->getTranslation('name', 'en');
         $this->description_ar = $player->getTranslation('description', 'ar');
         $this->description_en = $player->getTranslation('description', 'en');
-        $this->image = $player->getFirstMedia('player_image');
+        $this->image = $player->getFirstMediaUrl('player_image') ?: null;
+        $this->image = $this->image instanceof UploadedFile ? $this->image : null;
+
         $this->date_of_birth = $player->date_of_birth;
         $this->joined_at = $player->joined_at;
         $this->jersey_number = $player->jersey_number;
