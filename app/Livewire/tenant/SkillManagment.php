@@ -95,7 +95,7 @@ class SkillManagment extends Component
         $this->skill_name_en = $skill->getTranslation('name', 'en');
         $this->skill_name_ar = $skill->getTranslation('name', 'ar');
         $this->icon = null;
-        $this->edit_skill = $skill;
+        $this->edit_skill = $skill; 
         $this->showModal = true;
     }
 

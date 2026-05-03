@@ -360,13 +360,17 @@
         <h1 class="page-title">Forms & Data Entry</h1>
         <p class="page-subtitle">Professional form layouts for player registration, match scheduling, and settings</p>
     </div>
-    
+
 
     <!-- Forms Grid -->
     <div class="forms-grid">
         <!-- Player Registration Form -->
         <div class="form-card">
-            <h2>Player Registration</h2>
+            @if ($edit_player)
+                <h2>Edit Player</h2>
+            @else
+                <h2>Player Registration</h2>
+            @endif
             <form>
 
                 {{-- Name english , name arabic , image player --}}
@@ -396,9 +400,10 @@
                                 style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                                 {{-- <!-- Image Preview --> --}}
                                 @if ($image)
-                                    <img class="avatar-preview-img" src=" {{ $image->temporaryUrl() }}" alt ="Preview">
-                                    {{-- src="{{ $icon instanceof \Illuminate\Http\UploadedFile ? $icon->temporaryUrl() : $edit_skill->getFirstMediaUrl('skills') }}" --}}
-                                    {{-- alt="Preview"> --}}
+                                    <img class="avatar-preview-img" src=" {{ $image instanceof \Illuminate\Http\UploadedFile ? $image->temporaryUrl() : $edit_player->getFirstMediaUrl('player_image') }}" alt ="Preview">
+                                @elseif($edit_player && $edit_player->getFirstMediaUrl('player_image'))
+                                    <img class="avatar-preview-img"
+                                        src=" {{ $edit_player->getFirstMediaUrl('player_image') }}" alt ="Preview">
                                 @else
                                     {{-- <!-- Upload Placeholder --> --}}
                                     <div class="upload-placeholder text-center">
@@ -536,7 +541,7 @@
                                 stroke="currentColor" stroke-width="2">
                                 <path d="M12 5v14M5 12h14" />
                             </svg>
-                            Add Skill
+                            {{ $edit_player ? 'Update Skill' : 'Add Skill' }}
                         </button>
                     </div>
                     <br>
@@ -670,7 +675,9 @@
                 </div>
 
                 <div class="form-actions">
-                    <button wire:click="save" type="button" class="btn btn-primary">Register Player</button>
+
+                    <button wire:click="save" type="button"
+                        class="btn btn-primary">{{ $edit_player ? 'Update Player' : 'Register Player' }}</button>
                     <button wire:click="clear" class="btn btn-outline">Clear</button>
                 </div>
             </form>
@@ -678,4 +685,3 @@
 
     </div>
 </div>
-

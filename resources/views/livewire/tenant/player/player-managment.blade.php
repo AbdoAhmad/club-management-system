@@ -1,9 +1,10 @@
 <div>
     @push('styles')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css" />
         <link rel="stylesheet"
             href="https://cdn.ckeditor.com/ckeditor5-premium-features/43.0.0/ckeditor5-premium-features.css" />
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
         <style>
             /* === Skill Repeater === */
@@ -744,7 +745,6 @@
         @include('livewire.tenant.player.partials.list-players')
     @elseif($screen == 'form')
         @include('livewire.tenant.player.partials.player-form')
-
     @endif
 
     @push('scripts')
@@ -823,9 +823,7 @@
                                 <span class="position-name">${name}</span>
                                 <span class="position-status">${isPrimary ? 'Primary Position' : 'Reserve'}</span>
                             </div>
-                            <div class="star-action">
-                                <i class="${isPrimary ? 'fas' : 'far'} fa-star"></i>
-                            </div>
+                            <div class="star-action"><i class="${isPrimary ? 'fas' : 'far'} fa-star"></i></div>
                         </div>`;
                     grid.append(card);
                 });
@@ -838,30 +836,31 @@
 
             // تهيئة مكتبة Select2 وربطها بـ Livewire
             function initSelect() {
-                const selectElement = $('#skills-select2');
                 const positionElement = $('#position-select2');
+                const selectElement = $('#skills-select2');
 
-                if (positionElement.length) {
+                // التحقق ما إذا كان العنصر موجوداً ولم يتم تهيئته بعد
+                if (positionElement.length && !positionElement.hasClass("select2-hidden-accessible")) {
                     positionElement.select2({
                         placeholder: "Select player position...",
                         allowClear: true,
                         width: '100%',
                     }).on('change', function() {
                         let data = $(this).val();
-                        @this.set('selected_position', data);
+                        @this.set('selected_position', data, true);
                         renderPositionCards(data);
                     });
                     renderPositionCards(positionElement.val());
                 }
 
-                if (selectElement.length) {
+                if (selectElement.length && !selectElement.hasClass("select2-hidden-accessible")) {
                     selectElement.select2({
                         placeholder: "Select player skills...",
                         allowClear: true,
                         width: '100%',
                     }).on('change', function() {
                         let data = $(this).val();
-                        @this.set('selected_skills', data);
+                        @this.set('selected_skills', data, true);
                     });
                 }
             }
@@ -869,34 +868,62 @@
             // 3. دالة تشغيل محرر النصوص CKEditor للمحتوى العربي والإنجليزي
             function initCKEditor() {
                 if (typeof CKEDITOR === 'undefined') return;
-                // التأكد من عدم إنشاء نسخة مكررة لنفس العنصر
-                if (document.querySelector('.ck-editor')) return;
+                
+                // التأكد من عدم إنشاء نسخة مكررة لنفس العنصر (تحقق أدق)
+                if (document.querySelector('.ck-editor')) {
+                    // إذا كان المحرر موجوداً بالفعل، لا نفعل شيئاً
+                    // لكننا نتأكد أن البيانات المعروضة مطابقة لما في Livewire إذا لزم الأمر
+                    return;
+                }
 
-                const { ClassicEditor, Essentials, Paragraph, Bold, Italic, Underline, Strikethrough, FontSize, FontFamily, FontColor, FontBackgroundColor, Link, List, BlockQuote, Alignment, Table, TableToolbar, MediaEmbed, Undo, Heading, RemoveFormat, HorizontalLine, SpecialCharacters, SourceEditing, Highlight, FindAndReplace, Base64UploadAdapter, Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage, ImageUpload, ListProperties, TodoList } = CKEDITOR;
+                // Destructure plugins including Indent and IndentBlock to fix the "toolbarview-item-unavailable" error
+                const {
+                    ClassicEditor, Essentials, Paragraph, Bold, Italic, Underline, Strikethrough, 
+                    FontSize, FontFamily, FontColor, FontBackgroundColor, Link, List, 
+                    ListProperties, TodoList, BlockQuote, Alignment, Table, TableToolbar, 
+                    MediaEmbed, Undo, Heading, RemoveFormat, HorizontalLine, SpecialCharacters, 
+                    SourceEditing, Highlight, FindAndReplace, Base64UploadAdapter, Image, 
+                    ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage, 
+                    ImageUpload, Indent, IndentBlock
+                } = CKEDITOR;
 
                 const commonConfig = {
-                    plugins: [ Essentials, Paragraph, Bold, Italic, Underline, Strikethrough, FontSize, FontFamily, FontColor, FontBackgroundColor, Link, List, ListProperties, TodoList, BlockQuote, Alignment, Table, TableToolbar, MediaEmbed, Undo, Heading, RemoveFormat, HorizontalLine, SpecialCharacters, SourceEditing, Highlight, FindAndReplace, Base64UploadAdapter, Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage, ImageUpload ],
+                    plugins: [Essentials, Paragraph, Bold, Italic, Underline, Strikethrough, FontSize, FontFamily,
+                        FontColor, FontBackgroundColor, Link, List, ListProperties, TodoList, BlockQuote, Alignment,
+                        Table, TableToolbar, MediaEmbed, Undo, Heading, RemoveFormat, HorizontalLine, SpecialCharacters,
+                        SourceEditing, Highlight, FindAndReplace, Base64UploadAdapter, Image, ImageToolbar,
+                        ImageCaption, ImageStyle, ImageResize, LinkImage, ImageUpload, Indent, IndentBlock
+                    ],
                     toolbar: {
-                        items: [ 'undo', 'redo', '|', 'sourceEditing', 'findAndReplace', '|', 'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'highlight', '|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'link', 'uploadImage', 'insertTable', 'mediaEmbed', 'horizontalLine', 'specialCharacters', '|', 'bulletedList', 'numberedList', 'todoList', '|', 'alignment', 'outdent', 'indent', '|', 'removeFormat' ],
+                        items: ['undo', 'redo', '|', 'sourceEditing', 'findAndReplace', '|', 'heading', '|', 'bold',
+                            'italic', 'underline', 'strikethrough', 'highlight', '|', 'fontSize', 'fontFamily',
+                            'fontColor', 'fontBackgroundColor', '|', 'link', 'uploadImage', 'insertTable', 'mediaEmbed',
+                            'horizontalLine', 'specialCharacters', '|', 'bulletedList', 'numberedList', 'todoList', '|',
+                            'alignment', 'outdent', 'indent', '|', 'removeFormat'
+                        ],
                         shouldNotGroupWhenFull: true
                     },
                     image: {
-                        toolbar: [ 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|', 'toggleImageCaption', 'imageTextAlternative', '|', 'linkImage' ]
+                        toolbar: ['imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|', 'toggleImageCaption',
+                            'imageTextAlternative', '|', 'linkImage'
+                        ]
                     },
                     table: {
-                        contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells', '|', 'tableProperties', 'tableCellProperties' ]
+                        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', '|', 'tableProperties',
+                            'tableCellProperties'
+                        ]
                     }
                 };
 
                 ['#editor_ar', '#editor_en'].forEach(selector => {
                     const el = document.querySelector(selector);
-                    if (el) {
+                    if (el && !el.nextElementSibling?.classList.contains('ck-editor')) {
                         ClassicEditor.create(el, {
                             ...commonConfig,
                             language: selector.includes('ar') ? 'ar' : 'en',
-                            placeholder: selector.includes('ar') ? 'اكتب وصف اللاعب باللغة العربية...' : 'Enter player description in English...',
+                            placeholder: selector.includes('ar') ? 'اكتب وصف اللاعب باللغة العربية...' :
+                                'Enter player description in English...',
                         }).then(editor => {
-                            // تحديث قيمة Livewire فوراً عند تغيير النص
                             editor.model.document.on('change:data', () => {
                                 const field = selector.includes('ar') ? 'description_ar' : 'description_en';
                                 @this.set(field, editor.getData(), true);
@@ -915,24 +942,22 @@
 
             /**
              * خاص بـ Livewire 3:
-             * هذا الجزء يضمن بقاء جميع الأدوات (Select2, CKEditor, Scroll) تعمل بكفاءة حتى بعد تحديث الصفحة برمجياً.
-             * 
-             * livewire:initialized: يتم استدعاؤه بمجرد أن ينتهي Livewire من تحميل نفسه في المتصفح.
-             * Livewire.hook('morph.updated'): هذا هو "السر"؛ فعندما يقوم Livewire بتغيير أي جزء من الـ DOM (مثلاً عند البحث أو التبديل بين الشاشات)،
-             * تفقد المكتبات مثل Select2 و CKEditor اتصالها بالعناصر القديمة. هذا الهوك يعيد تشغيلهم فوراً على العناصر الجديدة.
+             * نستخدم morph.updated لضمان إعادة تشغيل المكتبات بعد أي تحديث للـ DOM.
              */
             document.addEventListener('livewire:initialized', () => {
+                // التشغيل الأولي
                 initTopScroll();
                 initSelect();
                 initCKEditor();
 
-                Livewire.hook('morph.updated', () => {
-                    // استخدام setTimeout بسيط للتأكد من استقرار الـ DOM قبل إعادة التهيئة
+                Livewire.hook('morph.updated', (el, component) => {
+                    // نقوم بإعادة التشغيل فقط إذا كان العنصر الذي تم تحديثه يحتوي على الأدوات المطلوبة
+                    // أو إذا تم تغيير الشاشة بالكامل
                     setTimeout(() => {
                         initTopScroll();
                         initSelect();
                         initCKEditor();
-                    }, 50);
+                    }, 100); // زيادة التأخير قليلاً لضمان استقرار الـ DOM
                 });
             });
 

@@ -144,9 +144,12 @@
                         </td>
                         <td class="sticky-right">
                             <div class="table-actions">
-                                <button class="action-btn action-view" title="View">👁️</button>
-                                <button class="action-btn action-edit" title="Edit">✏️</button>
-                                <button class="action-btn action-delete" title="Delete">🗑️</button>
+                                <button wire:click="view({{ $player->id }})" class="action-btn action-view"
+                                    title="View">👁️</button>
+                                <button wire:click="edit({{ $player->id }})" class="action-btn action-edit"
+                                    title="Edit">✏️</button>
+                                <button wire:click="delete({{ $player->id }})" class="action-btn action-delete"
+                                    title="Delete">🗑️</button>
                             </div>
                         </td>
                     </tr>
