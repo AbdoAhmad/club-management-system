@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    @include('layouts.tenant_dashboard.partials.header')
+@include('layouts.tenant_dashboard.partials.header')
+
 <body>
     <!-- Sidebar -->
     @include('layouts.tenant_dashboard.partials.sidebar')
@@ -12,4 +13,5 @@
     <!-- Footer -->
     @include('layouts.tenant_dashboard.partials.footer')
 </body>
+
 </html>

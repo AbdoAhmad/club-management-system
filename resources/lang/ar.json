@@ -75,5 +75,8 @@
     "No clubs found": "لم يتم العثور على أندية",
     "Add New Club": "إضافة نادٍ جديد",
     "Page Not Found": "الصفحة غير موجودة",
-    "Manage your footba ll club network from one central dashboard": "إدارة شبكة أندية كرة القدم الخاصة بك من لوحة تحكم مركزية واحدة."
+    "Manage your footba ll club network from one central dashboard": "إدارة شبكة أندية كرة القدم الخاصة بك من لوحة تحكم مركزية واحدة.",
+    "player_added_successfully": "تم إضافة اللاعب بنجاح",
+    "player_updated_successfully": "تم تحديث بيانات اللاعب بنجاح",
+    "player_deleted_successfully": "تم حذف اللاعب بنجاح"
 }

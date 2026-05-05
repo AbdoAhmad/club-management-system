@@ -161,7 +161,8 @@
                                 Players Found</h3>
                             <p style="color: #64748b; margin-bottom: 24px; font-size: 14px;">Get started by adding a new
                                 player to your roster or adjust your filters.</p>
-                            <button class="btn btn-primary" style="box-shadow: 0 8px 16px rgba(34, 197, 94, 0.25);">➕
+                            <button wire:click="switchScreen('form')" class="btn btn-primary"
+                                style="box-shadow: 0 8px 16px rgba(34, 197, 94, 0.25);">➕
                                 Add First Player</button>
                         </td>
                     </tr>

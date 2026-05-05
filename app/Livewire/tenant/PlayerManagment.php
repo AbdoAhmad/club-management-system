@@ -172,7 +172,7 @@ class PlayerManagment extends Component
             ]);
 
             $this->dispatch('notify', [
-                'message' => __('messages.player_updated_successfully'),
+                'message' => __('Player updated successfully'),
                 'type' => 'success',
             ]);
 
@@ -200,7 +200,7 @@ class PlayerManagment extends Component
             ]);
 
             $this->dispatch('notify', [
-                'message' => __('messages.player_added_successfully'),
+                'message' => __('Player added successfully'),
                 'type' => 'success',
             ]);
         }
@@ -272,6 +272,15 @@ class PlayerManagment extends Component
             'players' => Player::latest()->get(),
             'positions' => Position::all(),
             'skills' => Skill::all(),
+        ]);
+    }
+
+    public function delete(Player $player)
+    {
+        $player->delete();
+        $this->dispatch('notify', [
+            'message' => __('Player deleted successfully'),
+                      'type' => 'success',
         ]);
     }
 

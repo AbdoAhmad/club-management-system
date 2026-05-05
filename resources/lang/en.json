@@ -73,5 +73,8 @@
     "No clubs found": "No clubs found",
     "Add New Club": "Add New Club",
     "Page Not Found": "Page Not Found ",
-    "Manage your football club network from one central dashboard": "Manage your football club network from one central dashboard."
+    "Manage your football club network from one central dashboard": "Manage your football club network from one central dashboard.",
+    "player_added_successfully": "player added successfully",
+    "player_updated_successfully": "player updated successfully",
+    "player_deleted_successfully": "player deleted successfully"
 }

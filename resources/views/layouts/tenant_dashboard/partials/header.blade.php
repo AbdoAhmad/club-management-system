@@ -218,56 +218,56 @@
             padding: 2rem;
             min-height: 100vh;
         }
-    
+
         .page-header {
             margin-bottom: 2rem;
         }
-    
+
         .page-title {
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-    
+
         .page-subtitle {
             color: var(--text-secondary);
         }
-    
+
         .toolbar {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
         }
-    
+
         .toolbar-search {
             flex: 1;
             min-width: 250px;
         }
-    
+
         .toolbar-filters {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
         }
-    
+
         .toolbar-actions {
             display: flex;
             gap: 1rem;
         }
-    
+
         .status-active {
             color: var(--success-green);
         }
-    
+
         .status-injured {
             color: var(--warning-orange);
         }
-    
+
         .status-banned {
             color: var(--error-red);
         }
-    
+
         .pagination-wrapper {
             display: flex;
             align-items: center;
@@ -276,17 +276,17 @@
             padding-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
-    
+
         .pagination-info {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-    
+
         .pagination-controls {
             display: flex;
             gap: 0.5rem;
         }
-    
+
         .pagination-btn {
             padding: 0.5rem 1rem;
             background: white;
@@ -296,44 +296,44 @@
             cursor: pointer;
             transition: all var(--transition-fast);
         }
-    
+
         .pagination-btn:hover:not(:disabled) {
             background: var(--accent-green);
             color: white;
             border-color: var(--accent-green);
         }
-    
+
         .pagination-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-    
+
         @media (max-width: 768px) {
             .content-main {
                 margin-left: 0;
                 padding: 1rem;
             }
-    
+
             .page-title {
                 font-size: 1.5rem;
             }
-    
+
             .toolbar {
                 flex-direction: column;
             }
-    
+
             .toolbar-search {
                 min-width: auto;
             }
-    
+
             .toolbar-filters {
                 flex-direction: column;
             }
-    
+
             .toolbar-actions {
                 flex-direction: column;
             }
-    
+
             .pagination-wrapper {
                 flex-direction: column;
                 gap: 1rem;
@@ -341,414 +341,512 @@
             }
         }
     </style>
-<style>
-    .content-main {
-        margin-left: 280px;
-        padding: 2rem;
-        min-height: 100vh;
-    }
-
-    .page-header {
-        margin-bottom: 2rem;
-    }
-
-    .page-title {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    .page-subtitle {
-        color: var(--text-secondary);
-    }
-
-    .forms-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 2rem;
-        margin-bottom: 3rem;
-    }
-
-    .form-card {
-        background: white;
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        padding: 2rem;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .form-card h2 {
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
-        color: var(--text-primary);
-    }
-
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-        display: block;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
-    }
-
-    .form-group.two-col {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-
-    .form-group.three-col {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 1px solid var(--border-color);
-    }
-
-    .checkbox-group,
-    .radio-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .checkbox-item,
-    .radio-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.75rem;
-        cursor: pointer;
-    }
-
-    .checkbox-item input,
-    .radio-item input {
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        accent-color: var(--accent-green);
-    }
-
-    .checkbox-item label,
-    .radio-item label {
-        margin: 0;
-        cursor: pointer;
-        font-weight: 500;
-        color: var(--text-primary);
-    }
-
-    .full-width-form {
-        background: white;
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        padding: 2rem;
-        box-shadow: var(--shadow-sm);
-        max-width: 800px;
-    }
-
-    .form-section {
-        margin-bottom: 2.5rem;
-    }
-
-    .form-section:last-child {
-        margin-bottom: 0;
-    }
-
-    .form-section-title {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--accent-green);
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid var(--accent-green);
-    }
-
-    .form-section-subtitle {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        margin-bottom: 1.5rem;
-    }
-
-    .textarea-field {
-        min-height: 120px;
-        resize: vertical;
-    }
-
-    .input-hint {
-        font-size: 0.85rem;
-        color: var(--text-tertiary);
-        margin-top: 0.5rem;
-        display: block;
-    }
-
-    .required {
-        color: var(--error-red);
-    }
-
-    @media (max-width: 768px) {
+    <style>
         .content-main {
-            margin-left: 0;
-            padding: 1rem;
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
         }
 
         .page-title {
-            font-size: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
         }
 
         .forms-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .form-card {
-            padding: 1.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
         }
 
-        .form-group.two-col,
+        .form-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group.two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
         .form-group.three-col {
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
         }
 
         .form-actions {
-            flex-direction: column;
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .checkbox-group,
+        .radio-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+        }
+
+        .checkbox-item input,
+        .radio-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--accent-green);
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-primary);
         }
 
         .full-width-form {
-            padding: 1.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            max-width: 800px;
         }
-    }
-</style>
-<style>
-    .pagination-container {
-        margin-top: 2rem;
-        padding: 1.5rem 1rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-    }
 
-    /* Dark mode support for border */
-    @media (prefers-color-scheme: dark) {
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        .form-section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .textarea-field {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .required {
+            color: var(--error-red);
+        }
+
+        @media (max-width: 768px) {
+            .content-main {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .forms-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .form-card {
+                padding: 1.5rem;
+            }
+
+            .form-group.two-col,
+            .form-group.three-col {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .full-width-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <style>
         .pagination-container {
-            border-top-color: rgba(255, 255, 255, 0.05);
+            margin-top: 2rem;
+            padding: 1.5rem 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
-    }
 
-    .pagination-container nav {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        width: 100%;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
+        /* Dark mode support for border */
+        @media (prefers-color-scheme: dark) {
+            .pagination-container {
+                border-top-color: rgba(255, 255, 255, 0.05);
+            }
+        }
 
-    .pagination-container .pagination {
-        display: flex;
-        gap: 5px;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        align-items: center;
-    }
+        .pagination-container nav {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    .pagination-container .page-item .page-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 38px;
-        height: 38px;
-        background: white;
-        border: 1px solid #e2e8f0;
-        color: #64748b;
-        padding: 0 12px;
-        border-radius: 10px;
-        text-decoration: none;
-        transition: all 0.2s ease;
-        font-size: 14px;
-        font-weight: 600;
-    }
+        .pagination-container .pagination {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            align-items: center;
+        }
 
-    .pagination-container .page-item.active .page-link {
-        background: #22c55e;
-        border-color: #22c55e;
-        color: white;
-        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.25);
-    }
+        .pagination-container .page-item .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            height: 38px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            padding: 0 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 600;
+        }
 
-    .pagination-container .page-item .page-link:hover:not(.active) {
-        background: #f8fafc;
-        border-color: #22c55e;
-        color: #22c55e;
-    }
+        .pagination-container .page-item.active .page-link {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: white;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.25);
+        }
 
-    .pagination-container .page-item.disabled .page-link {
-        opacity: 0.5;
-        cursor: not-allowed;
-        background: #f1f5f9;
-    }
+        .pagination-container .page-item .page-link:hover:not(.active) {
+            background: #f8fafc;
+            border-color: #22c55e;
+            color: #22c55e;
+        }
 
-    .pagination-container nav div:first-child p {
-        margin: 0;
-        color: #64748b;
-        font-size: 14px;
-    }
+        .pagination-container .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f1f5f9;
+        }
 
-    /* Hidden small screen parts that sometimes appear in Bootstrap/Livewire pagination */
-    .pagination-container nav>div:first-child span {
-        display: none;
-    }
-</style>
-<style>
-    .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        opacity: 1 !important;
-        pointer-events: all !important;
-        backdrop-filter: blur(4px);
-    }
+        .pagination-container nav div:first-child p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
 
-    .modal-container {
-        background: white;
-        padding: 35px;
-        border-radius: 20px;
-        width: 100%;
-        max-width: 550px;
-        position: relative;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
-        color: var(--text-primary);
-        transition: all 0.3s ease;
-        border: 1px solid var(--border-color);
-    }
+        /* Hidden small screen parts that sometimes appear in Bootstrap/Livewire pagination */
+        .pagination-container nav>div:first-child span {
+            display: none;
+        }
+    </style>
+    <style>
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1 !important;
+            pointer-events: all !important;
+            backdrop-filter: blur(4px);
+        }
 
-    /* Dark Mode Support */
-    @media (prefers-color-scheme: dark) {
         .modal-container {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            .modal-container {
+                background: #1e293b;
+                color: white;
+                border-color: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            }
+
+            .modal-container h2 {
+                color: white !important;
+            }
+
+            .modal-container p {
+                color: #94a3b8 !important;
+            }
+
+            .modal-container label {
+                color: #cbd5e1 !important;
+            }
+
+            .modal-container .input-field {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border-color: rgba(255, 255, 255, 0.1) !important;
+                color: white !important;
+            }
+
+            .modal-container .btn-outline {
+                color: white !important;
+                border-color: rgba(255, 255, 255, 0.2) !important;
+            }
+        }
+
+        /* If user has a manual .dark class toggle */
+        .dark .modal-container {
             background: #1e293b;
             color: white;
             border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .modal-container h2 {
+        .dark .modal-container h2 {
             color: white !important;
         }
 
-        .modal-container p {
+        .dark .modal-container p {
             color: #94a3b8 !important;
         }
 
-        .modal-container label {
+        .dark .modal-container label {
             color: #cbd5e1 !important;
         }
 
-        .modal-container .input-field {
+        .dark .modal-container .input-field {
             background: rgba(255, 255, 255, 0.05) !important;
             border-color: rgba(255, 255, 255, 0.1) !important;
             color: white !important;
         }
 
-        .modal-container .btn-outline {
-            color: white !important;
-            border-color: rgba(255, 255, 255, 0.2) !important;
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s;
         }
-    }
 
-    /* If user has a manual .dark class toggle */
-    .dark .modal-container {
-        background: #1e293b;
-        color: white;
-        border-color: rgba(255, 255, 255, 0.1);
-    }
+        .modal-close:hover {
+            color: var(--error-red);
+        }
 
-    .dark .modal-container h2 {
-        color: white !important;
-    }
+        .avatar-container {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
 
-    .dark .modal-container p {
-        color: #94a3b8 !important;
-    }
+        .avatar-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.05);
+            border: 2px dashed rgba(34, 197, 94, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    .dark .modal-container label {
-        color: #cbd5e1 !important;
-    }
+        .avatar-circle:hover {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
 
-    .dark .modal-container .input-field {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-    }
+        .avatar-preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .modal-close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: transparent;
-        border: none;
-        color: var(--text-secondary);
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 10;
-        transition: color 0.2s;
-    }
+        .upload-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 
-    .modal-close:hover {
-        color: var(--error-red);
-    }
 
-    .avatar-container {
-        width: 100px;
-        height: 100px;
-        position: relative;
-    }
+    <!--begin::Accessibility Meta Tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+    <!--end::Accessibility Meta Tags-->
 
-    .avatar-circle {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: rgba(34, 197, 94, 0.05);
-        border: 2px dashed rgba(34, 197, 94, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+    <!--begin::Primary Meta Tags-->
+    <meta name="title" content="AdminLTE v4 | Dashboard" />
+    <meta name="author" content="ColorlibHQ" />
+    <meta name="description"
+        content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS. Fully accessible with WCAG 2.1 AA compliance." />
+    <meta name="keywords"
+        content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard, accessible admin panel, WCAG compliant" />
+    <!--end::Primary Meta Tags-->
 
-    .avatar-circle:hover {
-        border-color: #22c55e;
-        background: rgba(34, 197, 94, 0.1);
-    }
+    <!--begin::Accessibility Features-->
+    <!-- Skip links will be dynamically added by accessibility.js -->
+    <meta name="supported-color-schemes" content="light dark" />
+    <link rel="preload" href="{{ asset('dashboard-files/css/adminlte.css') }}" as="style" />
+    <!--end::Accessibility Features-->
 
-    .avatar-preview-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+        integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" media="print"
+        onload="this.media = 'all'" />
+    <!--end::Fonts-->
 
-    .upload-placeholder {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+        crossorigin="anonymous" />
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
 
-    @stack("styles")
+    <!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+        crossorigin="anonymous" />
+    <!--end::Third Party Plugin(Bootstrap Icons)-->
+
+    <!--begin::Required Plugin(AdminLTE)-->
+    @if (app()->getLocale() == 'ar')
+        <link rel="stylesheet" href="{{ asset('dashboard-files/css/adminlte.rtl.css') }}" />
+    @else
+        <link rel="stylesheet" href="{{ asset('dashboard-files/css/adminlte.css') }}" />
+    @endif
+    <link rel="stylesheet" href="{{ asset('dashboard-files/css/custom.css') }}" />
+    <!--end::Required Plugin(AdminLTE)-->
+
+    <!-- apexcharts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+        integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+
+    <!-- jsvectormap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
+        integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
+
+
+    <!--begin::Theme Script-->
+    <script>
+        (() => {
+            'use strict';
+            const storedTheme = localStorage.getItem('theme');
+            const getPreferredTheme = () => storedTheme || (globalThis.matchMedia('(prefers-color-scheme: dark)')
+                .matches ? 'dark' : 'light');
+            const setTheme = theme => document.documentElement.setAttribute('data-bs-theme', theme === 'auto' &&
+                globalThis.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : theme);
+            setTheme(getPreferredTheme());
+            const showActiveTheme = (theme, focus = false) => {
+                const themeSwitcher = document.querySelector('#bd-theme');
+                if (!themeSwitcher) return;
+                const activeThemeIcon = document.querySelector('.theme-icon-active i');
+                const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+                const svgOfActiveBtn = btnToActive.querySelector('i').getAttribute('class');
+                document.querySelectorAll('[data-bs-theme-value]').forEach(el => {
+                    el.classList.remove('active');
+                    el.setAttribute('aria-pressed', 'false');
+                });
+                btnToActive.classList.add('active');
+                btnToActive.setAttribute('aria-pressed', 'true');
+                activeThemeIcon.setAttribute('class', svgOfActiveBtn);
+                if (focus) themeSwitcher.focus();
+            };
+            globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (storedTheme !== 'light' && storedTheme !== 'dark') setTheme(getPreferredTheme());
+            });
+            globalThis.addEventListener('DOMContentLoaded', () => {
+                showActiveTheme(getPreferredTheme());
+                document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        const theme = toggle.getAttribute('data-bs-theme-value');
+                        localStorage.setItem('theme', theme);
+                        setTheme(theme);
+                        showActiveTheme(theme, true);
+                    });
+                });
+            });
+        })();
+    </script>
+    @stack('styles')
     @livewireStyles
 
 </head>
