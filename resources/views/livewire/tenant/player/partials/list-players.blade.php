@@ -15,19 +15,12 @@
             </div>
         </div>
         <div class="toolbar-filters">
-            <select class="input-field" style="width: 150px;" data-table-filter="status">
-                <option value="">All Status</option>
-                <option value="Active">Active</option>
-                <option value="Injured">Injured</option>
-                <option value="Banned">Banned</option>
-            </select>
-            <select class="input-field" style="width: 150px;" data-table-filter="position">
-                <option value="">All Positions</option>
-                <option value="Goalkeeper">Goalkeeper</option>
-                <option value="Defender">Defender</option>
-                <option value="Midfielder">Midfielder</option>
-                <option value="Forward">Forward</option>
-            </select>
+            <button class="btn btn-primary">
+                <i class="bi bi-file-earmark-excel me-2"></i> Excel
+            </button>
+            <button class="btn btn-primary">
+                <i class="bi bi-funnel me-2"></i> Filter
+            </button>
         </div>
         <div class="toolbar-actions">
             <button wire:click="switchScreen('form')" class="btn btn-primary">

@@ -67,6 +67,7 @@ class PlayerManagment extends Component
 
     public $edit_player;
 
+
     public function rules()
     {
         return [

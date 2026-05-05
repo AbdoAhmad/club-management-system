@@ -123,11 +123,11 @@
     }
 </style>
 <aside class="sidebar">
-    <div class="sidebar-header">
+    <div class="sidebar-header" style="height: var(--header-height); display: flex; align-items: center; padding: 0 var(--spacing-xl);">
         <div class="sidebar-logo">
             <div class="sidebar-logo-icon">⚽</div>
             <div>
-                <div>Football Club</div>
+                <div style="font-weight: 700; line-height: 1.2;">Football Club</div>
                 <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7);">Management</div>
             </div>
         </div>

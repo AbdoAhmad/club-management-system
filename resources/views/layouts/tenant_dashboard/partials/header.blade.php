@@ -7,7 +7,9 @@
         .content-main {
             margin-left: 280px;
             padding: 2rem;
+            padding-top: calc(var(--header-height) + 2rem);
             min-height: 100vh;
+            transition: all var(--transition-base);
         }
 
         .page-header {
@@ -216,7 +218,9 @@
         .content-main {
             margin-left: 280px;
             padding: 2rem;
+            padding-top: calc(var(--header-height) + 2rem);
             min-height: 100vh;
+            transition: all var(--transition-base);
         }
 
         .page-header {
@@ -345,7 +349,9 @@
         .content-main {
             margin-left: 280px;
             padding: 2rem;
+            padding-top: calc(var(--header-height) + 2rem);
             min-height: 100vh;
+            transition: all var(--transition-base);
         }
 
         .page-header {

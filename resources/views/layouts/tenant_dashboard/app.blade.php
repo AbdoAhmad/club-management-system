@@ -5,6 +5,10 @@
 <body>
     <!-- Sidebar -->
     @include('layouts.tenant_dashboard.partials.sidebar')
+
+    <!-- Navbar -->
+    @include('layouts.tenant_dashboard.partials.navbar')
+
     <!-- Main Content -->
     <main class="content-main">
         {{ $slot }}
