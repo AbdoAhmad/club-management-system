@@ -75,8 +75,8 @@ class PlayerManagment extends Component
         'joined_date_to' => null,
         'positions' => [],
         'skills' => [],
-        'height_min' => 150,
-        'height_max' => 220,
+        'height_min' => 120,
+        'height_max' => 200,
         'weight_min' => 50,
         'weight_max' => 120,
         'status' => ['active' => false, 'banned' => false, 'injured' => false],
@@ -282,14 +282,74 @@ class PlayerManagment extends Component
         $this->screen = 'form';
     }
 
+    public function updatedFilters($value, $key)
+    {
+        // Enforce age range gap
+        if (in_array($key, ['age_min', 'age_max'])) {
+            if ($this->filters['age_max'] <= $this->filters['age_min']) {
+                if ($key === 'age_min') {
+                    $this->filters['age_min'] = $this->filters['age_max'] - 1;
+                } else {
+                    $this->filters['age_max'] = $this->filters['age_min'] + 1;
+                }
+            }
+        }
+
+        // Height range
+        if (in_array($key, ['height_min', 'height_max'])) {
+            if ($this->filters['height_max'] <= $this->filters['height_min']) {
+                if ($key === 'height_min') {
+                    $this->filters['height_min'] = $this->filters['height_max'] - 1;
+                } else {
+                    $this->filters['height_max'] = $this->filters['height_min'] + 1;
+                }
+            }
+        }
+
+        // Weight range
+        if (in_array($key, ['weight_min', 'weight_max'])) {
+            if ($this->filters['weight_max'] <= $this->filters['weight_min']) {
+                if ($key === 'weight_min') {
+                    $this->filters['weight_min'] = $this->filters['weight_max'] - 1;
+                } else {
+                    $this->filters['weight_max'] = $this->filters['weight_min'] + 1;
+                }
+            }
+        }
+        
+        // Dynamic skill ranges
+        if (str_starts_with($key, 'skills.')) {
+            $parts = explode('.', $key);
+            if (count($parts) === 3) {
+                $skillId = $parts[1];
+                $bound = $parts[2];
+                $min = $this->filters['skills'][$skillId]['min_value'] ?? 0;
+                $max = $this->filters['skills'][$skillId]['max_value'] ?? 100;
+                
+                if ($max <= $min) {
+                    if ($bound === 'min_value') {
+                        $this->filters['skills'][$skillId]['min_value'] = max(0, $max - 1);
+                    } else {
+                        $this->filters['skills'][$skillId]['max_value'] = min(100, $min + 1);
+                    }
+                }
+            }
+        }
+    }
+
     public function render()
     {
         $query = Player::query();
 
         // Age Range
         if (! empty($this->filters['age_min'])) {
-            $query->where('date_of_birth', '<=', Carbon::now()->subYears($this->filters['age_min']))->orWhere('date_of_birth', '>=', Carbon::now()->subYears($this->filters['age_max']));
+            $query->where('date_of_birth', '<=', Carbon::now()->subYears($this->filters['age_min']));
+        
         }
+        if (! empty($this->filters['age_max'])) {
+            $query->where('date_of_birth', '>=', Carbon::now()->subYears($this->filters['age_max']));
+        }
+        // dd(Carbon::now()->subYears($this->filters['age_min']),Carbon::now()->subYears($this->filters['age_max']));
 
         // Joined Date Interval
         if (! empty($this->filters['joined_date_from'])) {
@@ -354,6 +414,7 @@ class PlayerManagment extends Component
 
         if (! empty($activeStatuses)) {
             $query->whereIn('status', $activeStatuses);
+
         }
 
         $players = $query->latest()->get();

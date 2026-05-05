@@ -13,9 +13,9 @@
             <label class="filter-label">Age Interval (Years)</label>
             <div class="dual-range-slider" data-min="5" data-max="50">
                 <div class="slider-track"></div>
-                <input type="range" wire:model="filters.age_min" class="min-range" min="5" max="50"
+                <input type="range" wire:model.live.debounce.300ms="filters.age_min" class="min-range" min="5" max="50"
                     oninput="updateDualRange(this)">
-                <input type="range" wire:model="filters.age_max" class="max-range" min="5" max="50"
+                <input type="range" wire:model.live.debounce.300ms="filters.age_max" class="max-range" min="5" max="50"
                     oninput="updateDualRange(this)">
                 <div class="range-tooltips">
                     <span class="min-tooltip">{{ $filters['age_min'] }}</span>
@@ -36,11 +36,11 @@
             <div class="date-range-grid">
                 <div class="date-input-wrap">
                     <span class="sub-label">From</span>
-                    <input type="date" wire:model="filters.joined_date_from" class="form-control-dark">
+                    <input type="date" wire:model.live="filters.joined_date_from" class="form-control-dark">
                 </div>
                 <div class="date-input-wrap">
                     <span class="sub-label">To</span>
-                    <input type="date" wire:model="filters.joined_date_to" class="form-control-dark">
+                    <input type="date" wire:model.live="filters.joined_date_to" class="form-control-dark">
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                         <i class="bi bi-star-fill text-warning me-1" style="font-size: 0.8rem;"></i>
                         <span class="switch-text">Primary Only</span>
                         <label class="switch" style="margin-left: 10px; margin-bottom: 0;">
-                            <input wire:model="filters.primary_position_only" type="checkbox" checked>
+                            <input wire:model.live="filters.primary_position_only" type="checkbox" checked>
                             <span class="slider-round"></span>
                         </label>
                     </div>
@@ -72,8 +72,8 @@
                     </div> --}}
                     @foreach ($positions as $position)
                         <div class="pos-tag">
-                            <input wire:model="filters.positions" type="checkbox" id="pos-{{ $position->id }}-scout"
-                                value="{{ $position->id }}">
+                            <input wire:model.live="filters.positions" type="checkbox"
+                                id="pos-{{ $position->id }}-scout" value="{{ $position->id }}">
                             <label for="pos-{{ $position->id }}-scout">{{ $position->code }}</label>
                         </div>
                     @endforeach
@@ -119,9 +119,9 @@
                                 <span class="sub-label mb-2">Value Range</span>
                                 <div class="dual-range-slider" data-min="0" data-max="100">
                                     <div class="slider-track"></div>
-                                    <input wire:model="filters.skills.{{ $skill->id }}.min_value" type="range"
+                                    <input wire:model.live.debounce.300ms="filters.skills.{{ $skill->id }}.min_value" type="range"
                                         class="min-range" min="0" max="100" oninput="updateDualRange(this)">
-                                    <input wire:model="filters.skills.{{ $skill->id }}.max_value" type="range"
+                                    <input wire:model.live.debounce.300ms="filters.skills.{{ $skill->id }}.max_value" type="range"
                                         class="max-range" min="0" max="100" oninput="updateDualRange(this)">
                                     <div class="range-tooltips">
                                         <span class="min-tooltip">{{ $filters['skills'][$skill->id]['min_value'] ?? 0 }}</span>
@@ -145,9 +145,9 @@
                     <span class="sub-label mb-2">Height Range (cm)</span>
                     <div class="dual-range-slider" data-min="150" data-max="220">
                         <div class="slider-track"></div>
-                        <input wire:model="filters.height_min" type="range" class="min-range" min="150"
+                        <input wire:model.live.debounce.300ms="filters.height_min" type="range" class="min-range" min="150"
                             max="220" oninput="updateDualRange(this)">
-                        <input wire:model="filters.height_max" type="range" class="max-range" min="150"
+                        <input wire:model.live.debounce.300ms="filters.height_max" type="range" class="max-range" min="150"
                             max="220" oninput="updateDualRange(this)">
                         <div class="range-tooltips">
                             <span class="min-tooltip">{{ $filters['height_min'] }}</span>
@@ -159,9 +159,9 @@
                     <span class="sub-label mb-2">Weight Range (kg)</span>
                     <div class="dual-range-slider" data-min="50" data-max="120">
                         <div class="slider-track"></div>
-                        <input wire:model="filters.weight_min" type="range" class="min-range" min="50"
+                        <input wire:model.live.debounce.300ms="filters.weight_min" type="range" class="min-range" min="50"
                             max="120" oninput="updateDualRange(this)">
-                        <input wire:model="filters.weight_max" type="range" class="max-range" min="50"
+                        <input wire:model.live.debounce.300ms="filters.weight_max" type="range" class="max-range" min="50"
                             max="120" oninput="updateDualRange(this)">
                         <div class="range-tooltips">
                             <span class="min-tooltip">{{ $filters['weight_min'] }}</span>
@@ -179,21 +179,21 @@
             <label class="filter-label">Availability</label>
             <div class="status-grid">
                 <div class="status-item active">
-                    <input wire:model="filters.status.active" type="checkbox" id="sc-active" checked>
+                    <input wire:model.live="filters.status.active" type="checkbox" id="sc-active" checked>
                     <label for="sc-active">
                         <i class="bi bi-check-circle-fill"></i>
                         <span>Active</span>
                     </label>
                 </div>
                 <div class="status-item injured">
-                    <input wire:model="filters.status.injured" type="checkbox" id="sc-injured">
+                    <input wire:model.live="filters.status.injured" type="checkbox" id="sc-injured">
                     <label for="sc-injured">
                         <i class="bi bi-exclamation-triangle-fill"></i>
                         <span>Injured</span>
                     </label>
                 </div>
                 <div class="status-item suspended">
-                    <input wire:model="filters.status.banned" type="checkbox" id="sc-suspended">
+                    <input wire:model.live="filters.status.banned" type="checkbox" id="sc-suspended">
                     <label for="sc-suspended">
                         <i class="bi bi-slash-circle-fill"></i>
                         <span>Suspended</span>
@@ -289,13 +289,22 @@
         const percent1 = ((minInput.value - min) / (max - min)) * 100;
         const percent2 = ((maxInput.value - min) / (max - min)) * 100;
 
+        let offset1 = 8 - percent1 * 0.15;
+        let offset2 = 8 - percent2 * 0.15;
+
+        // Prevent tooltip overlap when values are very close
+        if (percent2 - percent1 < 6) {
+            offset1 -= 12;
+            offset2 += 12;
+        }
+
         track.style.background =
             `linear-gradient(to right, rgba(255,255,255,0.1) ${percent1}% , var(--accent-green) ${percent1}% , var(--accent-green) ${percent2}%, rgba(255,255,255,0.1) ${percent2}%)`;
 
         minTooltip.innerHTML = minInput.value;
         maxTooltip.innerHTML = maxInput.value;
 
-        minTooltip.style.left = `calc(${percent1}% + (${8 - percent1 * 0.15}px))`;
-        maxTooltip.style.left = `calc(${percent2}% + (${8 - percent2 * 0.15}px))`;
+        minTooltip.style.left = `calc(${percent1}% + (${offset1}px))`;
+        maxTooltip.style.left = `calc(${percent2}% + (${offset2}px))`;
     }
 </script>

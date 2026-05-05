@@ -111,7 +111,7 @@
                             <div style="display: flex; flex-wrap: wrap; gap: 6px;">
                                 @foreach ($player->skills as $skill)
                                     <span class="badge-premium badge-skill">
-                                        ⚡ {{ $skill->name }}
+                                        ⚡ {{ $skill->name }} ({{ $skill->pivot->value }})
                                     </span>
                                 @endforeach
                             </div>
