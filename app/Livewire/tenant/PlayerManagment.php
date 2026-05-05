@@ -141,6 +141,7 @@ class PlayerManagment extends Component
 
     public function save()
     {
+        $this->image = $this->image instanceof UploadedFile ? $this->image : null;
         $this->validate();
 
         // Clean the descriptions
