@@ -56,6 +56,9 @@
     --z-sticky: 100;
     --z-fixed: 1000;
     --z-modal: 2000;
+
+    /* Header Height */
+    --header-height: 104px;
 }
 
 /* =====================================================
@@ -568,7 +571,7 @@ textarea.input-field {
     left: 0;
     height: 100vh;
     overflow-y: auto;
-    z-index: 40;
+    z-index: calc(var(--z-fixed) + 10);
     transition: transform var(--transition-base);
 }
 
@@ -633,6 +636,178 @@ textarea.input-field {
 .nav-item-icon {
     width: 20px;
     text-align: center;
+}
+
+/* =====================================================
+   11.1 TOP NAVBAR
+   ===================================================== */
+
+.app-navbar {
+    height: var(--header-height);
+    background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-navy) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 280px;
+    z-index: var(--z-fixed);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-xl);
+    transition: all var(--transition-base);
+    color: white;
+}
+
+[data-bs-theme="light"] .app-navbar {
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--text-primary);
+    border-bottom-color: var(--border-color);
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.navbar-start, .navbar-end {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.navbar-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+[data-bs-theme="light"] .navbar-btn {
+    color: var(--text-secondary);
+    background: var(--bg-light);
+    border-color: var(--border-color);
+}
+
+.navbar-btn:hover {
+    background: var(--accent-green);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.navbar-search {
+    position: relative;
+    max-width: 300px;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-search {
+        display: block;
+    }
+}
+
+.navbar-search .input-field {
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    background: var(--bg-light);
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.navbar-user:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.navbar-user-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-green);
+}
+
+.navbar-user-info {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .navbar-user-info {
+        display: block;
+    }
+}
+
+.navbar-user-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: white;
+    line-height: 1.2;
+}
+
+[data-bs-theme="light"] .navbar-user-name {
+    color: var(--text-primary);
+}
+
+.navbar-user-role {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+[data-bs-theme="light"] .navbar-user-role {
+    color: var(--text-secondary);
+}
+
+/* Initials Avatar */
+.avatar-initials {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-green-dark) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Badge for notifications */
+.navbar-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 18px;
+    height: 18px;
+    background: var(--error-red);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
 }
 
 /* =====================================================
