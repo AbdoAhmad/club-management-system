@@ -18,7 +18,7 @@
             <button class="btn btn-primary">
                 <i class="bi bi-file-earmark-excel me-2"></i> Excel
             </button>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" id="open-filters">
                 <i class="bi bi-funnel me-2"></i> Filter
             </button>
         </div>
@@ -163,4 +163,8 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Scouting Filters Drawer -->
+    @include('livewire.tenant.player.partials.filters-drawer')
+</div>
 </div>

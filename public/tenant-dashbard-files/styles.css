@@ -1001,6 +1001,7 @@ textarea.input-field {
 
 /* Display */
 .flex { display: flex; }
+.w-100 { width: 100%; }
 .flex-col { flex-direction: column; }
 .flex-center { justify-content: center; align-items: center; }
 .flex-between { justify-content: space-between; align-items: center; }
@@ -1131,4 +1132,494 @@ a:focus-visible {
     body {
         background: white;
     }
+}
+
+/* =====================================================
+   14. ADVANCED SCOUTING DRAWER
+   ===================================================== */
+
+.filters-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 420px;
+    height: 100vh;
+    background: var(--primary-dark);
+    color: white;
+    z-index: calc(var(--z-fixed) + 100);
+    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    overflow-x: hidden;
+}
+
+.filters-drawer.active {
+    right: 0;
+}
+
+.drawer-header {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.drawer-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.btn-close-drawer {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-close-drawer:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--error-red);
+    transform: rotate(90deg);
+}
+
+.drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+}
+
+.filter-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.filter-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent-green);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.9;
+}
+
+.filter-divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(255,255,255,0.08), transparent);
+    margin: var(--spacing-xl) 0;
+}
+
+/* Dual Range Slider Styles */
+.dual-range-slider {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    padding: 10px 0;
+}
+
+.slider-track {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.dual-range-slider input[type="range"] {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: none;
+    pointer-events: none;
+    appearance: none;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    outline: none;
+}
+
+.dual-range-slider input[type="range"]::-webkit-slider-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--accent-green);
+    cursor: pointer;
+    pointer-events: auto;
+    appearance: none;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    transition: transform 0.2s;
+}
+
+.dual-range-slider input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.range-tooltips {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    margin-top: 15px;
+}
+
+.min-tooltip, .max-tooltip {
+    position: absolute;
+    top: 0;
+    background: var(--accent-green);
+    color: var(--primary-dark);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    transform: translateX(-50%);
+    min-width: 24px;
+    text-align: center;
+}
+
+.range-labels-fixed {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+}
+
+/* Status Grid Selection */
+.status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.status-item {
+    position: relative;
+}
+
+.status-item input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.status-item label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.status-item label i {
+    font-size: 1.1rem;
+}
+
+.status-item.active input:checked + label {
+    border-color: var(--accent-green);
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--accent-green);
+}
+
+.status-item.injured input:checked + label {
+    border-color: var(--warning-orange);
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning-orange);
+}
+
+.status-item.suspended input:checked + label {
+    border-color: var(--error-red);
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error-red);
+}
+
+/* Form Dark Overrides */
+.form-control-dark {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: white;
+    padding: 10px 14px;
+}
+
+.form-control-dark:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-green);
+    box-shadow: none;
+    color: white;
+}
+
+.sub-label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Elite Switch Styling */
+.custom-switch-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s;
+}
+
+.custom-switch-wrap:has(input:checked) {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.2);
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
+}
+
+.switch-text {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.custom-switch-wrap input:checked ~ .switch-text {
+    color: var(--accent-green);
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-round {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 34px;
+}
+
+.slider-round:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider-round {
+    background-color: var(--accent-green);
+}
+
+input:checked + .slider-round:before {
+    transform: translateX(18px);
+    background-color: white;
+}
+
+.date-range-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.drawer-footer {
+    padding: var(--spacing-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    gap: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: calc(var(--z-fixed) + 90);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.drawer-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Custom Checkbox Overrides */
+.custom-control-input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Position Tag Grid */
+.position-tag-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: var(--spacing-xl); /* Add significant space above tags */
+}
+
+.pos-tag {
+    position: relative;
+}
+
+.pos-tag input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.pos-tag label {
+    display: block;
+    padding: 10px 5px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+}
+
+.pos-tag:hover label {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.pos-tag input:checked + label {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+    color: var(--primary-dark);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Skills Scouting Grid */
+.skills-scouting-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.skill-scout-item {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.skill-tag-check {
+    position: relative;
+}
+
+.skill-tag-check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.skill-tag-check label {
+    display: block;
+    padding: 10px 15px;
+    background: transparent;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0;
+}
+
+.skill-tag-check input:checked + label {
+    color: var(--accent-green);
+}
+
+/* Dynamic Slider Container */
+.skill-slider-container {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 15px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+}
+
+.skill-slider-container.active {
+    max-height: 120px;
+    padding: 15px 15px 25px 15px;
+    opacity: 1;
+/* Internal Scrollable Sections */
+.scrollable-filter-list {
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-top: 10px;
+}
+
+.scrollable-filter-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scrollable-filter-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.scrollable-filter-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* Physical Profile Spacing */
+.physical-scouting-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 80px; /* Maximum gap to prevent text overlap */
+    padding-top: 10px;
 }
