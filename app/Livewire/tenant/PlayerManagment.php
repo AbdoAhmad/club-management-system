@@ -67,6 +67,21 @@ class PlayerManagment extends Component
 
     public $edit_player;
 
+    // filters
+    public $filters = [
+        'age_min' => 5,
+        'age_max' => 50,
+        'joined_date_from' => null,
+        'joined_date_to' => null,
+        'positions' => [],
+        'skills' => [],
+        'height_min' => 150,
+        'height_max' => 220,
+        'weight_min' => 50,
+        'weight_max' => 120,
+        'status' => ['active' => false, 'banned' => false, 'injured' => false],
+        'primary_position_only' => false,
+    ];
 
     public function rules()
     {
@@ -269,9 +284,82 @@ class PlayerManagment extends Component
 
     public function render()
     {
+        $query = Player::query();
+
+        // Age Range
+        if (! empty($this->filters['age_min'])) {
+            $query->where('date_of_birth', '<=', Carbon::now()->subYears($this->filters['age_min']))->orWhere('date_of_birth', '>=', Carbon::now()->subYears($this->filters['age_max']));
+        }
+
+        // Joined Date Interval
+        if (! empty($this->filters['joined_date_from'])) {
+            $query->where('joined_at', '>=', $this->filters['joined_date_from']);
+        }
+        if (! empty($this->filters['joined_date_to'])) {
+            $query->where('joined_at', '<=', $this->filters['joined_date_to']);
+        }
+
+        // Primary Position Only
+        if ($this->filters['primary_position_only']) {
+            $query->whereHas('positions', function ($q) {
+                $q->where('is_primary', true);
+            });
+        }
+
+        // Positions
+        if (! empty($this->filters['positions'])) {
+            $query->whereHas('positions', function ($q) {
+                $q->whereIn('position_id', $this->filters['positions']);
+            });
+        }
+
+        // Skills
+        if (! empty($this->filters['skills'])) {
+            foreach ($this->filters['skills'] as $skillId => $skillFilter) {
+                if (empty($skillFilter['min_value'])) {
+                    $skillFilter['min_value'] = 0;
+                }
+                if (empty($skillFilter['max_value'])) {
+                    $skillFilter['max_value'] = 100;
+                }
+                $query->whereHas('skills', function ($q) use ($skillId, $skillFilter) {
+                    $q->where('skill_id', $skillId)
+                        ->where('value', '>=', $skillFilter['min_value'])
+                        ->where('value', '<=', $skillFilter['max_value']);
+                });
+            }
+        }
+
+        // Height Range
+        if (! empty($this->filters['height_min'])) {
+            $query->where('height', '>=', $this->filters['height_min']);
+        }
+        if (! empty($this->filters['height_max'])) {
+            $query->where('height', '<=', $this->filters['height_max']);
+        }
+
+        // Weight Range
+        if (! empty($this->filters['weight_min'])) {
+            $query->where('weight', '>=', $this->filters['weight_min']);
+        }
+        if (! empty($this->filters['weight_max'])) {
+            $query->where('weight', '<=', $this->filters['weight_max']);
+        }
+
+        // Status
+        $activeStatuses = collect($this->filters['status'])
+            ->filter(fn ($value) => $value)
+            ->keys()
+            ->toArray();
+
+        if (! empty($activeStatuses)) {
+            $query->whereIn('status', $activeStatuses);
+        }
+
+        $players = $query->latest()->get();
 
         return view('livewire.tenant.player.player-managment', [
-            'players' => Player::latest()->get(),
+            'players' => $players,
             'positions' => Position::all(),
             'skills' => Skill::all(),
         ]);
@@ -282,12 +370,24 @@ class PlayerManagment extends Component
         $player->delete();
         $this->dispatch('notify', [
             'message' => __('Player deleted successfully'),
-                      'type' => 'success',
+            'type' => 'success',
         ]);
     }
 
     public function clear()
     {
         $this->reset();
+    }
+
+    public function applyFilters()
+    {
+
+        $this->screen = 'list';
+    }
+
+    public function clearFilters()
+    {
+        $this->reset('filters');
+        $this->screen = 'list';
     }
 }

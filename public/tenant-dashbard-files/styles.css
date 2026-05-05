@@ -1595,6 +1595,10 @@ input:checked + .slider-round:before {
     max-height: 120px;
     padding: 15px 15px 25px 15px;
     opacity: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 5px;
+}
+
 /* Internal Scrollable Sections */
 .scrollable-filter-list {
     max-height: 220px;
