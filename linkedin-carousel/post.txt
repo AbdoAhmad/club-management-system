@@ -1,0 +1,45 @@
+🏟️ كيف بنينا نظام إدارة أندية يخدم عشرات الأندية من تطبيق واحد؟
+
+فكرة نظام إدارة الأندية كانت للمُهندس عبدالرحمن أحمد سيد، واشتغلت معاه على تطبيق الفكرة دي في مشروع Club Management System.
+
+واجهنا سؤالاً محورياً:
+كيف نضمن لكل نادي بياناته المعزولة تماماً — لاعبين، مهارات، مراكز — بدون ما نكرر الكود أو نعرّض بيانات نادي لآخر؟
+
+الحل: Multi-Tenancy باستراتيجية Database-per-Tenant 🗄️
+
+🔧 التقنيات:
+• Laravel 13 + Livewire
+• stancl/tenancy v3
+• MySQL — قاعدة بيانات مستقلة لكل نادي (club_{tenant_id})
+• Domain-based identification — كل نادي على subdomain خاص
+
+🏗️ المعمارية:
+
+Central App (لوحة الأدمن)
+    ↓ إنشاء نادي جديد
+    → إنشاء DB تلقائي
+    → تشغيل Migrations
+    → ربط Domain
+    ↓
+Tenant App (لوحة النادي)
+    → Middleware يحدد النادي من الـ Domain
+    → Bootstrappers تعزل: DB + Cache + Filesystem + Queue
+
+✨ أهم ما تعلمته:
+
+1️⃣ العزل الحقيقي يبدأ من قاعدة البيانات — مش مجرد فلتر WHERE tenant_id
+2️⃣ Event-driven provisioning: إنشاء النادي = Pipeline تلقائي (CreateDatabase → MigrateDatabase)
+3️⃣ Soft Delete + Job لحذف DB عند الحذف النهائي — بيانات كل نادي محمية
+4️⃣ Middleware مخصص يفرّق بين Central domains و Tenant domains
+
+📊 النتيجة:
+• نادي واحد = تطبيق كامل مستقل
+• كود واحد = صيانة أسهل
+• أدمن مركزي = إدارة كل الأندية من مكان واحد
+
+شكراً للمُهندس Abdulrahman Ahmed على الفكرة والمشاركة في التطبيق 🙏
+
+هل جرّبت Multi-Tenancy في مشاريعك؟
+أي استراتيجية تفضّل: Database-per-Tenant ولا Shared Database؟
+
+#Laravel #PHP #MultiTenancy #SaaS #BackendDevelopment #WebDevelopment #SoftwareArchitecture #Livewire #MySQL

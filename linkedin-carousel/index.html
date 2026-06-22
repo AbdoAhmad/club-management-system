@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Tenancy Carousel — Club Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --laravel: #FF2D20;
+      --laravel-dark: #e0261a;
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --bg-light: #f8fafc;
+      --text-primary: #0f172a;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-green: #10b981;
+      --accent-purple: #8b5cf6;
+      --border: #e2e8f0;
+      --slide-size: 1080px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #1a1a2e;
+      min-height: 100vh;
+      padding: 40px 20px 120px;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid #334155;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+
+    .controls p {
+      color: #94a3b8;
+      font-size: 14px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .controls button {
+      font-family: 'Cairo', sans-serif;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .controls button:hover {
+      background: #2563eb;
+    }
+
+    .controls button.secondary {
+      background: #334155;
+    }
+
+    .controls button.secondary:hover {
+      background: #475569;
+    }
+
+    .slide-indicator {
+      color: #e2e8f0;
+      font-weight: 700;
+      font-size: 16px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    /* ── Slides container ── */
+    .slides-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .slide-label {
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── Base slide ── */
+    .slide {
+      width: var(--slide-size);
+      height: var(--slide-size);
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════
+       SLIDE 1 — Cover
+    ══════════════════════════════════════ */
+    .slide-1 {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px;
+    }
+
+    .slide-1 .badge {
+      background: rgba(255, 45, 32, 0.15);
+      border: 1px solid rgba(255, 45, 32, 0.4);
+      color: #ff6b61;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 40px;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-1 h1 {
+      color: #ffffff;
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 28px;
+    }
+
+    .slide-1 h1 span {
+      color: var(--laravel);
+    }
+
+    .slide-1 .subtitle {
+      color: #94a3b8;
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1.6;
+      max-width: 780px;
+      margin-bottom: 50px;
+    }
+
+    .slide-1 .tech-stack {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .slide-1 .tech-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .slide-1 .corner-deco {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,45,32,0.12) 0%, transparent 70%);
+    }
+
+    .slide-1 .corner-deco.top-right { top: -100px; right: -100px; }
+    .slide-1 .corner-deco.bottom-left { bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); }
+
+    .slide-1 .author-block {
+      position: absolute;
+      bottom: 44px;
+      text-align: center;
+      width: 100%;
+      left: 0;
+      padding: 0 80px;
+    }
+
+    .slide-1 .author {
+      color: #94a3b8;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .slide-1 .collaborator {
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .slide-1 .collaborator strong {
+      color: #cbd5e1;
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════════
+       SLIDE 2 — Problem
+    ══════════════════════════════════════ */
+    .slide-2 {
+      background: var(--bg-light);
+      padding: 70px 80px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-2 .slide-header {
+      margin-bottom: 50px;
+    }
+
+    .slide-2 .slide-number {
+      color: var(--laravel);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .slide-2 h2 {
+      color: var(--text-primary);
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .problem-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .problem-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 36px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .problem-card .icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .problem-card:nth-child(1) .icon { background: #fef2f2; }
+    .problem-card:nth-child(2) .icon { background: #eff6ff; }
+    .problem-card:nth-child(3) .icon { background: #f0fdf4; }
+
+    .problem-card h3 {
+      color: var(--text-primary);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .problem-card p {
+      color: var(--text-muted);
+      font-size: 19px;
+      line-height: 1.6;
+    }
+
+    .slide-2 .bottom-bar {
+      margin-top: 36px;
+      background: linear-gradient(90deg, var(--laravel), #ff6b61);
+      border-radius: 16px;
+      padding: 24px 36px;
+      text-align: center;
+    }
+
+    .slide-2 .bottom-bar p {
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════════
+       SLIDE 3 — Architecture
+    ══════════════════════════════════════ */
+    .slide-3 {
+      background: var(--bg-dark);
+      padding: 60px 70px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-3 .slide-header {
+      margin-bottom: 36px;
+    }
+
+    .slide-3 .slide-number {
+      color: #60a5fa;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .slide-3 h2 {
+      color: #ffffff;
+      font-size: 44px;
+      font-weight: 800;
+    }
+
+    .arch-diagram {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+
+    .arch-box {
+      width: 100%;
+      border-radius: 16px;
+      padding: 24px 32px;
+      text-align: center;
+    }
+
+    .arch-box.central {
+      background: linear-gradient(135deg, #1e3a5f, #1e293b);
+      border: 2px solid #3b82f6;
+    }
+
+    .arch-box.central h4 {
+      color: #60a5fa;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .arch-box.central .tables {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .arch-box.central .table-tag {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+    }
+
+    .arch-arrow {
+      color: #475569;
+      font-size: 32px;
+      padding: 8px 0;
+      line-height: 1;
+    }
+
+    .arch-box.pipeline {
+      background: linear-gradient(135deg, #312e81, #1e1b4b);
+      border: 2px solid var(--accent-purple);
+      width: 85%;
+    }
+
+    .arch-box.pipeline h4 {
+      color: #c4b5fd;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .arch-box.pipeline .pipeline-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .arch-box.pipeline .step {
+      background: rgba(139, 92, 246, 0.25);
+      color: #ddd6fe;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .arch-box.pipeline .arrow-small {
+      color: #7c3aed;
+      font-size: 20px;
+    }
+
+    .tenant-dbs {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .tenant-db {
+      flex: 1;
+      background: linear-gradient(180deg, #064e3b, #022c22);
+      border: 2px solid var(--accent-green);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .tenant-db .db-name {
+      font-family: 'JetBrains Mono', monospace;
+      color: #6ee7b7;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(110, 231, 183, 0.3);
+    }
+
+    .tenant-db .db-tables {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tenant-db .db-table {
+      background: rgba(16, 185, 129, 0.15);
+      color: #a7f3d0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+    }
+
+    .slide-3 .strategy-tag {
+      margin-top: 24px;
+      text-align: center;
+      background: rgba(255, 45, 32, 0.12);
+      border: 1px solid rgba(255, 45, 32, 0.3);
+      color: #ff8a80;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      align-self: center;
+    }
+
+    /* ══════════════════════════════════════
+       SLIDE 4 — Flow
+    ══════════════════════════════════════ */
+    .slide-4 {
+      background: var(--bg-light);
+      padding: 60px 70px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-4 .slide-header {
+      margin-bottom: 36px;
+    }
+
+    .slide-4 .slide-number {
+      color: var(--accent-green);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .slide-4 h2 {
+      color: var(--text-primary);
+      font-size: 44px;
+      font-weight: 800;
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    .flow-step .step-num {
+      width: 52px;
+      height: 52px;
+      background: var(--bg-dark);
+      color: white;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .flow-step .step-content {
+      flex: 1;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 28px;
+    }
+
+    .flow-step .step-content h4 {
+      color: var(--text-primary);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step .step-content p {
+      color: var(--text-muted);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .flow-step .step-content code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #f1f5f9;
+      color: var(--laravel);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .bootstrappers {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bootstrapper-tag {
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid #bfdbfe;
+    }
+
+  /* ══════════════════════════════════════
+       SLIDE 5 — Summary + CTA
+    ══════════════════════════════════════ */
+    .slide-5 {
+      background: linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
+      padding: 70px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .slide-5 .slide-number {
+      color: #fbbf24;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .slide-5 h2 {
+      color: #ffffff;
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 40px;
+      line-height: 1.3;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 44px;
+    }
+
+    .summary-item {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .summary-item .check {
+      width: 36px;
+      height: 36px;
+      background: rgba(16, 185, 129, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #34d399;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .summary-item h4 {
+      color: #f1f5f9;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .summary-item p {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .cta-box {
+      background: linear-gradient(90deg, var(--laravel), #ff6b61);
+      border-radius: 20px;
+      padding: 32px 40px;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      color: white;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .cta-box p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 18px;
+    }
+
+    .slide-5 .credit-line {
+      margin-top: 20px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .slide-5 .credit-line strong {
+      color: #e2e8f0;
+      font-weight: 700;
+    }
+
+    .hashtags {
+      margin-top: 28px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    /* ── Screenshot mode ── */
+    body.screenshot-mode {
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    body.screenshot-mode .controls,
+    body.screenshot-mode .slide-label,
+    body.screenshot-mode .slides-wrapper > *:not(.slide-container) {
+      display: none !important;
+    }
+
+    body.screenshot-mode .slides-wrapper {
+      gap: 0;
+    }
+
+    body.screenshot-mode .slide-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    body.screenshot-mode .slide-container.active {
+      display: flex;
+    }
+
+    body.screenshot-mode .slide {
+      transform-origin: center center;
+    }
+
+    @media (max-width: 1120px) {
+      .slide {
+        transform: scale(0.85);
+        transform-origin: top center;
+      }
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .controls, .slide-label { display: none; }
+      .slides-wrapper { gap: 0; }
+      .slide {
+        page-break-after: always;
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slides-wrapper" id="slidesWrapper">
+
+    <!-- ═══ SLIDE 1 ═══ -->
+    <span class="slide-label">الشريحة 1 — الغلاف</span>
+    <div class="slide-container" data-slide="1">
+      <div class="slide slide-1">
+        <div class="corner-deco top-right"></div>
+        <div class="corner-deco bottom-left"></div>
+        <div class="badge">🏟️ Club Management System</div>
+        <h1>كيف بنينا نظام<br><span>Multi-Tenancy</span><br>لإدارة الأندية؟</h1>
+        <p class="subtitle">عزل كامل للبيانات — كود واحد — إدارة مركزية<br>باستراتيجية Database-per-Tenant</p>
+        <div class="tech-stack">
+          <span class="tech-pill">Laravel 13</span>
+          <span class="tech-pill">Livewire</span>
+          <span class="tech-pill">stancl/tenancy</span>
+          <span class="tech-pill">MySQL</span>
+        </div>
+        <div class="author-block">
+          <p class="author">Omar Ahmed Sayed · Backend Developer</p>
+          <p class="collaborator">الفكرة والتطبيق مع: <strong>م. عبدالرحمن أحمد سيد</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 2 ═══ -->
+    <span class="slide-label">الشريحة 2 — المشكلة</span>
+    <div class="slide-container" data-slide="2">
+      <div class="slide slide-2">
+        <div class="slide-header">
+          <div class="slide-number">02 — التحدي</div>
+          <h2>ليه محتاجين Multi-Tenancy؟</h2>
+        </div>
+        <div class="problem-cards">
+          <div class="problem-card">
+            <div class="icon">🔒</div>
+            <div>
+              <h3>بيانات حساسة ومعزولة</h3>
+              <p>كل نادي عنده لاعبين، مهارات، مراكز، وصلاحيات — ممنوع أي تسريب بين الأندية</p>
+            </div>
+          </div>
+          <div class="problem-card">
+            <div class="icon">♻️</div>
+            <div>
+              <h3>كود واحد، مش نسخ متعددة</h3>
+              <p>مش منطقي تعمل deploy منفصل لكل نادي — محتاج تطبيق واحد يخدم الجميع</p>
+            </div>
+          </div>
+          <div class="problem-card">
+            <div class="icon">⚙️</div>
+            <div>
+              <h3>إدارة مركزية</h3>
+              <p>الأدمن يقدر ينشئ أندية جديدة، يفعّلها، يوقفها — من لوحة تحكم واحدة</p>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-bar">
+          <p>الحل: عزل حقيقي على مستوى قاعدة البيانات — مش مجرد WHERE tenant_id</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 3 ═══ -->
+    <span class="slide-label">الشريحة 3 — المعمارية</span>
+    <div class="slide-container" data-slide="3">
+      <div class="slide slide-3">
+        <div class="slide-header">
+          <div class="slide-number">03 — المعمارية</div>
+          <h2>Database-per-Tenant Architecture</h2>
+        </div>
+        <div class="arch-diagram">
+          <div class="arch-box central">
+            <h4>🗄️ Central Database</h4>
+            <div class="tables">
+              <span class="table-tag">tenants</span>
+              <span class="table-tag">domains</span>
+              <span class="table-tag">admins</span>
+            </div>
+          </div>
+          <div class="arch-arrow">▼ TenantCreated Event</div>
+          <div class="arch-box pipeline">
+            <h4>⚡ Automated Provisioning Pipeline</h4>
+            <div class="pipeline-steps">
+              <span class="step">CreateDatabase</span>
+              <span class="arrow-small">→</span>
+              <span class="step">MigrateDatabase</span>
+              <span class="arrow-small">→</span>
+              <span class="step">Link Domain</span>
+            </div>
+          </div>
+          <div class="arch-arrow">▼</div>
+          <div class="tenant-dbs">
+            <div class="tenant-db">
+              <div class="db-name">club_alahly</div>
+              <div class="db-tables">
+                <span class="db-table">players</span>
+                <span class="db-table">skills</span>
+                <span class="db-table">positions</span>
+                <span class="db-table">users</span>
+              </div>
+            </div>
+            <div class="tenant-db">
+              <div class="db-name">club_zamalek</div>
+              <div class="db-tables">
+                <span class="db-table">players</span>
+                <span class="db-table">skills</span>
+                <span class="db-table">positions</span>
+                <span class="db-table">users</span>
+              </div>
+            </div>
+            <div class="tenant-db">
+              <div class="db-name">club_...</div>
+              <div class="db-tables">
+                <span class="db-table">players</span>
+                <span class="db-table">skills</span>
+                <span class="db-table">positions</span>
+                <span class="db-table">users</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="strategy-tag">كل نادي = قاعدة بيانات مستقلة بالكامل (prefix: club_)</div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 4 ═══ -->
+    <span class="slide-label">الشريحة 4 — الـ Flow</span>
+    <div class="slide-container" data-slide="4">
+      <div class="slide slide-4">
+        <div class="slide-header">
+          <div class="slide-number">04 — Request Lifecycle</div>
+          <h2>إزاي الطلب بيتعامل مع الـ Tenant؟</h2>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Domain Identification</h4>
+              <p>الـ Middleware بيقرأ الـ Domain ويحدد النادي → <code>InitializeTenancyByDomain</code></p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Tenancy Bootstrappers</h4>
+              <p>بيفعّل العزل على كل طبقات التطبيق:</p>
+              <div class="bootstrappers">
+                <span class="bootstrapper-tag">Database</span>
+                <span class="bootstrapper-tag">Cache</span>
+                <span class="bootstrapper-tag">Filesystem</span>
+                <span class="bootstrapper-tag">Queue</span>
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Tenant Routes + Livewire</h4>
+              <p>الطلب بيتوجّه لـ routes خاصة بالنادي: لاعبين، مهارات، مراكز — كلها معزولة تلقائياً</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Safe Deletion</h4>
+              <p>عند الحذف النهائي → <code>DeleteTenantDatabase</code> Job بيمسح قاعدة البيانات بالكامل</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SLIDE 5 ═══ -->
+    <span class="slide-label">الشريحة 5 — الخلاصة</span>
+    <div class="slide-container" data-slide="5">
+      <div class="slide slide-5">
+        <div class="slide-number">05 — الخلاصة</div>
+        <h2>النتيجة النهائية 🎯</h2>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="check">✓</div>
+            <div>
+              <h4>عزل حقيقي 100%</h4>
+              <p>كل نادي له DB مستقلة — مستحيل تسريب بيانات</p>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="check">✓</div>
+            <div>
+              <h4>Provisioning تلقائي</h4>
+              <p>إنشاء نادي جديد = DB + Migrations في ثواني</p>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="check">✓</div>
+            <div>
+              <h4>كود واحد للجميع</h4>
+              <p>صيانة أسهل، تحديثات أسرع، bugs أقل</p>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="check">✓</div>
+            <div>
+              <h4>قابل للتوسع</h4>
+              <p>أندية لا نهائية بدون تغيير في المعمارية</p>
+            </div>
+          </div>
+        </div>
+        <div class="cta-box">
+          <h3>هل جرّبت Multi-Tenancy في مشاريعك؟</h3>
+          <p>شاركوني في التعليقات — Database-per-Tenant ولا Shared DB؟</p>
+        </div>
+        <p class="credit-line">شكراً لـ <strong>م. عبدالرحمن أحمد سيد</strong> على فكرة النظام والمشاركة في التطبيق 🙏</p>
+        <p class="hashtags">
+          #Laravel #PHP #MultiTenancy #SaaS #BackendDevelopment #SoftwareArchitecture #Livewire #MySQL #WebDevelopment
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <p>📸 افتح الملف في Chrome → اضغط F11 (ملء الشاشة) → صوّر كل شريحة بحجم 1080×1080</p>
+    <button class="secondary" onclick="prevSlide()">◀ السابق</button>
+    <span class="slide-indicator" id="indicator">1 / 5</span>
+    <button onclick="nextSlide()">التالي ▶</button>
+    <button class="secondary" onclick="toggleScreenshotMode()">وضع التصوير</button>
+  </div>
+
+  <script>
+    let current = 1;
+    const total = 5;
+    let screenshotMode = false;
+
+    function updateView() {
+      document.getElementById('indicator').textContent = current + ' / ' + total;
+
+      if (screenshotMode) {
+        document.querySelectorAll('.slide-container').forEach(el => {
+          el.classList.toggle('active', parseInt(el.dataset.slide) === current);
+        });
+        scaleSlide();
+      } else {
+        const containers = document.querySelectorAll('.slide-container');
+        containers[current - 1]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function scaleSlide() {
+      const slide = document.querySelector('.slide-container.active .slide');
+      if (!slide) return;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const scale = Math.min(vw / 1080, vh / 1080) * 0.95;
+      slide.style.transform = `scale(${scale})`;
+    }
+
+    function nextSlide() {
+      current = current < total ? current + 1 : 1;
+      updateView();
+    }
+
+    function prevSlide() {
+      current = current > 1 ? current - 1 : total;
+      updateView();
+    }
+
+    function toggleScreenshotMode() {
+      screenshotMode = !screenshotMode;
+      document.body.classList.toggle('screenshot-mode', screenshotMode);
+      updateView();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+      if (e.key === 'f' || e.key === 'F') toggleScreenshotMode();
+    });
+
+    window.addEventListener('resize', () => {
+      if (screenshotMode) scaleSlide();
+    });
+  </script>
+</body>
+</html>
